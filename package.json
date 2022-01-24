@@ -28,7 +28,7 @@
         "datatables.net-select-bs4": "^1.2.7",
         "jquery": "^3.3.1",
         "jquery.nicescroll": "^3.7.6",
-        "laravel-mix": "^6.0.6",
+        "laravel-mix": "^6.0.41",
         "lodash": "^4.17.19",
         "moment": "^2.24.0",
         "popper.js": "^1.14.7",
