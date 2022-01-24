@@ -55,8 +55,8 @@ jobs:
       - name: Prepare the application
         run: |
           php -r "file_exists('.env') || copy('.env.github', '.env');"
-          php -r "file_exists('.env.testing') || copy('.env.github', '.env.testing');"
           php artisan key:generate
+          php -r "file_exists('.env.testing') || copy('.env', '.env.testing');"
 
       - name: Clear Config
         run: php artisan config:clear
