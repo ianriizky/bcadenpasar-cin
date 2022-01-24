@@ -33,8 +33,10 @@ jobs:
           max_attempts: 5
           command: composer install --no-scripts
 
-      - name: Create .env.testing
-        run: cp .env.testing.github .env.testing
+      - name: Create .env
+        run: |
+          cp .env.testing.github .env
+          cp .env.testing.github .env.testing
 
       - name: Run migration
         run: php artisan migrate --force
@@ -42,7 +44,7 @@ jobs:
       - name: Execute tests
         run: |
           mkdir -p build/logs
-          vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+          vendor/bin/phpunit --verbose --coverage-clover build/logs/clover.xml
 
       - name: Upload Scrutinizer coverage
         uses: sudo-bot/action-scrutinizer@latest
