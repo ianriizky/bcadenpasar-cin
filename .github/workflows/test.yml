@@ -69,7 +69,7 @@ jobs:
       - name: Test with phpunit
         run: |
           mkdir -p build/logs
-          vendor/bin/phpunit --verbose --coverage-clover build/logs/clover.xml
+          vendor/bin/pest --verbose --coverage-clover build/logs/clover.xml
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
