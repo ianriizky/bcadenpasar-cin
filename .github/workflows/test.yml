@@ -49,7 +49,7 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Install Composer dependencies
+      - name: Install composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: Prepare the application
@@ -57,27 +57,27 @@ jobs:
           php -r "file_exists('.env') || copy('.env.github', '.env');"
           php artisan key:generate
 
-      - name: Clear Config
+      - name: Clear config
         run: php artisan config:clear
 
-      - name: Run Migration
+      - name: Run migration
         run: php artisan migrate -v
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
-      - name: Test with phpunit
+      - name: Test with pest
         run: |
           mkdir -p build/logs
           vendor/bin/pest --verbose --coverage-clover build/logs/clover.xml
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
 
-      - name: Upload Scrutinizer coverage
+      - name: Upload scrutinizer coverage
         uses: sudo-bot/action-scrutinizer@latest
         with:
           cli-args: "--format=php-clover build/logs/clover.xml"
 
-      - name: Upload coverage results to Coveralls
+      - name: Upload coverage results to coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
