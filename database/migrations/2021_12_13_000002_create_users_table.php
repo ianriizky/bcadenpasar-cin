@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Company;
+use App\Models\Branch;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +19,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Company::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignIdFor(Branch::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
 
             $table->string('username')->unique();
             $table->string('name');

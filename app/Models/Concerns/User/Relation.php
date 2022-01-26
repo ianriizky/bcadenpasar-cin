@@ -2,46 +2,46 @@
 
 namespace App\Models\Concerns\User;
 
-use App\Models\Company;
+use App\Models\Branch;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int $company_id Foreign key of \App\Models\Company.
- * @property-read \App\Models\Company $company
+ * @property int $branch_id Foreign key of \App\Models\Branch.
+ * @property-read \App\Models\Branch $branch
  *
  * @see \App\Models\User
  */
 trait Relation
 {
     /**
-     * Define an inverse one-to-one or many relationship with \App\Models\Company.
+     * Define an inverse one-to-one or many relationship with \App\Models\Branch.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function company(): BelongsTo
+    public function branch(): BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Branch::class);
     }
 
     /**
-     * Return \App\Models\Company model relation value.
+     * Return \App\Models\Branch model relation value.
      *
-     * @return \App\Models\Company
+     * @return \App\Models\Branch
      */
-    public function getCompanyRelationValue(): Company
+    public function getBranchRelationValue(): Branch
     {
-        return $this->getRelationValue('company');
+        return $this->getRelationValue('branch');
     }
 
     /**
-     * Set \App\Models\Company model relation value.
+     * Set \App\Models\Branch model relation value.
      *
-     * @param  \App\Models\Company  $company
+     * @param  \App\Models\Branch  $branch
      * @return $this
      */
-    public function setCompanyRelationValue(Company $company)
+    public function setBranchRelationValue(Branch $branch)
     {
-        $this->company()->associate($company);
+        $this->branch()->associate($branch);
 
         return $this;
     }

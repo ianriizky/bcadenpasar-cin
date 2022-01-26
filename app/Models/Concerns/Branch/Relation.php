@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Concerns\Company;
+namespace App\Models\Concerns\Branch;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\User> $users
  *
- * @see \App\Models\Company
+ * @see \App\Models\Branch
  */
 trait Relation
 {

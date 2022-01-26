@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\Company;
+use App\Models\Branch;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules;
@@ -17,7 +17,7 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_name' => ['required', 'string', 'max:255'],
+            'branch_name' => ['required', 'string', 'max:255'],
 
             'username' => ['required', 'string', 'max:255', new Rules\Unique(User::class)],
             'name' => ['required', 'string', 'max:255'],
@@ -32,7 +32,7 @@ class RegisterRequest extends FormRequest
     public function attributes()
     {
         return [
-            'company_name' => trans('Company Name'),
+            'branch_name' => trans('Branch Name'),
 
             'username' => trans('Username'),
             'name' => trans('Name'),
@@ -49,8 +49,8 @@ class RegisterRequest extends FormRequest
      */
     public function register(): User
     {
-        $company = Company::create([
-            'name' => $this->input('company_name'),
+        $branch = Branch::firstOrCreate([
+            'name' => $this->input('branch_name'),
         ]);
 
         /** @var \App\Models\User $user */
@@ -61,7 +61,7 @@ class RegisterRequest extends FormRequest
             'password' => $this->input('password'),
         ]);
 
-        $user->setCompanyRelationValue($company)->save();
+        $user->setBranchRelationValue($branch)->save();
 
         return $user->fresh();
     }

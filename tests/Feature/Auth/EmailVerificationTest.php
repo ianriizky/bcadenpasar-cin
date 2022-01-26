@@ -18,7 +18,7 @@ class EmailVerificationTest extends TestCase
     // public function test_email_verification_screen_can_be_rendered()
     // {
     //     /** @var \App\Models\User $user */
-    //     $user = User::factory()->forCompany()->create([
+    //     $user = User::factory()->forBranch()->create([
     //         'email_verified_at' => null,
     //     ]);
 
@@ -30,7 +30,7 @@ class EmailVerificationTest extends TestCase
     public function test_email_can_be_verified()
     {
         /** @var \App\Models\User $user */
-        $user = User::factory()->forCompany()->create([
+        $user = User::factory()->forBranch()->create([
             'email_verified_at' => null,
         ]);
 
@@ -52,7 +52,7 @@ class EmailVerificationTest extends TestCase
     public function test_email_is_not_verified_with_invalid_hash()
     {
         /** @var \App\Models\User $user */
-        $user = User::factory()->forCompany()->create([
+        $user = User::factory()->forBranch()->create([
             'email_verified_at' => null,
         ]);
 

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @see \App\Models\Company
+ * @see \App\Models\Branch
  */
-class CompanyFactory extends Factory
+class BranchFactory extends Factory
 {
     /**
      * {@inheritDoc}

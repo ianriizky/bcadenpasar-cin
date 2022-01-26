@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\Company;
+use App\Models\Branch;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -21,14 +21,14 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register()
     {
-        /** @var \App\Models\Company $company */
-        $company = Company::factory()->make();
+        /** @var \App\Models\Branch $branch */
+        $branch = Branch::factory()->make();
 
         /** @var \App\Models\User $user */
         $user = User::factory()->make();
 
         $response = $this->post(route('register'), [
-            'company_name' => $company->name,
+            'branch_name' => $branch->name,
 
             'username' => $user->username,
             'name' => $user->name,

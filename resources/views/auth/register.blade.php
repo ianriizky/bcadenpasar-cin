@@ -71,18 +71,18 @@
 
                                 <div class="row">
                                     <div class="form-group col-lg-6 col-12">
-                                        <label for="company_name">@lang('Company Name')<span class="text-danger">*</span></label>
+                                        <label for="branch_name">@lang('Branch Name')<span class="text-danger">*</span></label>
 
                                         <input type="text"
-                                            name="company_name"
-                                            id="company_name"
-                                            class="form-control @error('company_name') is-invalid @enderror"
-                                            value="{{ old('company_name') }}"
+                                            name="branch_name"
+                                            id="branch_name"
+                                            class="form-control @error('branch_name') is-invalid @enderror"
+                                            value="{{ old('branch_name') }}"
                                             required
                                             tabindex="2"
                                             autocomplete="on">
 
-                                        <x-invalid-feedback :name="'company_name'"/>
+                                        <x-invalid-feedback :name="'branch_name'"/>
                                     </div>
 
                                     <div class="form-group col-lg-6 col-12">

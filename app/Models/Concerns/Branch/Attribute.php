@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Concerns\Company;
+namespace App\Models\Concerns\Branch;
 
 /**
  * @property string $name
  *
- * @see \App\Models\Company
+ * @see \App\Models\Branch
  */
 trait Attribute
 {

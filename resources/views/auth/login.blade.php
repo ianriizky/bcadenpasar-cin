@@ -18,7 +18,6 @@
                     @endif
 
                     <x-auth-session-status class="mb-4" :status="session('status')" />
-                    {{-- <x-auth-validation-errors class="mb-4 text-danger" :errors="$errors" /> --}}
 
                     <form action="{{ route('login') }}" method="post">
                         @csrf
@@ -48,7 +47,7 @@
                                 tabindex="2"
                                 required>
 
-                            <x-invalid-feedback :name="'identifier'"/>
+                            <x-invalid-feedback :name="'password'"/>
                         </div>
 
                         <div class="form-group">
@@ -56,12 +55,14 @@
                                 <input type="checkbox"
                                     name="remember"
                                     id="remember"
-                                    class="custom-control-input"
+                                    class="custom-control-input @error('remember') is-invalid @enderror"
                                     value="1"
-                                    @if (old('checked', false)) checked @endif
+                                    @if (old('remember', false)) checked @endif
                                     tabindex="3">
 
                                 <label for="remember" class="custom-control-label">@lang('Remember me')</label>
+
+                                <x-invalid-feedback :name="'remember'"/>
                             </div>
                         </div>
 
