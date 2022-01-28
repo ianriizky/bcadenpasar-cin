@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EducationController;
+use App\Http\Controllers\MonitoringController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +21,11 @@ require __DIR__.'/auth.php';
 
 Route::view('/', 'welcome');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('education', EducationController::class);
+    Route::resource('monitoring', MonitoringController::class);
+    Route::resource('achievement', AchievementController::class);
+});
+
