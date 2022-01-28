@@ -1,21 +1,41 @@
-<div class="main-sidebar">
-    <aside id="sidebar-wrapper">
-        <div class="sidebar-brand">
-            <a href="{{ route('dashboard') }}">{{ config('app.name') }}</a>
-        </div>
+<nav class="navbar navbar-secondary navbar-expand-lg">
+    <div class="container">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item"><a href="index-0.html" class="nav-link">General Dashboard</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link">Ecommerce Dashboard</a></li>
+                </ul>
+            </li>
 
-        <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{{ route('dashboard') }}">{{ config('app.shortname') }}</a>
-        </div>
+            <li class="nav-item active">
+                <a href="#" class="nav-link"><i class="far fa-heart"></i><span>Top Navigation</span></a>
+            </li>
 
-        <ul class="sidebar-menu">
-            <li class="menu-header">@lang('Home')</li>
+            <li class="nav-item dropdown">
+                <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="far fa-clone"></i><span>Multiple Dropdown</span></a>
 
-            <li @if (Route::is('dashboard')) class="active" @endif>
-                <a href="{{ route('dashboard') }}" class="nav-link">
-                    <i class="fa fa-fire"></i> <span>@lang('Dashboard')</span>
-                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item"><a href="#" class="nav-link">Not Dropdown Link</a></li>
+
+                    <li class="nav-item dropdown"><a href="#" class="nav-link has-dropdown">Hover Me</a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+
+                            <li class="nav-item dropdown"><a href="#" class="nav-link has-dropdown">Link 2</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+                                    <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+                                    <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item"><a href="#" class="nav-link">Link 3</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </li>
         </ul>
-    </aside>
-</div>
+    </div>
+</nav>

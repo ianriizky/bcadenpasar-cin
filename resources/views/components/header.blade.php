@@ -1,23 +1,52 @@
 <nav class="navbar navbar-expand-lg main-navbar">
-    <form class="form-inline mr-auto">
-        <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-        </ul>
-    </form>
+    <a href="{{ route('dashboard') }}" class="navbar-brand sidebar-gone-hide">{{ config('app.name') }}</a>
 
-    <ul class="navbar-nav navbar-right">
+    <div class="navbar-nav">
+        <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
+    </div>
+
+    <div class="nav-collapse">
+        <a class="sidebar-gone-show nav-collapse-toggle nav-link" href="#">
+            <i class="fas fa-ellipsis-v"></i>
+        </a>
+        <ul class="navbar-nav">
+            <li class="nav-item @if (Route::is('dashboard')) active @endif">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <span>@lang('Dashboard')</span>
+                </a>
+            </li>
+
+            <li class="nav-item @if (Route::is('education.*')) active @endif">
+                <a href="{{ route('education.index') }}" class="nav-link">
+                    <span>@lang('Education')</span>
+                </a>
+            </li>
+
+            <li class="nav-item @if (Route::is('monitoring.*')) active @endif">
+                <a href="{{ route('monitoring.index') }}" class="nav-link">
+                    <span>@lang('Monitoring')</span>
+                </a>
+            </li>
+
+            <li class="nav-item @if (Route::is('achievement.*')) active @endif">
+                <a href="{{ route('achievement.index') }}" class="nav-link">
+                    <span>@lang('Achievement')</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <ul class="navbar-nav navbar-right ml-auto">
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="https://www.gravatar.com/avatar/@auth{{ md5(Auth::user()->email) }}@endauth" class="rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">@auth{{ Auth::user()->name }} @else Administrator @endauth</div>
+                <img alt="image" src="{{ Auth::user()->profile_image }}" class="rounded-circle mr-1">
+                <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
-                @auth
-                    <div class="dropdown-title">
-                        <span>🇮🇩 {{ Auth::user()->username }}</span>
-                    </div>
-                @endauth
+                <div class="dropdown-title">
+                    <span>🇮🇩 {{ Auth::user()->username }}</span>
+                </div>
 
                 <div class="dropdown-divider"></div>
 

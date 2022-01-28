@@ -20,7 +20,7 @@
     @stack('styles')
 </head>
 
-<body>
+<body @hasSection('masterBodyClass') class="@yield('masterBodyClass')" @endif>
     <main id="app">
         @isset($slot)
             {{ $slot }}

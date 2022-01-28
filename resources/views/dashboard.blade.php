@@ -12,7 +12,7 @@
 
                 <div class="breadcrumb-item">
                     <a href="{{ route('dashboard') }}">
-                        <i class="fas fa-fire"></i> <span>@lang('Dashboard')</span>
+                        <i class="fas @lang('icon.dashboard')"></i> <span>@lang('Dashboard')</span>
                     </a>
                 </div>
             </div>
@@ -21,7 +21,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <p>@lang('Welcome to the blog dashboard!')</p>
+                    <p>@lang('Welcome to the dashboard page!')</p>
                 </div>
             </div>
         </div>

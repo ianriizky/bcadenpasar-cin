@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
  * @property \Illuminate\Support\Carbon $email_verified_at
  * @property string $password
  * @property-read string $remember_token
+ * @property-read string $profile_image
  *
  * @see \App\Models\User
  */
@@ -27,5 +28,15 @@ trait Attribute
         $this->attributes['password'] = Hash::make($value);
 
         return $this;
+    }
+
+    /**
+     * Return "profile_image" attribute value.
+     *
+     * @return string
+     */
+    public function getProfileImageAttribute(): string
+    {
+        return 'https://www.gravatar.com/avatar/' . md5($this->email);
     }
 }
