@@ -52,7 +52,7 @@
 
                                     <div class="article-title">
                                         <h2>
-                                            <a href="{{ route('education.pembukaan-rekening-online') }}">Video Pembukaan Rekening Online</a>
+                                            <a href="{{ route('education.pembukaan-rekening-online.index') }}">Video Pembukaan Rekening Online</a>
                                         </h2>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                     </p>
 
                                     <div class="article-cta">
-                                        <a href="{{ route('education.pembukaan-rekening-online') }}" class="btn btn-primary">@lang('Read More')</a>
+                                        <a href="{{ route('education.pembukaan-rekening-online.index') }}" class="btn btn-primary">@lang('Read More')</a>
                                     </div>
                                 </div>
                             </article>
@@ -78,7 +78,7 @@
 
                                     <div class="article-title">
                                         <h2>
-                                            <a href="{{ route('education.employee-get-cin') }}">Employee Get CiN</a>
+                                            <a href="{{ route('education.employee-get-cin.index') }}">Employee Get CiN</a>
                                         </h2>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                                     </p>
 
                                     <div class="article-cta">
-                                        <a href="{{ route('education.employee-get-cin') }}" class="btn btn-primary">@lang('Read More')</a>
+                                        <a href="{{ route('education.employee-get-cin.index') }}" class="btn btn-primary">@lang('Read More')</a>
                                     </div>
                                 </div>
                             </article>
