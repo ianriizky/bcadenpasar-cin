@@ -7,15 +7,15 @@ const getFiles = directory => fs.readdirSync(directory).filter(
 );
 
 /*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel applications. By default, we are compiling the CSS
- | file for the application as well as bundling up all the JS files.
- |
- */
+|--------------------------------------------------------------------------
+| Mix Asset Management
+|--------------------------------------------------------------------------
+|
+| Mix provides a clean, fluent API for defining some Webpack build steps
+| for your Laravel applications. By default, we are compiling the CSS
+| file for the application as well as bundling up all the JS files.
+|
+*/
 
 mix.sass('resources/scss/stisla/master.scss', 'public/css/stisla').sourceMaps();
 mix.sass('resources/scss/stisla/style.scss', 'public/css/stisla');

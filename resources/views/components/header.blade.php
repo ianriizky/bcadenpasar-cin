@@ -18,7 +18,7 @@
 
             <li class="nav-item @if (Route::is('education.*')) active @endif">
                 <a href="{{ route('education.index') }}" class="nav-link">
-                    <span>@lang('Education')</span>
+                    <span>@lang('Educate')</span>
                 </a>
             </li>
 

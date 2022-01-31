@@ -84,7 +84,23 @@
                     </form>
 
                     <div class="text-center mt-5 text-small">
-                        Copyright &copy; {{ config('app.name') }} 2022. Made with 💙 by Stisla
+                        <div>
+                            <a href="https://instagram.com" target="_blank">
+                                <i class="fab fa-instagram" style="font-size: 2em;"></i>
+                            </a>
+
+                            <a href="https://facebook.com" target="_blank">
+                                <i class="fab fa-facebook" style="font-size: 2em;"></i>
+                            </a>
+
+                            <a href="https://twitter.com" target="_blank">
+                                <i class="fab fa-twitter" style="font-size: 2em;"></i>
+                            </a>
+                        </div>
+
+                        <div class="mt-2">
+                            Copyright &copy; {{ config('app.name') }} 2022. Made with 💙 by Stisla
+                        </div>
 
                         <div class="mt-2">
                             <a href="#">@lang('Privacy Policy')</a>
