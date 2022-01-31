@@ -24,7 +24,7 @@ class MonitoringController extends Controller
      */
     public function create()
     {
-        //
+        return view('monitoring.create');
     }
 
     /**

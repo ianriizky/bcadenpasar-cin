@@ -18,68 +18,32 @@ class AchievementController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display dashboard pencapaian page.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function create()
+    public function dashboardPencapaian()
     {
-        //
+        return view('achievement.dashboard-pencapaian');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display dashboard growth newcin page.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function show(Achievement $achievement)
+    public function dashboardGrowthNewCin()
     {
-        //
+        return view('achievement.dashboard-growth-new-cin');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display dashboard penutupancin page.
      *
-     * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function edit(Achievement $achievement)
+    public function dashboardPenutupanCin()
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Achievement  $achievement
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request, Achievement $achievement)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Achievement  $achievement
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Achievement $achievement)
-    {
-        //
+        return view('achievement.dashboard-penutupan-cin');
     }
 }

@@ -17,7 +17,33 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <p>@lang('Welcome to the monitoring page!')</p>
+                    <div class="row">
+                        {{-- input-pencapaian-harian --}}
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                            <article class="article">
+                                <div class="article-header">
+                                    <div class="article-image" data-background="https://www.gravatar.com/avatar/"></div>
+
+                                    <div class="article-title">
+                                        <h2>
+                                            <a href="{{ route('monitoring.create') }}">Input Pencapaian Harian</a>
+                                        </h2>
+                                    </div>
+                                </div>
+
+                                <div class="article-details">
+                                    <p>
+                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                    </p>
+
+                                    <div class="article-cta">
+                                        <a href="{{ route('monitoring.create') }}" class="btn btn-primary">@lang('New')</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        {{-- /.input-pencapaian-harian --}}
+                    </div>
                 </div>
             </div>
         </div>

@@ -97,8 +97,8 @@
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item @if (Route::is('monitoring.create')) active @endif">
+                        <a href="{{ route('monitoring.create') }}" class="nav-link">
                             <span class="narrow-line-height">Input Pencapaian Harian</span>
                         </a>
                     </li>
@@ -106,25 +106,25 @@
             </li>
 
             <li class="nav-item dropdown @if (Route::is('achievement.*')) active @endif">
-                <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
+                <a href="{{ route('achievement.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
                     <i class="fas @lang('icon.achievement')"></i> <span>@lang('menu.achievement')</span>
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item @if (Route::is('achievement.dashboard-pencapaian')) active @endif">
+                        <a href="{{ route('achievement.dashboard-pencapaian') }}" class="nav-link">
                             <span class="narrow-line-height">Dashboard Pencapaian</span>
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item @if (Route::is('achievement.dashboard-growth-new-cin')) active @endif">
+                        <a href="{{ route('achievement.dashboard-growth-new-cin') }}" class="nav-link">
                             <span class="narrow-line-height">Dashboard Growth New CiN</span>
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item @if (Route::is('achievement.dashboard-penutupan-cin')) active @endif">
+                        <a href="{{ route('achievement.dashboard-penutupan-cin') }}" class="nav-link">
                             <span class="narrow-line-height">Dashboard Penutupan CiN</span>
                         </a>
                     </li>

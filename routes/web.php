@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EducationController;
 use App\Http\Controllers\MonitoringController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +21,11 @@ require __DIR__.'/auth.php';
 Route::view('/', 'welcome');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
 
-    Route::prefix('/education')->name('education.')->controller(EducationController::class)->group(function () {
+    Route::prefix('/education')->name('education.')->group(function () {
+        Route::view('/', 'education.index')->name('index');
+
         Route::prefix('/webinar-literasi-keuangan')->name('webinar-literasi-keuangan.')->group(function () {
             Route::view('/', 'education.webinar-literasi-keuangan.index')->name('index');
 
@@ -39,8 +40,14 @@ Route::middleware('auth')->group(function () {
         Route::view('/employee-get-cin', 'education.employee-get-cin')->name('employee-get-cin');
     });
 
-    Route::resource('education', EducationController::class);
     Route::resource('monitoring', MonitoringController::class);
-    Route::resource('achievement', AchievementController::class);
+
+    Route::prefix('/achievement')->name('achievement.')->controller(AchievementController::class)->group(function () {
+        Route::view('/', 'achievement.index')->name('index');
+
+        Route::get('/dashboard-pencapaian', 'dashboardPencapaian')->name('dashboard-pencapaian');
+        Route::get('/dashboard-growth-new-cin', 'dashboardGrowthNewCin')->name('dashboard-growth-new-cin');
+        Route::get('/dashboard-penutupan-cin', 'dashboardPenutupanCin')->name('dashboard-penutupan-cin');
+    });
 });
 
