@@ -34,7 +34,7 @@
     <div class="container">
         <ul class="navbar-nav">
             <li class="nav-item dropdown @if (Route::is('education.*')) active @endif">
-                <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
+                <a href="{{ route('education.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
                     <i class="fas @lang('icon.education')"></i> <span>@lang('menu.education')</span>
                 </a>
 
@@ -77,14 +77,14 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item @if (Route::is('education.pembukaan-rekening-online')) active @endif">
+                        <a href="{{ route('education.pembukaan-rekening-online') }}" class="nav-link">
                             <span class="narrow-line-height">Video Pembukaan Rekening Online</span>
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item @if (Route::is('education.employee-get-cin')) active @endif">
+                        <a href="{{ route('education.employee-get-cin') }}" class="nav-link">
                             <span class="narrow-line-height">Employee Get CiN</span>
                         </a>
                     </li>
@@ -92,7 +92,7 @@
             </li>
 
             <li class="nav-item dropdown @if (Route::is('monitoring.*')) active @endif">
-                <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
+                <a href="{{ route('monitoring.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
                     <i class="fas @lang('icon.monitoring')"></i> <span>@lang('menu.monitoring')</span>
                 </a>
 

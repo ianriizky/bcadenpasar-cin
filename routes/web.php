@@ -35,13 +35,8 @@ Route::middleware('auth')->group(function () {
             Route::view('/input-rencana-penyelenggaraan-webinar', 'education.webinar-literasi-keuangan.input-rencana-penyelenggaraan-webinar')->name('input-rencana-penyelenggaraan-webinar');
         });
 
-        Route::prefix('/pembukaan-rekening-online')->name('pembukaan-rekening-online.')->group(function () {
-            Route::view('/', 'education.pembukaan-rekening-online')->name('index');
-        });
-
-        Route::prefix('/employee-get-cin')->name('employee-get-cin.')->group(function () {
-            Route::view('/', 'education.employee-get-cin')->name('index');
-        });
+        Route::view('/pembukaan-rekening-online', 'education.pembukaan-rekening-online')->name('pembukaan-rekening-online');
+        Route::view('/employee-get-cin', 'education.employee-get-cin')->name('employee-get-cin');
     });
 
     Route::resource('education', EducationController::class);
