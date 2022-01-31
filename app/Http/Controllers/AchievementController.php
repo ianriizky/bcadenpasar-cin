@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AchievementController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display index page.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */

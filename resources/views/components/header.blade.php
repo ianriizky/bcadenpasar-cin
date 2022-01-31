@@ -12,25 +12,25 @@
         <ul class="navbar-nav">
             <li class="nav-item @if (Route::is('dashboard')) active @endif">
                 <a href="{{ route('dashboard') }}" class="nav-link">
-                    <span>@lang('Dashboard')</span>
+                    <span>@lang('menu.dashboard')</span>
                 </a>
             </li>
 
             <li class="nav-item @if (Route::is('education.*')) active @endif">
                 <a href="{{ route('education.index') }}" class="nav-link">
-                    <span>@lang('Educate')</span>
+                    <span>@lang('menu.education')</span>
                 </a>
             </li>
 
             <li class="nav-item @if (Route::is('monitoring.*')) active @endif">
                 <a href="{{ route('monitoring.index') }}" class="nav-link">
-                    <span>@lang('Monitoring')</span>
+                    <span>@lang('menu.monitoring')</span>
                 </a>
             </li>
 
             <li class="nav-item @if (Route::is('achievement.*')) active @endif">
                 <a href="{{ route('achievement.index') }}" class="nav-link">
-                    <span>@lang('Achievement')</span>
+                    <span>@lang('menu.achievement')</span>
                 </a>
             </li>
         </ul>

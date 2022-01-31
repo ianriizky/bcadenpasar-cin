@@ -3,16 +3,12 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>@lang('Dashboard')</h1>
+            <h1>@lang('menu.dashboard')</h1>
 
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item">
-                    <span>@lang('Home')</span>
-                </div>
-
-                <div class="breadcrumb-item">
                     <a href="{{ route('dashboard') }}">
-                        <i class="fas @lang('icon.dashboard')"></i> <span>@lang('Dashboard')</span>
+                        <i class="fas @lang('icon.dashboard')"></i> <span>@lang('menu.dashboard')</span>
                     </a>
                 </div>
             </div>

@@ -3,16 +3,12 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>@lang('Achievement')</h1>
+            <h1>@lang('menu.achievement')</h1>
 
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item">
-                    <span>@lang('Menu')</span>
-                </div>
-
-                <div class="breadcrumb-item">
                     <a href="{{ route('achievement.index') }}">
-                        <i class="fas @lang('icon.achievement')"></i> <span>@lang('Achievement')</span>
+                        <i class="fas @lang('icon.achievement')"></i> <span>@lang('menu.achievement')</span>
                     </a>
                 </div>
             </div>

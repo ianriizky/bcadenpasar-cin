@@ -35,42 +35,42 @@
         <ul class="navbar-nav">
             <li class="nav-item dropdown @if (Route::is('education.*')) active @endif">
                 <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
-                    <i class="fas @lang('icon.education')"></i> <span>@lang('Educate')</span>
+                    <i class="fas @lang('icon.education')"></i> <span>@lang('menu.education')</span>
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li class="nav-item dropdown">
-                        <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
+                    <li class="nav-item dropdown @if (Route::is('education.webinar-literasi-keuangan.*')) active @endif">
+                        <a href="{{ route('education.webinar-literasi-keuangan.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
                             <span class="narrow-line-height">Webinar Literasi Keuangan</span>
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-mobile" data-dropdown-menu-mobile-class="dropdown-submenu">
-                            <li class="nav-item mb-xl-0 mb-4">
-                                <a href="#" class="nav-link">
+                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.template-surat-penawaran-webinar')) active @endif">
+                                <a href="{{ route('education.webinar-literasi-keuangan.template-surat-penawaran-webinar') }}" class="nav-link">
                                     <span class="narrow-line-height">Template Surat Penawaran Webinar</span>
                                 </a>
                             </li>
 
-                            <li class="nav-item mb-xl-0 mb-4">
-                                <a href="#" class="nav-link">
+                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.template-presentasi-webinar-literasi-keuangan')) active @endif">
+                                <a href="{{ route('education.webinar-literasi-keuangan.template-presentasi-webinar-literasi-keuangan') }}" class="nav-link">
                                     <span class="narrow-line-height">Template Presentasi Webinar Literasi Keuangan</span>
                                 </a>
                             </li>
 
-                            <li class="nav-item mb-xl-0 mb-4">
-                                <a href="#" class="nav-link">
+                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.template-rundown-webinar-literasi-keuangan')) active @endif">
+                                <a href="{{ route('education.webinar-literasi-keuangan.template-rundown-webinar-literasi-keuangan') }}" class="nav-link">
                                     <span class="narrow-line-height">Template Rundown Webinar Literasi Keuangan</span>
                                 </a>
                             </li>
 
-                            <li class="nav-item mb-xl-0 mb-4">
-                                <a href="#" class="nav-link">
+                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.pemetaan-sekolah-kampus-potensi-webinar')) active @endif">
+                                <a href="{{ route('education.webinar-literasi-keuangan.pemetaan-sekolah-kampus-potensi-webinar') }}" class="nav-link">
                                     <span class="narrow-line-height">Pemetaan Sekolah / Kampus Potensi Webinar</span>
                                 </a>
                             </li>
 
-                            <li class="nav-item mb-xl-0 mb-4">
-                                <a href="#" class="nav-link">
+                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.input-rencana-penyelenggaraan-webinar')) active @endif">
+                                <a href="{{ route('education.webinar-literasi-keuangan.input-rencana-penyelenggaraan-webinar') }}" class="nav-link">
                                     <span class="narrow-line-height">Input Rencana Penyelenggaraan Webinar</span>
                                 </a>
                             </li>
@@ -93,7 +93,7 @@
 
             <li class="nav-item dropdown @if (Route::is('monitoring.*')) active @endif">
                 <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
-                    <i class="fas @lang('icon.monitoring')"></i> <span>@lang('Monitoring')</span>
+                    <i class="fas @lang('icon.monitoring')"></i> <span>@lang('menu.monitoring')</span>
                 </a>
 
                 <ul class="dropdown-menu">
@@ -107,7 +107,7 @@
 
             <li class="nav-item dropdown @if (Route::is('achievement.*')) active @endif">
                 <a href="#" data-toggle="dropdown" class="nav-link has-dropdown">
-                    <i class="fas @lang('icon.achievement')"></i> <span>@lang('Achievement')</span>
+                    <i class="fas @lang('icon.achievement')"></i> <span>@lang('menu.achievement')</span>
                 </a>
 
                 <ul class="dropdown-menu">
