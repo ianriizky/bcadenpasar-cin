@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\AchievementController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\MonitoringController;
+use App\Http\Controllers\DailyAchievementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,7 +39,11 @@ Route::middleware('auth')->group(function () {
         Route::view('/employee-get-cin', 'education.employee-get-cin')->name('employee-get-cin');
     });
 
-    Route::resource('monitoring', MonitoringController::class);
+    Route::prefix('/monitoring')->name('monitoring.')->group(function () {
+        Route::view('/', 'monitoring.index')->name('index');
+
+        Route::resource('daily-achievement', DailyAchievementController::class);
+    });
 
     Route::prefix('/achievement')->name('achievement.')->controller(AchievementController::class)->group(function () {
         Route::view('/', 'achievement.index')->name('index');

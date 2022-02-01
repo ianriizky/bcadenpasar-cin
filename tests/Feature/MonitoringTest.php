@@ -11,6 +11,12 @@ it('has monitoring index page', function () {
     actingAs($this->user)->get(route('monitoring.index'))->assertOk();
 });
 
-it('has monitoring create page', function () {
-    actingAs($this->user)->get(route('monitoring.create'))->assertOk();
+#region daily achievement
+it('has monitoring daily achievement index page', function () {
+    actingAs($this->user)->get(route('monitoring.daily-achievement.index'))->assertOk();
 });
+
+it('has monitoring daily achievement create page', function () {
+    actingAs($this->user)->get(route('monitoring.daily-achievement.create'))->assertOk();
+});
+#endregion daily achievement

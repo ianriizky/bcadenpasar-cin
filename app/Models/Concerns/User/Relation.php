@@ -2,12 +2,16 @@
 
 namespace App\Models\Concerns\User;
 
+use App\Models\Achievement;
 use App\Models\Branch;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int $branch_id Foreign key of \App\Models\Branch.
- * @property-read \App\Models\Branch $branch
+ * @property int|null $branch_id Foreign key of \App\Models\Branch.
+ * @property-read \App\Models\Branch|null $branch
+ * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement> $achievements
  *
  * @see \App\Models\User
  */
@@ -26,9 +30,9 @@ trait Relation
     /**
      * Return \App\Models\Branch model relation value.
      *
-     * @return \App\Models\Branch
+     * @return \App\Models\Branch|null
      */
-    public function getBranchRelationValue(): Branch
+    public function getBranchRelationValue(): ?Branch
     {
         return $this->getRelationValue('branch');
     }
@@ -42,6 +46,41 @@ trait Relation
     public function setBranchRelationValue(Branch $branch)
     {
         $this->branch()->associate($branch);
+
+        return $this;
+    }
+
+    /**
+     * Define a one-to-many relationship with App\Models\Achievement.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function achievements(): HasMany
+    {
+        return $this->hasMany(Achievement::class);
+    }
+
+    /**
+     * Return collection of \App\Models\Achievement model relation value.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement>
+     */
+    public function getAchievementsRelationValue(): Collection
+    {
+        return $this->getCollectionValue('achievements', Achievement::class);
+    }
+
+    /**
+     * Set collection of \App\Models\Achievement model relation value.
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement>  $achievements
+     * @return $this
+     */
+    public function setAchievementsRelationValue(Collection $achievements)
+    {
+        if ($this->isCollectionValid($achievements, Achievement::class)) {
+            $this->setRelation('achievements', $achievements);
+        }
 
         return $this;
     }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Monitoring;
 use Illuminate\Http\Request;
 
-class MonitoringController extends Controller
+class DailyAchievementController extends Controller
 {
     /**
      * Display index page.
@@ -14,7 +14,7 @@ class MonitoringController extends Controller
      */
     public function index()
     {
-        return view('monitoring.index');
+        return view('monitoring.daily-achievement.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class MonitoringController extends Controller
      */
     public function create()
     {
-        return view('monitoring.create');
+        return view('monitoring.daily-achievement.create');
     }
 
     /**

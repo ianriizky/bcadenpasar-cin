@@ -97,8 +97,8 @@
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li class="nav-item @if (Route::is('monitoring.create')) active @endif">
-                        <a href="{{ route('monitoring.create') }}" class="nav-link">
+                    <li class="nav-item @if (Route::is('monitoring.daily-achievement.*')) active @endif">
+                        <a href="{{ route('monitoring.daily-achievement.index') }}" class="nav-link">
                             <span class="narrow-line-height">Input Pencapaian Harian</span>
                         </a>
                     </li>

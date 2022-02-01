@@ -26,7 +26,7 @@
 
                                     <div class="article-title">
                                         <h2>
-                                            <a href="{{ route('monitoring.create') }}">Input Pencapaian Harian</a>
+                                            <a href="{{ route('monitoring.daily-achievement.index') }}">Input Pencapaian Harian</a>
                                         </h2>
                                     </div>
                                 </div>
@@ -37,7 +37,9 @@
                                     </p>
 
                                     <div class="article-cta">
-                                        <a href="{{ route('monitoring.create') }}" class="btn btn-primary">@lang('New')</a>
+                                        <a href="{{ route('monitoring.daily-achievement.index') }}" class="btn btn-primary">@lang('View')</a>
+
+                                        <a href="{{ route('monitoring.daily-achievement.create') }}" class="btn btn-success">@lang('Create')</a>
                                     </div>
                                 </div>
                             </article>

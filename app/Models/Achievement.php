@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Achievement extends Model
 {
     use HasFactory,
-        Concerns\Achievement\Attribute;
+        Concerns\Achievement\Attribute,
+        Concerns\Achievement\Relation;
 
     /**
      * {@inheritDoc}
