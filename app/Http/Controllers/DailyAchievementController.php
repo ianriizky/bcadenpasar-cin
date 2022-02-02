@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Monitoring;
+use App\Models\Achievement;
 use Illuminate\Http\Request;
 
 class DailyAchievementController extends Controller
@@ -41,10 +41,10 @@ class DailyAchievementController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Monitoring  $monitoring
+     * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function show(Monitoring $monitoring)
+    public function show(Achievement $achievement)
     {
         //
     }
@@ -52,10 +52,10 @@ class DailyAchievementController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Monitoring  $monitoring
+     * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function edit(Monitoring $monitoring)
+    public function edit(Achievement $achievement)
     {
         //
     }
@@ -64,10 +64,10 @@ class DailyAchievementController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Monitoring  $monitoring
+     * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Monitoring $monitoring)
+    public function update(Request $request, Achievement $achievement)
     {
         //
     }
@@ -75,10 +75,10 @@ class DailyAchievementController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Monitoring  $monitoring
+     * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Monitoring $monitoring)
+    public function destroy(Achievement $achievement)
     {
         //
     }
