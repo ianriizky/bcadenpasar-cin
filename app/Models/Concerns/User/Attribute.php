@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
  * @property \Illuminate\Support\Carbon $email_verified_at
  * @property string $password
  * @property-read string $remember_token
+ * @property-read string $role
  * @property-read string $profile_image
  *
  * @see \App\Models\User
@@ -31,12 +32,24 @@ trait Attribute
     }
 
     /**
+     * Return "role" attribute value.
+     *
+     * @return string
+     */
+    public function getRoleAttribute(): string
+    {
+        $this->load('roles:id,name');
+
+        return $this->roles->first()->name;
+    }
+
+    /**
      * Return "profile_image" attribute value.
      *
      * @return string
      */
     public function getProfileImageAttribute(): string
     {
-        return 'https://www.gravatar.com/avatar/' . md5($this->email);
+        return gravatar_image($this->email);
     }
 }

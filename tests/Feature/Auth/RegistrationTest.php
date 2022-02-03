@@ -5,13 +5,10 @@ namespace Tests\Feature\Auth;
 use App\Models\Branch;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function test_registration_screen_can_be_rendered()
     {
         $response = $this->get(route('register'));
@@ -29,6 +26,7 @@ class RegistrationTest extends TestCase
 
         $response = $this->post(route('register'), [
             'branch_name' => $branch->name,
+            'branch_address' => $branch->address,
 
             'username' => $user->username,
             'name' => $user->name,

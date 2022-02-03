@@ -16,6 +16,7 @@ class BranchFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
+            'address' => $this->faker->address(),
         ];
     }
 }

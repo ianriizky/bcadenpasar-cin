@@ -36,8 +36,10 @@
                             <form action="{{ route('register') }}" method="post">
                                 @csrf
 
+                                <div class="section-title mt-0">@lang('Profile')</div>
+
                                 <div class="row">
-                                    <div class="form-group col-lg-4 col-12">
+                                    <div class="form-group col-lg-6 col-12">
                                         <label for="username">@lang('Username')<span class="text-danger">*</span></label>
 
                                         <input type="text"
@@ -53,7 +55,7 @@
                                         <x-invalid-feedback :name="'username'"/>
                                     </div>
 
-                                    <div class="form-group col-lg-8 col-12">
+                                    <div class="form-group col-lg-6 col-12">
                                         <label for="name">@lang('Name')<span class="text-danger">*</span></label>
 
                                         <input type="text"
@@ -66,23 +68,6 @@
                                             autocomplete="on">
 
                                         <x-invalid-feedback :name="'name'"/>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="form-group col-lg-6 col-12">
-                                        <label for="branch_name">@lang('Branch Name')<span class="text-danger">*</span></label>
-
-                                        <input type="text"
-                                            name="branch_name"
-                                            id="branch_name"
-                                            class="form-control @error('branch_name') is-invalid @enderror"
-                                            value="{{ old('branch_name') }}"
-                                            required
-                                            tabindex="2"
-                                            autocomplete="on">
-
-                                        <x-invalid-feedback :name="'branch_name'"/>
                                     </div>
 
                                     <div class="form-group col-lg-6 col-12">
@@ -99,10 +84,9 @@
 
                                         <x-invalid-feedback :name="'email'"/>
                                     </div>
-                                </div>
 
+                                    <div class="col-lg-6 col-12"></div>
 
-                                <div class="row">
                                     <div class="form-group col-lg-6 col-12">
                                         <label for="password">@lang('Password')<span class="text-danger">*</span></label>
 
@@ -127,6 +111,28 @@
                                             tabindex="6">
 
                                         <x-invalid-feedback :name="'password_confirmation'"/>
+                                    </div>
+                                </div>
+
+                                <div class="section-title mt-0">@lang('menu.branch')</div>
+
+                                <div class="row">
+                                    <div class="form-group col-lg-6 col-12">
+                                        <label for="branch_id">@lang('Branch Name')<span class="text-danger">*</span></label>
+
+                                        <select name="branch_id"
+                                            id="branch_id"
+                                            class="form-control select2 @error('branch_id') is-invalid @enderror"
+                                            data-placeholder="--@lang('Choose :field', ['field' => __('menu.branch') ])--"
+                                            data-allow-clear="true"
+                                            required
+                                            autofocus>
+                                            @foreach (App\Models\Branch::pluck('name', 'id') as $value => $label)
+                                                <option value="{{ $value }}">{{ $label }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        <x-invalid-feedback :name="'branch_id'"/>
                                     </div>
                                 </div>
 
@@ -155,7 +161,8 @@
                                 <div class="form-group">
                                     <button type="submit"
                                         class="btn btn-primary btn-lg btn-block"
-                                        tabindex="9">@lang('Register')</button>
+                                        tabindex="9">@lang('Register')
+                                    </button>
                                 </div>
                             </form>
                         </div>

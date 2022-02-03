@@ -66,11 +66,7 @@
                             </div>
                         </div>
                         {{-- /.template-rundown-webinar-literasi-keuangan --}}
-                    </div>
-                    {{-- /.first-row --}}
 
-                    {{-- second-row --}}
-                    <div class="row justify-content-center">
                         {{-- pemetaan-sekolah-kampus-potensi-webinar --}}
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                             <div class="alert alert-primary alert-has-icon">
@@ -99,7 +95,7 @@
                         </div>
                         {{-- /.input-rencana-penyelenggaraan-webinar --}}
                     </div>
-                    {{-- /.second-row --}}
+                    {{-- /.first-row --}}
                 </div>
             </div>
         </div>

@@ -3,8 +3,13 @@
 namespace App\Http\Requests\Auth;
 
 use App\Models\Branch;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
 class RegisterRequest extends FormRequest
@@ -17,11 +22,11 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'branch_name' => ['required', 'string', 'max:255'],
+            'branch_id' => ['required', Rule::exists(Branch::class, 'id')],
 
-            'username' => ['required', 'string', 'max:255', new Rules\Unique(User::class)],
+            'username' => ['required', 'string', 'max:255', Rule::unique(User::class)],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', new Rules\Unique(User::class)],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ];
     }
@@ -32,7 +37,7 @@ class RegisterRequest extends FormRequest
     public function attributes()
     {
         return [
-            'branch_name' => trans('Branch Name'),
+            'branch_id' => trans('Branch Name'),
 
             'username' => trans('Username'),
             'name' => trans('Name'),
@@ -49,10 +54,6 @@ class RegisterRequest extends FormRequest
      */
     public function register(): User
     {
-        $branch = Branch::firstOrCreate([
-            'name' => $this->input('branch_name'),
-        ]);
-
         /** @var \App\Models\User $user */
         $user = User::make([
             'username' => $this->input('username'),
@@ -61,7 +62,11 @@ class RegisterRequest extends FormRequest
             'password' => $this->input('password'),
         ]);
 
-        $user->setBranchRelationValue($branch)->save();
+        $user->setAttribute('email_verified_at', Carbon::now());
+        $user->syncRoles(Role::ROLE_STAFF);
+        $user->setBranchRelationValue(Branch::find($this->input('branch_id')))->save();
+
+        Event::dispatch(new Registered($user));
 
         return $user->fresh();
     }

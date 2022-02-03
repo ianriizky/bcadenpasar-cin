@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/monitoring')->name('monitoring.')->group(function () {
         Route::view('/', 'monitoring.index')->name('index');
 
-        Route::resource('daily-achievement', DailyAchievementController::class);
+        Route::resource('/daily-achievement', DailyAchievementController::class);
     });
 
     Route::prefix('/achievement')->name('achievement.')->controller(AchievementController::class)->group(function () {

@@ -17,12 +17,12 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row justify-content-center">
                         {{-- input-pencapaian-harian --}}
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                             <article class="article">
                                 <div class="article-header">
-                                    <div class="article-image" data-background="https://www.gravatar.com/avatar/"></div>
+                                    <div class="article-image" data-background="{{ gravatar_image() }}"></div>
 
                                     <div class="article-title">
                                         <h2>

@@ -7,8 +7,10 @@ use App\Models\Branch;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
+ * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Role> $roles
  * @property int|null $branch_id Foreign key of \App\Models\Branch.
  * @property-read \App\Models\Branch|null $branch
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement> $achievements
@@ -17,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 trait Relation
 {
+    use HasRoles;
+
     /**
      * Define an inverse one-to-one or many relationship with \App\Models\Branch.
      *

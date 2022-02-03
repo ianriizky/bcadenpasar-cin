@@ -38,4 +38,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Determine if the user has the role of "admin".
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(Role::ROLE_ADMIN);
+    }
+
+    /**
+     * Determine if the user has the role of "staff".
+     *
+     * @return bool
+     */
+    public function isStaff(): bool
+    {
+        return $this->hasRole(Role::ROLE_STAFF);
+    }
 }
