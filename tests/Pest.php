@@ -39,7 +39,15 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * Create user data from factory with "admin" role.
+ *
+ * @return \App\Models\User
+ */
+function pest_create_admin(): App\Models\User
 {
-    // ..
+    return App\Models\User::factory()
+        ->forBranch()
+        ->create()
+        ->syncRoles(App\Models\Role::ROLE_ADMIN);
 }

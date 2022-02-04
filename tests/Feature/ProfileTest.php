@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Arr;
 
@@ -8,13 +7,11 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 
 beforeEach(function () {
-    $this->user = User::factory()->forBranch()->create();
-
-    $this->user->syncRoles(Role::ROLE_ADMIN);
+    $this->admin = pest_create_admin();
 });
 
 it('has profile edit page', function () {
-    actingAs($this->user)
+    actingAs($this->admin)
         ->get(route('profile.edit'))
         ->assertOk();
 });
@@ -25,7 +22,7 @@ it('can update profile', function () {
         'password_confirmation' => $data['password'],
     ]);
 
-    actingAs($this->user)
+    actingAs($this->admin)
         ->put(route('profile.edit'), $data)
         ->assertRedirect(route('profile.edit'));
 

@@ -7,10 +7,8 @@ use App\Http\Requests\Branch\StoreRequest;
 use App\Http\Requests\Branch\UpdateRequest;
 use App\Http\Resources\DataTables\BranchResource;
 use App\Models\Branch;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
 use Yajra\DataTables\Facades\DataTables;
 
 class BranchController extends Controller
@@ -46,11 +44,7 @@ class BranchController extends Controller
 
         return DataTables::eloquent(Branch::query())
             ->setTransformer(fn ($model) => BranchResource::make($model)->resolve())
-            ->orderColumn('branch_name', function ($query, $direction) {
-                $query->orderBy('branches.name', $direction);
-            })->filterColumn('branch_name', function ($query, $keyword) {
-                $query->where('branches.name', 'like', '%' . $keyword . '%');
-            })->toJson();
+            ->toJson();
     }
 
     /**
@@ -71,16 +65,7 @@ class BranchController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        /** @var \App\Models\Branch $branch */
-        $branch = Branch::make($request->validated())->setBranchRelationValue(
-            $request->getBranch()
-        );
-
-        $branch->save();
-
-        $branch->syncRoles($request->input('role'));
-
-        Event::dispatch(new Registered($branch));
+        $request->store();
 
         return redirect()->route('master.branch.index')->with([
             'alert' => [
@@ -109,8 +94,6 @@ class BranchController extends Controller
      */
     public function edit(Branch $branch)
     {
-        $branch->append('role');
-
         return view('master.branch.edit', compact('branch'));
     }
 
@@ -123,13 +106,7 @@ class BranchController extends Controller
      */
     public function update(UpdateRequest $request, Branch $branch)
     {
-        $branch = $branch->fill($request->validated())->setBranchRelationValue(
-            $request->getBranch()
-        );
-
-        $branch->save();
-
-        $branch->syncRoles($request->input('role'));
+        $branch = $request->update($branch);
 
         return redirect()->route('master.branch.edit', $branch)->with([
             'alert' => [

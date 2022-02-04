@@ -120,13 +120,7 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, User $user)
     {
-        $user = $user->fill($request->validated())->setBranchRelationValue(
-            $request->getBranch()
-        );
-
-        $user->save();
-
-        $user->syncRoles($request->input('role'));
+        $user = $request->update($user)->syncRoles($request->input('role'));
 
         return redirect()->route('master.user.edit', $user)->with([
             'alert' => [

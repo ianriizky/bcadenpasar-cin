@@ -25,4 +25,21 @@ class UpdateRequest extends AbstractRequest
             'role' => ['required', Rule::exists(Role::class, 'name')],
         ];
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \App\Models\User
+     */
+    public function update(User $user): User
+    {
+        $user = $user->fill($this->validated())->setBranchRelationValue(
+            $this->getBranch()
+        );
+
+        $user->save();
+
+        return $user;
+    }
 }

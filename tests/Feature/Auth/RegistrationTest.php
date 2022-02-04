@@ -19,16 +19,13 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register()
     {
-        Event::fake();
-
-        /** @var \App\Models\Branch $branch */
-        $branch = Branch::first();
-
         /** @var \App\Models\User $user */
         $user = User::factory()->make();
 
+        Event::fake();
+
         $response = $this->post(route('register'), [
-            'branch_id' => $branch->getKey(),
+            'branch_id' => Branch::value('id'),
 
             'username' => $user->username,
             'name' => $user->name,

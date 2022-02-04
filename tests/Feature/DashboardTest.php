@@ -1,14 +1,13 @@
 <?php
 
-use App\Models\User;
 use function Pest\Laravel\actingAs;
 
 beforeEach(function () {
-    $this->user = User::factory()->forBranch()->create();
+    $this->admin = pest_create_admin();
 });
 
 it('has dashboard page', function () {
-    actingAs($this->user)
+    actingAs($this->admin)
         ->get(route('dashboard'))
         ->assertOk();
 });
