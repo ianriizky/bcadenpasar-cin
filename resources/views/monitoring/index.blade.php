@@ -38,8 +38,6 @@
 
                                     <div class="article-cta">
                                         <a href="{{ route('monitoring.daily-achievement.index') }}" class="btn btn-primary">@lang('View')</a>
-
-                                        <a href="{{ route('monitoring.daily-achievement.create') }}" class="btn btn-success">@lang('Create')</a>
                                     </div>
                                 </div>
                             </article>

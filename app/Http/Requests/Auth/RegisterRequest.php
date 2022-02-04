@@ -2,33 +2,29 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\Branch;
+use App\Http\Requests\User\StoreRequest;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules;
+use Illuminate\Support\Arr;
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends StoreRequest
 {
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
+     * {@inheritDoc}
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function rules()
     {
-        return [
-            'branch_id' => ['required', Rule::exists(Branch::class, 'id')],
-
-            'username' => ['required', 'string', 'max:255', Rule::unique(User::class)],
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ];
+        return array_merge(Arr::except(parent::rules(), 'role'), [
+            'agree_with_terms' => 'required|boolean|in:1',
+        ]);
     }
 
     /**
@@ -36,38 +32,16 @@ class RegisterRequest extends FormRequest
      */
     public function attributes()
     {
-        return [
-            'branch_id' => trans('Branch Name'),
-
-            'username' => trans('Username'),
-            'name' => trans('Name'),
-            'email' => trans('Email Address'),
-            'password' => trans('Password'),
+        return array_merge(Arr::except(parent::attributes(), 'role'), [
             'agree_with_terms' => trans('Terms of Service'),
-        ];
+        ]);
     }
 
     /**
-     * Register user based on the given request.
-     *
-     * @return \App\Models\User
+     * {@inheritDoc}
      */
-    public function register(): User
+    public function store(): User
     {
-        /** @var \App\Models\User $user */
-        $user = User::make([
-            'username' => $this->input('username'),
-            'name' => $this->input('name'),
-            'email' => $this->input('email'),
-            'password' => $this->input('password'),
-        ]);
-
-        $user->setAttribute('email_verified_at', Carbon::now());
-        $user->syncRoles(Role::ROLE_STAFF);
-        $user->setBranchRelationValue(Branch::find($this->input('branch_id')))->save();
-
-        Event::dispatch(new Registered($user));
-
-        return $user->fresh();
+        return parent::store()->syncRoles(Role::ROLE_STAFF);
     }
 }

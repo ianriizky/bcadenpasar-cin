@@ -8,5 +8,7 @@ beforeEach(function () {
 });
 
 it('has dashboard page', function () {
-    actingAs($this->user)->get(route('dashboard'))->assertOk();
+    actingAs($this->user)
+        ->get(route('dashboard'))
+        ->assertOk();
 });

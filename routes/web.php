@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\DailyAchievementController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +24,18 @@ Route::view('/', 'welcome');
 
 Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
+
+    Route::prefix('/master')->name('master.')->group(function () {
+        Route::view('/', 'master.index')->name('index')->middleware('can:view-master');
+
+        Route::prefix('/user')->name('user.')->group(function () {
+            Route::post('/datatable', [UserController::class, 'datatable'])->name('datatable');
+            Route::delete('/multiple', [UserController::class, 'destroyMultiple'])->name('destroy-multiple');
+        });
+
+        Route::resource('/branch', BranchController::class);
+        Route::resource('/user', UserController::class);
+    });
 
     Route::prefix('/education')->name('education.')->group(function () {
         Route::view('/', 'education.index')->name('index');
@@ -52,5 +67,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard-growth-new-cin', 'dashboardGrowthNewCin')->name('dashboard-growth-new-cin');
         Route::get('/dashboard-penutupan-cin', 'dashboardPenutupanCin')->name('dashboard-penutupan-cin');
     });
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 

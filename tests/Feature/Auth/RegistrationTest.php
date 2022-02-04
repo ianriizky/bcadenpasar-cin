@@ -5,6 +5,7 @@ namespace Tests\Feature\Auth;
 use App\Models\Branch;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -18,15 +19,16 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register()
     {
+        Event::fake();
+
         /** @var \App\Models\Branch $branch */
-        $branch = Branch::factory()->make();
+        $branch = Branch::first();
 
         /** @var \App\Models\User $user */
         $user = User::factory()->make();
 
         $response = $this->post(route('register'), [
-            'branch_name' => $branch->name,
-            'branch_address' => $branch->address,
+            'branch_id' => $branch->getKey(),
 
             'username' => $user->username,
             'name' => $user->name,

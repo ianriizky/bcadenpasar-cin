@@ -31,7 +31,7 @@ class RegisteredUserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
-        $user = $request->register();
+        $user = $request->store();
 
         Event::dispatch(new Registered($user));
 

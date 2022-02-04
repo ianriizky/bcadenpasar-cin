@@ -6,12 +6,14 @@ use App\Infrastructure\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable,
         Concerns\User\Attribute,
+        Concerns\User\Event,
         Concerns\User\Relation;
 
     /**
@@ -57,5 +59,18 @@ class User extends Authenticatable
     public function isStaff(): bool
     {
         return $this->hasRole(Role::ROLE_STAFF);
+    }
+
+    /**
+     * Bypass email verification process by fill the "email_verified_at" field.
+     *
+     * @param  \Illuminate\Support\Carbon|null  $date
+     * @return $this
+     */
+    public function bypassEmailVerification(Carbon $date = null)
+    {
+        $this->email_verified_at = $date ?? Carbon::now();
+
+        return $this;
     }
 }

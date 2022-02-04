@@ -33,6 +33,40 @@
 <nav class="navbar navbar-secondary navbar-expand-lg">
     <div class="container">
         <ul class="navbar-nav">
+            @can('view-master')
+                <li class="nav-item dropdown @if (Route::is('master.*')) active @endif">
+                    <a href="{{ route('master.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
+                        <i class="fas @lang('icon.master')"></i> <span>@lang('menu.master')</span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        @can('viewAny', \App\Models\Branch::class)
+                            <li class="nav-item @if (Route::is('master.branch.*')) active @endif">
+                                <a href="{{ route('master.branch.index') }}" class="nav-link">
+                                    <i class="fas @lang('icon.branch')"></i> <span class="narrow-line-height">@lang('menu.branch')</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('viewAny', \App\Models\User::class)
+                            <li class="nav-item @if (Route::is('master.user.*')) active @endif">
+                                <a href="{{ route('master.user.index') }}" class="nav-link">
+                                    <i class="fas @lang('icon.user')"></i> <span class="narrow-line-height">@lang('menu.user')</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('viewAny', \App\Models\Role::class)
+                            <li class="nav-item @if (Route::is('master.role.*')) active @endif">
+                                <a href="{{ route('master.role.index') }}" class="nav-link">
+                                    <i class="fas @lang('icon.role')"></i> <span class="narrow-line-height">@lang('menu.role')</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
             <li class="nav-item dropdown @if (Route::is('education.*')) active @endif">
                 <a href="{{ route('education.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
                     <i class="fas @lang('icon.education')"></i> <span>@lang('menu.education')</span>
