@@ -18,13 +18,55 @@ class AchievementController extends Controller
     }
 
     /**
-     * Display dashboard pencapaian page.
+     * Display laporan pencapaian new cin page.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function dashboardPencapaian()
+    public function laporanPencapaianNewCin()
     {
-        return view('achievement.dashboard-pencapaian');
+        return view('achievement.laporan-pencapaian-new-cin');
+    }
+
+    /**
+     * Return laporan pencapaian new cin chart data as json response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function laporanPencapaianNewCinChart()
+    {
+        return response()->json([
+            'labels' => [
+                'Sunday',
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+            ],
+            'datasets' => [
+                [
+                    'label' => 'Jumlah New CiN',
+                    'data' => [460, 458, 330, 502, 430, 610, 488],
+                    'borderWidth' => 2,
+                    'backgroundColor' => 'rgba(254,86,83,.7)',
+                    'borderColor' => 'rgba(254,86,83,.7)',
+                    'borderWidth' => 2.5,
+                    'pointBackgroundColor' => '#ffffff',
+                    'pointRadius' => 4,
+                ],
+                [
+                    'label' => 'Target Bulanan',
+                    'data' => [550, 558, 390, 562, 490, 670, 538],
+                    'borderWidth' => 2,
+                    'backgroundColor' => 'rgba(63,82,227,.8)',
+                    'borderColor' => 'transparent',
+                    'borderWidth' => 0,
+                    'pointBackgroundColor' => '#999999',
+                    'pointRadius' => 4,
+                ],
+            ],
+        ]);
     }
 
     /**

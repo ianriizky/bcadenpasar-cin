@@ -67,7 +67,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/achievement')->name('achievement.')->controller(AchievementController::class)->group(function () {
         Route::view('/', 'achievement.index')->name('index');
 
-        Route::get('/dashboard-pencapaian', 'dashboardPencapaian')->name('dashboard-pencapaian');
+        Route::get('/laporan-pencapaian-new-cin', 'laporanPencapaianNewCin')->name('laporan-pencapaian-new-cin');
+        Route::post('/laporan-pencapaian-new-cin/chart', 'laporanPencapaianNewCinChart')->name('laporan-pencapaian-new-cin-chart');
+
         Route::get('/dashboard-growth-new-cin', 'dashboardGrowthNewCin')->name('dashboard-growth-new-cin');
         Route::get('/dashboard-penutupan-cin', 'dashboardPenutupanCin')->name('dashboard-penutupan-cin');
     });

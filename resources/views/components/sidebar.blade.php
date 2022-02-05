@@ -137,9 +137,9 @@
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li class="nav-item @if (Route::is('achievement.dashboard-pencapaian')) active @endif">
-                        <a href="{{ route('achievement.dashboard-pencapaian') }}" class="nav-link">
-                            <span class="narrow-line-height">Dashboard Pencapaian</span>
+                    <li class="nav-item @if (Route::is('achievement.laporan-pencapaian-new-cin')) active @endif">
+                        <a href="{{ route('achievement.laporan-pencapaian-new-cin') }}" class="nav-link">
+                            <span class="narrow-line-height">Laporan Pencapaian New CiN</span>
                         </a>
                     </li>
 

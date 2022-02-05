@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        {{-- dashboard-pencapaian --}}
+                        {{-- laporan-pencapaian-new-cin --}}
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                             <article class="article">
                                 <div class="article-header">
@@ -26,7 +26,7 @@
 
                                     <div class="article-title">
                                         <h2>
-                                            <a href="{{ route('achievement.dashboard-pencapaian') }}">Dashboard Pencapaian</a>
+                                            <a href="{{ route('achievement.laporan-pencapaian-new-cin') }}">Laporan Pencapaian New CiN</a>
                                         </h2>
                                     </div>
                                 </div>
@@ -37,12 +37,12 @@
                                     </p>
 
                                     <div class="article-cta">
-                                        <a href="{{ route('achievement.dashboard-pencapaian') }}" class="btn btn-primary">@lang('Read More')</a>
+                                        <a href="{{ route('achievement.laporan-pencapaian-new-cin') }}" class="btn btn-primary">@lang('Read More')</a>
                                     </div>
                                 </div>
                             </article>
                         </div>
-                        {{-- /.dashboard-pencapaian --}}
+                        {{-- /.laporan-pencapaian-new-cin --}}
 
                         {{-- dashboard-growth-new-cin --}}
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">

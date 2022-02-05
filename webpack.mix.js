@@ -28,7 +28,7 @@ mix.combine([
   'node_modules/popper.js/dist/umd/popper.min.js',
   'node_modules/bootstrap/dist/js/bootstrap.min.js',
   'node_modules/jquery.nicescroll/dist/jquery.nicescroll.min.js',
-  'node_modules/moment/min/moment.min.js',
+  'node_modules/moment/min/moment-with-locales.min.js',
 ], 'public/js/stisla/master.js').sourceMaps();
 
 mix.copy(`resources/js/stisla/app.js`, 'public/js/stisla');
@@ -49,3 +49,4 @@ mix.combine('node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js', '
 mix.combine('node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js', 'public/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js');
 mix.combine('node_modules/datatables.net-plugins/i18n/id.json', 'public/node_modules/datatables.net-plugins/i18n/id.json');
 mix.combine('node_modules/bootstrap-daterangepicker/daterangepicker.js', 'public/node_modules/bootstrap-daterangepicker/daterangepicker.js');
+mix.combine('node_modules/chart.js/dist/Chart.min.js', 'public/node_modules/chart.js/dist/Chart.min.js');

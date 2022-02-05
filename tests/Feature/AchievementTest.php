@@ -12,9 +12,9 @@ it('has achievement index page', function () {
         ->assertOk();
 });
 
-it('has achievement dashboard-pencapaian page', function () {
+it('has achievement laporan-pencapaian-new-cin page', function () {
     actingAs($this->admin)
-        ->get(route('achievement.dashboard-pencapaian'))
+        ->get(route('achievement.laporan-pencapaian-new-cin'))
         ->assertOk();
 });
 
