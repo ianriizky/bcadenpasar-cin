@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -19,9 +18,7 @@ class UserPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->isAdmin() && in_array($ability, [
-            'viewAny', 'view',
-        ])) {
+        if ($user->isAdmin() && in_array($ability, ['viewAny', 'view'])) {
             return true;
         }
     }

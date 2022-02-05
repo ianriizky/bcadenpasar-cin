@@ -55,14 +55,6 @@
                                 </a>
                             </li>
                         @endcan
-
-                        @can('viewAny', \App\Models\Role::class)
-                            <li class="nav-item @if (Route::is('master.role.*')) active @endif">
-                                <a href="{{ route('master.role.index') }}" class="nav-link">
-                                    <i class="fas @lang('icon.role')"></i> <span class="narrow-line-height">@lang('menu.role')</span>
-                                </a>
-                            </li>
-                        @endcan
                     </ul>
                 </li>
             @endcan

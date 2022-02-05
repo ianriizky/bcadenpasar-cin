@@ -28,17 +28,17 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/master')->name('master.')->group(function () {
         Route::view('/', 'master.index')->name('index')->middleware('can:view-master');
 
-        Route::prefix('/user')->name('user.')->group(function () {
-            Route::post('/datatable', [UserController::class, 'datatable'])->name('datatable');
-            Route::delete('/multiple', [UserController::class, 'destroyMultiple'])->name('destroy-multiple');
-        });
-        Route::resource('/user', UserController::class);
-
         Route::prefix('/branch')->name('branch.')->group(function () {
             Route::post('/datatable', [BranchController::class, 'datatable'])->name('datatable');
             Route::delete('/multiple', [BranchController::class, 'destroyMultiple'])->name('destroy-multiple');
         });
         Route::resource('/branch', BranchController::class);
+
+        Route::prefix('/user')->name('user.')->group(function () {
+            Route::post('/datatable', [UserController::class, 'datatable'])->name('datatable');
+            Route::delete('/multiple', [UserController::class, 'destroyMultiple'])->name('destroy-multiple');
+        });
+        Route::resource('/user', UserController::class);
     });
 
     Route::prefix('/education')->name('education.')->group(function () {

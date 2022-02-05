@@ -85,14 +85,14 @@ if (! function_exists('gravatar_image')) {
      * Return avatar image url using gravatar.
      *
      * @param  string|null  $email
-     * @param  string  $extension
      * @param  int  $size
+     * @param  string  $extension
      * @return string
      */
-    function gravatar_image(string $email = null, string $extension = 'png', int $size = 30): string
+    function gravatar_image(string $email = null, int $size = 30, string $extension = 'png'): string
     {
         if (is_null($email)) {
-            return 'https://www.gravatar.com/avatar/';
+            return sprintf('https://www.gravatar.com/avatar?s=%s', $size);
         }
 
         return sprintf('https://www.gravatar.com/avatar/%s.%s?s=%s', md5($email), $extension, $size);

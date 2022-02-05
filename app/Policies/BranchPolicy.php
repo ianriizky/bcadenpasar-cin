@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\Branch;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -20,7 +19,7 @@ class BranchPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->hasRole(Role::ROLE_ADMIN)) {
+        if ($user->isAdmin() && in_array($ability, ['viewAny', 'view'])) {
             return true;
         }
     }
@@ -33,7 +32,7 @@ class BranchPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(Role::ROLE_STAFF);
+        return $user->isStaff();
     }
 
     /**
@@ -56,7 +55,7 @@ class BranchPolicy
      */
     public function create(User $user)
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -68,7 +67,7 @@ class BranchPolicy
      */
     public function update(User $user, Branch $branch)
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -80,7 +79,7 @@ class BranchPolicy
      */
     public function delete(User $user, Branch $branch)
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -92,7 +91,7 @@ class BranchPolicy
      */
     public function restore(User $user, Branch $branch)
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -104,6 +103,6 @@ class BranchPolicy
      */
     public function forceDelete(User $user, Branch $branch)
     {
-        return false;
+        return $user->isAdmin();
     }
 }

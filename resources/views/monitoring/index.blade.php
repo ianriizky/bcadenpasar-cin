@@ -22,7 +22,7 @@
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                             <article class="article">
                                 <div class="article-header">
-                                    <div class="article-image" data-background="{{ gravatar_image() }}"></div>
+                                    <div class="article-image" data-background="{{ gravatar_image(null, 200) }}"></div>
 
                                     <div class="article-title">
                                         <h2>
