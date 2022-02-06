@@ -5,10 +5,10 @@ namespace App\Enum;
 use Spatie\Enum\Laravel\Enum;
 
 /**
- * @method static self yearly()
- * @method static self monthly()
- * @method static self weekly()
  * @method static self daily()
+ * @method static self weekly()
+ * @method static self monthly()
+ * @method static self yearly()
  */
 class Periodicity extends Enum
 {
@@ -18,10 +18,10 @@ class Periodicity extends Enum
     protected static function labels(): array
     {
         return [
-            'yearly' => trans('Yearly'),
-            'monthly' => trans('Monthly'),
-            'weekly' => trans('Weekly'),
             'daily' => trans('Daily'),
+            'weekly' => trans('Weekly'),
+            'monthly' => trans('Monthly'),
+            'yearly' => trans('Yearly'),
         ];
     }
 }

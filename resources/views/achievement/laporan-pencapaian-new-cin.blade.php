@@ -104,7 +104,7 @@
                         </div>
                     </div>
 
-                    <canvas id="chart" height="180" class="mt-3"></canvas>
+                    <canvas id="chart" height="120" class="mt-3"></canvas>
                 </div>
             </div>
         </div>
