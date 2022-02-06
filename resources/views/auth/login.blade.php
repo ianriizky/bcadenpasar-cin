@@ -73,7 +73,7 @@
                                 </a>
                             @endif
 
-                            <button type="submit" class="btn btn-primary btn-lg btn-icon icon-right" tabindex="4">
+                            <button type="submit" class="btn btn-primary btn-lg" tabindex="4">
                                 @lang('Log in')
                             </button>
                         </div>

@@ -1,1 +1,1 @@
-<i class="fa fa-info-circle"></i> <span>{{ __('Details') }}</span>
+<i class="fa fa-info-circle"></i> <span>@lang('Details')</span>

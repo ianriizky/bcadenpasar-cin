@@ -145,7 +145,7 @@
                         <button type="submit"
                             formaction="{{ route('profile.update') }}"
                             name="_method" value="PUT"
-                            class="btn btn-primary">
+                            class="btn btn-primary btn-icon icon-left">
                             <i class="fa fa-save"></i> <span>@lang('Update')</span>
                         </button>
                     </div>

@@ -196,7 +196,7 @@
                                 formaction="{{ $destroy_action }}"
                                 @isset($method) name="_method" value="DELETE" @endisset
                                 onclick="return (confirm('@lang('Are you sure you want to delete this data?')'))"
-                                class="btn btn-danger">
+                                class="btn btn-danger btn-icon icon-left">
                                 <i class="fa fa-trash"></i> <span>@lang('Delete')</span>
                             </button>
                         @endif
@@ -204,7 +204,7 @@
                         <button type="submit"
                             formaction="{{ $submit_action }}"
                             @isset($method) name="_method" value="{{ $method }}" @endisset
-                            class="btn btn-primary">
+                            class="btn btn-primary btn-icon icon-left">
                             <i class="fa fa-save"></i> <span>@lang('Save')</span>
                         </button>
                     </div>

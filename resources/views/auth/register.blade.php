@@ -159,9 +159,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button type="submit"
-                                        class="btn btn-primary btn-lg btn-block"
-                                        tabindex="9">@lang('Register')
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="9">
+                                        @lang('Register')
                                     </button>
                                 </div>
                             </form>

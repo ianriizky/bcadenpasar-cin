@@ -65,6 +65,9 @@
             daterangeHandler(startDate, endDate);
 
             $('.btn-daterange').on('cancel.daterangepicker', function(ev, picker) {
+                startDate = null;
+                endDate = null;
+
                 $('.btn-daterange span').html('@lang('Choose date')');
             });
 
@@ -98,7 +101,6 @@
                         ],
                     },
                     elements: {
-                        borderWidth: 2,
                         pointRadius: 4,
                     },
                 },
@@ -114,9 +116,7 @@
             });
 
             $('button#load-chart-data').click(async function () {
-                $(this)
-                    .attr('disabled', 'disabled')
-                    .addClass('btn-progress');
+                $(this).attr('disabled', 'disabled').addClass('btn-progress');
 
                 try {
                     chart.data = await getChartLabelsAndDatasets('{{ route('achievement.laporan-pencapaian-new-cin-chart') }}');
@@ -124,12 +124,11 @@
                     chart.update();
                 } catch (error) {
                     console.error(error);
+
                     alert(error.message);
                 }
 
-                $(this)
-                    .removeAttr('disabled')
-                    .removeClass('btn-progress');
+                $(this).removeAttr('disabled').removeClass('btn-progress');
             });
         });
     </script>
@@ -171,11 +170,11 @@
                     <div class="row">
                         <div class="col-12 col-xl-5 offset-xl-7">
                             <div class="btn-group btn-block">
-                                <button class="btn btn-outline-primary icon-left btn-icon btn-daterange">
+                                <button class="btn btn-outline-primary btn-icon icon-left btn-daterange">
                                     <i class="fa fa-calendar"></i> <span>@lang('Choose date')</span>
                                 </button>
 
-                                <button type="button" id="load-chart-data" class="btn btn-primary col-2 col-xl-3">
+                                <button type="button" id="load-chart-data" class="btn btn-primary btn-icon icon-left col-2 col-xl-3">
                                     <i class="fa fa-search"></i> <span class="d-none d-xl-inline">@lang('Search')</span>
                                 </button>
                             </div>

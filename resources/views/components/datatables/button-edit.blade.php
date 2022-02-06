@@ -1,1 +1,1 @@
-<i class="fa fa-edit"></i> <span>{{ __('Edit') }}</span>
+<i class="fa fa-edit"></i> <span>@lang('Edit')</span>

@@ -1,1 +1,1 @@
-<i class="fa fa-trash"></i> <span>{{ __('Delete') }}</span>
+<i class="fa fa-trash"></i> <span>@lang('Delete')</span>

@@ -1,4 +1,4 @@
-<a href="{{ $url }}" class="btn btn-danger" onclick="event.preventDefault(); if (confirm('{{ __('Are you sure you want to delete this data?') }}')) this.querySelector('form').submit();">
+<a href="{{ $url }}" class="btn btn-danger" onclick="event.preventDefault(); if (confirm('@lang('Are you sure you want to delete this data?')')) this.querySelector('form').submit();">
     @include('components.datatables.button-delete')
 
     <form action="{{ $url }}" method="post">
