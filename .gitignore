@@ -5,6 +5,7 @@
 /public/node_modules
 /public/storage
 /public/js/helpers/*
+/public/js/page/*
 /public/js/stisla/*
 /public/webfonts
 /storage/*.key

@@ -2,11 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Achievement;
+use App\Http\Requests\Achievement\LaporanPencapaianNewCinChartRequest;
+use App\Repositories\AchievementRepository;
 use Illuminate\Http\Request;
 
 class AchievementController extends Controller
 {
+    /**
+     * Create a new instance class.
+     *
+     * @param  \App\Repositories\AchievementRepository  $achievementRepository
+     * @return void
+     */
+    public function __construct(
+        protected AchievementRepository $achievementRepository
+    ) {
+        //
+    }
+
     /**
      * Display index page.
      *
@@ -30,41 +43,18 @@ class AchievementController extends Controller
     /**
      * Return laporan pencapaian new cin chart data as json response.
      *
+     * @param  \App\Http\Requests\Achievement\LaporanPencapaianNewCinChartRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function laporanPencapaianNewCinChart()
+    public function laporanPencapaianNewCinChart(LaporanPencapaianNewCinChartRequest $request)
     {
-        return response()->json([
-            'labels' => [
-                'Sunday',
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-            ],
-            'datasets' => [
-                [
-                    'label' => 'Jumlah New CiN',
-                    'data' => [460, 458, 330, 502, 430, 610, 488],
-                    'backgroundColor' => 'rgba(254,86,83,.7)',
-                    'borderColor' => 'rgba(254,86,83,.7)',
-                    'borderWidth' => 2.5,
-                    'pointBackgroundColor' => '#ffffff',
-                    'pointRadius' => 4,
-                ],
-                [
-                    'label' => 'Target Bulanan',
-                    'data' => [550, 558, 390, 562, 490, 670, 538],
-                    'backgroundColor' => 'rgba(63,82,227,.8)',
-                    'borderColor' => 'transparent',
-                    'borderWidth' => 0,
-                    'pointBackgroundColor' => '#999999',
-                    'pointRadius' => 4,
-                ],
-            ],
-        ]);
+        $data = $this->achievementRepository->chartLaporanPencapaianNewCin(
+            $request->date('start_date'),
+            $request->date('end_date'),
+            $request->periodicity
+        );
+
+        return response()->json($data);
     }
 
     /**

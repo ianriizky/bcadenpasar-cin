@@ -802,5 +802,8 @@
     "Last 30 Days": "30 Hari Terakhir",
     "This Month": "Bulan Ini",
     "Last Month": "Bulan Lalu",
-    "This Year": "Tahun Ini"
+    "This Year": "Tahun Ini",
+    "Periodicity": "Jangka Waktu",
+    ":periodicity target": "Target :periodicity",
+    "Number of New CiN": "Jumlah New CiN"
 }

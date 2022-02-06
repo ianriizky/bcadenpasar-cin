@@ -9,7 +9,7 @@
     <script src="{{ mix('node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ mix('node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ mix('node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/helpers/data-checkboxes.js') }}"></script>
+    <script src="{{ mix('js/helpers/data-checkboxes.js') }}"></script>
     <script>
         const datatable_url = '{{ route('master.branch.datatable') }}';
         const datatable_columns = [
@@ -20,7 +20,7 @@
         ];
         @include('components.datatables.language-url')
     </script>
-    <script src="{{ asset('js/helpers/datatable.js') }}"></script>
+    <script src="{{ mix('js/helpers/datatable.js') }}"></script>
 @endsection
 
 @section('content')

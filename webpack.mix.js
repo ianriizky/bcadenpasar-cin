@@ -2,9 +2,15 @@ const mix = require('laravel-mix');
 const fs = require('fs');
 const path = require('path');
 
-const getFiles = directory => fs.readdirSync(directory).filter(
-  file => fs.statSync(path.resolve(directory, file)).isFile()
-);
+const getFiles = directory => {
+  try {
+    return fs.readdirSync(directory).filter(
+      file => fs.statSync(path.resolve(directory, file)).isFile()
+    );
+  } catch (error) {
+    return [];
+  }
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +42,10 @@ mix.copy(`resources/js/stisla/scripts.js`, 'public/js/stisla');
 
 getFiles('resources/js/helpers').forEach(filename => {
   mix.copy(`resources/js/helpers/${filename}`, 'public/js/helpers');
+});
+
+getFiles('resources/js/page').forEach(filename => {
+  mix.copy(`resources/js/page/${filename}`, 'public/js/page');
 });
 
 mix.combine('node_modules/select2/dist/css/select2.min.css', 'public/node_modules/select2/dist/css/select2.min.css');

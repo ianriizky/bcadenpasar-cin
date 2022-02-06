@@ -7,7 +7,7 @@
 @section('script')
     <script src="{{ mix('node_modules/select2/dist/js/select2.full.min.js') }}"></script>
     <script>
-        $(document).ready(function () {
+        $(function() {
             $('.select2').select2();
 
             @include('components.select2-change', ['olds' => Arr::except(old() ?: $branch, '_token')])

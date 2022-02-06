@@ -8,128 +8,29 @@
     <script src="{{ mix('node_modules/chart.js/dist/Chart.min.js') }}"></script>
     <script src="{{ mix('node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
-        let startDate = moment().subtract(29, 'days');
-        let endDate = moment();
+        const initialStartDate = moment().startOf('days');
+        const initialEndDate = moment().endOf('days');
+        const initialPeriodicity = '{{ \App\Enum\Periodicity::daily() }}';
 
-        function daterangeHandler(start, end) {
-            startDate = start;
-            endDate = end;
-
-            $('.btn-daterange span').html(`${start.format('DD MMMM YYYY')} - ${end.format('DD MMMM YYYY')}`);
-        }
-
-        async function getChartLabelsAndDatasets(url) {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                body: JSON.stringify({
-                    startDate: startDate.format('YYYY-MM-DD'),
-                    endDate: endDate.format('YYYY-MM-DD'),
-                }),
-            });
-
-            if (!response.ok) {
-                const json = await response.json();
-
-                throw new Error(`[HTTP ${response.status}] ${json.message}`);
-            }
-
-            return await response.json();
-        }
-
-        $(document).ready(function () {
-            $('.btn-daterange').daterangepicker({
-                ranges: {
-                    '@lang('Today')': [moment(), moment()],
-                    '@lang('Yesterday')': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    '@lang('Last 7 Days')': [moment().subtract(6, 'days'), moment()],
-                    '@lang('Last 30 Days')': [moment().subtract(29, 'days'), moment()],
-                    '@lang('This Month')': [moment().startOf('month'), moment().endOf('month')],
-                    '@lang('Last Month')': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    '@lang('This Year')': [moment().startOf('year'), moment().endOf('year')],
-                },
-                startDate,
-                endDate,
-                maxDate: moment(),
-                locale: {
-                    applyLabel: '@lang('Apply')',
-                    cancelLabel: '@lang('Cancel')',
-                    customRangeLabel: '@lang('Choose date')',
-                },
-            }, daterangeHandler);
-
-            daterangeHandler(startDate, endDate);
-
-            $('.btn-daterange').on('cancel.daterangepicker', function(ev, picker) {
-                startDate = null;
-                endDate = null;
-
-                $('.btn-daterange span').html('@lang('Choose date')');
-            });
-
-            const chartElement = document.getElementById('chart').getContext('2d');
-
-            let chart = new Chart(chartElement, {
-                type: 'bar',
-                options: {
-                    legend: {
-                        display: false,
-                    },
-                    scales: {
-                        yAxes: [
-                            {
-                                gridLines: {
-                                    drawBorder: false,
-                                    color: '#f2f2f2',
-                                },
-                                ticks: {
-                                    beginAtZero: true,
-                                    stepSize: 150,
-                                },
-                            },
-                        ],
-                        xAxes: [
-                            {
-                                gridLines: {
-                                    display: false,
-                                },
-                            },
-                        ],
-                    },
-                    elements: {
-                        pointRadius: 4,
-                    },
-                },
-            });
-
-            $('button#download-chart').click(function () {
-                const a = document.createElement('a');
-
-                a.href = chart.toBase64Image();
-                a.download = `${moment().format('YYYY-MM-DD')}.png`;
-
-                a.click();
-            });
-
-            $('button#load-chart-data').click(async function () {
-                $(this).attr('disabled', 'disabled').addClass('btn-progress');
-
-                try {
-                    chart.data = await getChartLabelsAndDatasets('{{ route('achievement.laporan-pencapaian-new-cin-chart') }}');
-
-                    chart.update();
-                } catch (error) {
-                    console.error(error);
-
-                    alert(error.message);
-                }
-
-                $(this).removeAttr('disabled').removeClass('btn-progress');
-            });
+        const applyLabel = '@lang('Apply')';
+        const cancelLabel = '@lang('Cancel')';
+        const customRangeLabel = '@lang('Choose date')';
+        const periodicityLabel = '@lang('Choose :field', ['field' => __('Periodicity') ])';
+        const daterangepickerRanges = {
+            '@lang('Today')': [initialStartDate.clone(), initialEndDate.clone()],
+            '@lang('Yesterday')': [initialStartDate.clone().subtract(1, 'days'), initialEndDate.clone().subtract(1, 'days')],
+            '@lang('Last 7 Days')': [initialStartDate.clone().subtract(6, 'days'), initialEndDate.clone()],
+            '@lang('Last 30 Days')': [initialStartDate.clone().subtract(29, 'days'), initialEndDate.clone()],
+            '@lang('This Month')': [initialStartDate.clone().startOf('month'), initialEndDate.clone().endOf('month')],
+            '@lang('Last Month')': [initialStartDate.clone().subtract(1, 'month').startOf('month'), initialEndDate.clone().subtract(1, 'month').endOf('month')],
+            '@lang('This Year')': [initialStartDate.clone().startOf('year'), initialEndDate.clone().endOf('year')],
+        };
+    </script>
+    <script src="{{ mix('js/page/achievement-laporan-pencapaian-new-cin.js') }}"></script>
+    <script>
+        $(function() {
+            $('button#load-chart-data').trigger('click');
+            $(`a.periodicity-dropdown-item[data-value=${initialPeriodicity}]`).trigger('click');
         });
     </script>
 @endsection
@@ -168,46 +69,42 @@
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-xl-5 offset-xl-7">
+                        <div class="col-12 col-lg-8 offset-lg-4">
                             <div class="btn-group btn-block">
                                 <button class="btn btn-outline-primary btn-icon icon-left btn-daterange">
                                     <i class="fa fa-calendar"></i> <span>@lang('Choose date')</span>
                                 </button>
 
-                                <button type="button" id="load-chart-data" class="btn btn-primary btn-icon icon-left col-2 col-xl-3">
-                                    <i class="fa fa-search"></i> <span class="d-none d-xl-inline">@lang('Search')</span>
+                                <button type="button"
+                                    id="periodicity-dropdown-toggle"
+                                    class="btn btn-outline-primary dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    style="border-top-right-radius: 0; border-bottom-right-radius: 0;"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                    @lang('Choose :field', ['field' => __('Periodicity') ])
+                                </button>
+
+                                <div class="dropdown-menu">
+                                    @foreach (\App\Enum\Periodicity::toArray() as $value => $label)
+                                        <a class="dropdown-item periodicity-dropdown-item" style="cursor: pointer;" data-value="{{ $value }}">{{ $label }}</a>
+                                    @endforeach
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <a class="dropdown-item has-icon periodicity-dropdown-item" style="cursor: pointer;" data-value="__reset">
+                                        <i class="far fa-trash-alt"></i> <span>@lang('Reset Filters')</span>
+                                    </a>
+                                </div>
+
+                                <button type="button" id="load-chart-data" data-url="{{ route('achievement.laporan-pencapaian-new-cin-chart') }}" class="btn btn-primary btn-icon icon-left col-2 col-lg-3">
+                                    <i class="fa fa-search"></i> <span class="d-none d-lg-inline">@lang('Search')</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <canvas id="chart" height="180" class="mt-3"></canvas>
-
-                    <div class="statistic-details mt-1">
-                        <div class="statistic-details-item">
-                            <div class="text-small text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 7%</div>
-                            <div class="detail-value">$243</div>
-                            <div class="detail-name">Today</div>
-                        </div>
-
-                        <div class="statistic-details-item">
-                            <div class="text-small text-muted"><span class="text-danger"><i class="fas fa-caret-down"></i></span> 23%</div>
-                            <div class="detail-value">$2,902</div>
-                            <div class="detail-name">This Week</div>
-                        </div>
-
-                        <div class="statistic-details-item">
-                            <div class="text-small text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span>9%</div>
-                            <div class="detail-value">$12,821</div>
-                            <div class="detail-name">This Month</div>
-                        </div>
-
-                        <div class="statistic-details-item">
-                            <div class="text-small text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 19%</div>
-                            <div class="detail-value">$92,142</div>
-                            <div class="detail-name">This Year</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
