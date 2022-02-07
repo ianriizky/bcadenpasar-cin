@@ -44,8 +44,13 @@ getFiles('resources/js/helpers').forEach(filename => {
   mix.copy(`resources/js/helpers/${filename}`, 'public/js/helpers');
 });
 
-getFiles('resources/js/page').forEach(filename => {
-  mix.copy(`resources/js/page/${filename}`, 'public/js/page');
+[
+  // put the specified page js files here
+  'achievement',
+].forEach(directory => {
+  getFiles(`resources/js/page/${directory}`).forEach(filename => {
+    mix.copy(`resources/js/page/${directory}/${filename}`, `public/js/page/${directory}`);
+  });
 });
 
 mix.combine('node_modules/select2/dist/css/select2.min.css', 'public/node_modules/select2/dist/css/select2.min.css');

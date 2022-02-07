@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Branch;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -42,26 +43,80 @@ class BranchUserSeeder extends Seeder
     /**
      * Generate the specified branch data into storage.
      *
-     * @return \App\Models\Branch[]
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Branch>
      */
-    protected function generateBranch(): array
+    protected function generateBranch(): Collection
     {
-        /** @var \App\Models\Branch $branch_1 */
-        $branch_1 = Branch::make([
-            'name' => 'BCA KCU Denpasar',
-            'address' => 'Jl. Hasanuddin No.58, Pemecutan, Kec. Denpasar Bar., Kota Denpasar, Bali 80232',
+        $branches = new Collection([
+            [
+                'name' => 'BCA KCU Denpasar',
+                'address' => 'Jl. Hasanuddin No.58, Pemecutan, Kec. Denpasar Bar., Kota Denpasar, Bali 80232',
+            ],
+            [
+                'name' => 'BCA KCP Gianyar',
+                'address' => 'Jl. By Pass Dharma Giri, Gianyar, Kec. Gianyar, Kabupaten Gianyar, Bali 80511',
+            ],
+            [
+                'name' => 'BCA KCP Cokroaminoto',
+                'address' => 'Pemecutan Kaja, North Denpasar, Denpasar City, Bali',
+            ],
+            [
+                'name' => 'BCA KCP Gatot Subroto Barat',
+                'address' => 'Jl. Gatot Subroto Barat No.508-509, Padangsambian Kaja, Kec. Denpasar Bar., Kota Denpasar, Bali 80117',
+            ],
+            [
+                'name' => 'BCA KCP Gatot Subroto',
+                'address' => 'Jl. Gatot Subroto Barat No.80, Dangin Puri Kaja, Kec. Denpasar Utara, Kota Denpasar, Bali 80234',
+            ],
+            [
+                'name' => 'BCA KCP Gatot Subroto Timur',
+                'address' => 'Jl. Gatot Subroto Tim. No.42- 43, Kesiman Kertalangu, Kec. Denpasar Tim., Kota Denpasar, Bali 80237',
+            ],
+            [
+                'name' => 'BCA KCP Gianyar',
+                'address' => 'Jl. By Pass Dharma Giri, Gianyar, Kec. Gianyar, Kabupaten Gianyar, Bali 80511',
+            ],
+            [
+                'name' => 'BCA KCP Klungkung',
+                'address' => 'Jl. Puputan Galiran No.88C, Semarapura Kelod, Kec. Klungkung, Kabupaten Klungkung, Bali 80715',
+            ],
+            [
+                'name' => 'BCA KCP Mahendradata',
+                'address' => 'Jl. Mahendradatta No.99, Pemecutan Kaja, Kec. Denpasar Utara, Kota Denpasar, Bali 80111',
+            ],
+            [
+                'name' => 'BCA KCP Renon',
+                'address' => 'Jl. Raya Puputan No.10, Sumerta Kelod, Kec. Denpasar Tim., Kota Denpasar, Bali 80239',
+            ],
+            [
+                'name' => 'BCA KCP Sesetan',
+                'address' => 'Jl. Raya Sesetan, Sesetan, Denpasar Selatan, Kota Denpasar, Bali 80223',
+            ],
+            [
+                'name' => 'BCA KCP Ubud',
+                'address' => 'Jl. Raya Ubud No.10X, Petulu, Kecamatan Ubud, Kabupaten Gianyar, Bali 80571',
+            ],
+            [
+                'name' => 'BCA KCP Grand Sudirman',
+                'address' => 'Jl. PB Sudirman Blok C5-C6 Ruko Grand Sudirman, Dauh Puri Klod, Kec. Denpasar Bar., Kota Denpasar, Bali 80232',
+            ],
+            [
+                'name' => 'BCA KCP Maluku',
+                'address' => 'Jl. Pulau Maluku III No.10, Dauh Puri, Kec. Denpasar Bar., Kota Denpasar, Bali 80232',
+            ],
+            [
+                'name' => 'BCA KCP Teuku Umar',
+                'address' => 'Jl. Teuku Umar No.99 D, Dauh Puri Klod, Kec. Denpasar Bar., Kota Denpasar, Bali 80114',
+            ],
+            [
+                'name' => 'BCA KCP Benoa',
+                'address' => 'Jl. Suwung Batan Kendal No.2, Sesetan, Denpasar Selatan, Kota Denpasar, Bali 80222',
+            ],
         ]);
 
-        /** @var \App\Models\Branch $branch_2 */
-        $branch_2 = Branch::make([
-            'name' => 'BCA KCP Gianyar',
-            'address' => 'Jl. By Pass Dharma Giri, Gianyar, Kec. Gianyar, Kabupaten Gianyar, Bali 80511',
+        return $branches->mapWithKeys(fn (array $branch) => [
+            $branch['name'] => new Branch($branch),
         ]);
-
-        return [
-            $branch_1->name => $branch_1,
-            $branch_2->name => $branch_2,
-        ];
     }
 
     /**
