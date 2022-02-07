@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>@lang('Create') Input Pencapaian Harian</h1>
+            <h1>@lang('Create') @lang('menu.achievement')</h1>
 
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item">
@@ -13,13 +13,13 @@
                 </div>
 
                 <div class="breadcrumb-item">
-                    <a href="{{ route('monitoring.daily-achievement.index') }}">
-                        <span>Input Pencapaian Harian</span>
+                    <a href="{{ route('monitoring.achievement.index') }}">
+                        <i class="fas @lang('icon.achievement')"></i> <span>@lang('menu.achievement')</span>
                     </a>
                 </div>
 
                 <div class="breadcrumb-item">
-                    <a href="{{ route('monitoring.daily-achievement.create') }}">
+                    <a href="{{ route('monitoring.achievement.create') }}">
                         <span>@lang('Create')</span>
                     </a>
                 </div>

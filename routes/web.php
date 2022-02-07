@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\BranchController;
-use App\Http\Controllers\DailyAchievementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,17 +61,24 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/monitoring')->name('monitoring.')->group(function () {
         Route::view('/', 'monitoring.index')->name('index');
 
-        Route::resource('/daily-achievement', DailyAchievementController::class);
+        Route::resource('/achievement', AchievementController::class);
     });
 
-    Route::prefix('/achievement')->name('achievement.')->controller(AchievementController::class)->group(function () {
-        Route::view('/', 'achievement.index')->name('index');
+    Route::prefix('/report')->name('report.')->controller(ReportController::class)->group(function () {
+        Route::view('/', 'report.index')->name('index');
 
-        Route::get('/laporan-pencapaian-new-cin', 'laporanPencapaianNewCin')->name('laporan-pencapaian-new-cin');
-        Route::post('/laporan-pencapaian-new-cin/chart', 'laporanPencapaianNewCinChart')->name('laporan-pencapaian-new-cin-chart');
+        Route::prefix('/laporan-pencapaian-new-cin')->name('laporan-pencapaian-new-cin.')->group(function () {
+            Route::view('/', 'report.laporan-pencapaian-new-cin')->name('index');
+            Route::post('/chart', 'laporanPencapaianNewCinChart')->name('chart');
+        });
 
-        Route::get('/dashboard-growth-new-cin', 'dashboardGrowthNewCin')->name('dashboard-growth-new-cin');
-        Route::get('/dashboard-penutupan-cin', 'dashboardPenutupanCin')->name('dashboard-penutupan-cin');
+        Route::prefix('/dashboard-growth-new-cin')->name('dashboard-growth-new-cin.')->group(function () {
+            Route::view('/', 'report.dashboard-growth-new-cin')->name('index');
+        });
+
+        Route::prefix('/dashboard-penutupan-cin')->name('dashboard-penutupan-cin.')->group(function () {
+            Route::view('/', 'report.dashboard-penutupan-cin')->name('index');
+        });
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

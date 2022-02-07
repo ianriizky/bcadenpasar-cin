@@ -3,18 +3,18 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Dashboard Penutupan CiN</h1>
+            <h1>Dashboard Growth New CiN</h1>
 
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item">
-                    <a href="{{ route('achievement.index') }}">
+                    <a href="{{ route('report.index') }}">
                         <i class="fas @lang('icon.achievement')"></i> <span>@lang('menu.achievement')</span>
                     </a>
                 </div>
 
                 <div class="breadcrumb-item">
-                    <a href="{{ route('achievement.dashboard-penutupan-cin') }}">
-                        <span>Dashboard Penutupan CiN</span>
+                    <a href="{{ route('report.dashboard-growth-new-cin.index') }}">
+                        <span>Dashboard Growth New CiN</span>
                     </a>
                 </div>
             </div>

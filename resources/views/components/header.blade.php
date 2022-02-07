@@ -41,9 +41,9 @@
                 </a>
             </li>
 
-            <li class="nav-item @if (Route::is('achievement.*')) active @endif">
-                <a href="{{ route('achievement.index') }}" class="nav-link">
-                    <span>@lang('menu.achievement')</span>
+            <li class="nav-item @if (Route::is('report.*')) active @endif">
+                <a href="{{ route('report.index') }}" class="nav-link">
+                    <span>@lang('menu.report')</span>
                 </a>
             </li>
         </ul>

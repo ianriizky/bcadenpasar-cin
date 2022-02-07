@@ -9,4 +9,5 @@ return [
     'education' => 'Edukasi',
     'monitoring' => 'Monitoring',
     'achievement' => 'Pencapaian',
+    'report' => 'Laporan',
 ];

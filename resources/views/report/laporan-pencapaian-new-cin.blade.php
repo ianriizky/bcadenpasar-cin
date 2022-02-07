@@ -16,6 +16,8 @@
         const cancelLabel = '@lang('Cancel')';
         const customRangeLabel = '@lang('Choose date')';
         const periodicityLabel = '@lang('Choose :field', ['field' => __('Periodicity') ])';
+        const xAxesLabelString = '@lang('menu.branch')';
+        const yAxesLabelString = '@lang('Number of New CiN')';
         const daterangepickerRanges = {
             '@lang('Today')': [initialStartDate.clone(), initialEndDate.clone()],
             '@lang('Yesterday')': [initialStartDate.clone().subtract(1, 'days'), initialEndDate.clone().subtract(1, 'days')],
@@ -26,7 +28,7 @@
             '@lang('This Year')': [initialStartDate.clone().startOf('year'), initialEndDate.clone().endOf('year')],
         };
     </script>
-    <script src="{{ mix('js/page/achievement-laporan-pencapaian-new-cin.js') }}"></script>
+    <script src="{{ mix('js/page/achievement/laporan-pencapaian-new-cin.js') }}"></script>
     <script>
         $(function() {
             $('button#load-chart-data').trigger('click');
@@ -42,13 +44,13 @@
 
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item">
-                    <a href="{{ route('achievement.index') }}">
+                    <a href="{{ route('report.index') }}">
                         <i class="fas @lang('icon.achievement')"></i> <span>@lang('menu.achievement')</span>
                     </a>
                 </div>
 
                 <div class="breadcrumb-item">
-                    <a href="{{ route('achievement.laporan-pencapaian-new-cin') }}">
+                    <a href="{{ route('report.laporan-pencapaian-new-cin.index') }}">
                         <span>Laporan Pencapaian New CiN</span>
                     </a>
                 </div>
@@ -97,7 +99,7 @@
                                     </a>
                                 </div>
 
-                                <button type="button" id="load-chart-data" data-url="{{ route('achievement.laporan-pencapaian-new-cin-chart') }}" class="btn btn-primary btn-icon icon-left col-2 col-lg-3">
+                                <button type="button" id="load-chart-data" data-url="{{ route('report.laporan-pencapaian-new-cin.chart') }}" class="btn btn-primary btn-icon icon-left col-2 col-lg-3">
                                     <i class="fa fa-search"></i> <span class="d-none d-lg-inline">@lang('Search')</span>
                                 </button>
                             </div>

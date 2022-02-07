@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        {{-- input-pencapaian-harian --}}
+                        {{-- inputachievement --}}
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                             <article class="article">
                                 <div class="article-header">
@@ -26,7 +26,7 @@
 
                                     <div class="article-title">
                                         <h2>
-                                            <a href="{{ route('monitoring.daily-achievement.index') }}">Input Pencapaian Harian</a>
+                                            <a href="{{ route('monitoring.achievement.index') }}">@lang('menu.achievement')</a>
                                         </h2>
                                     </div>
                                 </div>
@@ -37,12 +37,12 @@
                                     </p>
 
                                     <div class="article-cta">
-                                        <a href="{{ route('monitoring.daily-achievement.index') }}" class="btn btn-primary">@lang('View')</a>
+                                        <a href="{{ route('monitoring.achievement.index') }}" class="btn btn-primary">@lang('View')</a>
                                     </div>
                                 </div>
                             </article>
                         </div>
-                        {{-- /.input-pencapaian-harian --}}
+                        {{-- /.achievement --}}
                     </div>
                 </div>
             </div>

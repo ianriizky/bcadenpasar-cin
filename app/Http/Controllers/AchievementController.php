@@ -2,24 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Achievement\LaporanPencapaianNewCinChartRequest;
-use App\Repositories\AchievementRepository;
+use App\Models\Achievement;
 use Illuminate\Http\Request;
 
 class AchievementController extends Controller
 {
-    /**
-     * Create a new instance class.
-     *
-     * @param  \App\Repositories\AchievementRepository  $achievementRepository
-     * @return void
-     */
-    public function __construct(
-        protected AchievementRepository $achievementRepository
-    ) {
-        //
-    }
-
     /**
      * Display index page.
      *
@@ -27,53 +14,72 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        return view('achievement.index');
+        return view('monitoring.achievement.index');
     }
 
     /**
-     * Display laporan pencapaian new cin page.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function laporanPencapaianNewCin()
+    public function create()
     {
-        return view('achievement.laporan-pencapaian-new-cin');
+        return view('monitoring.achievement.create');
     }
 
     /**
-     * Return laporan pencapaian new cin chart data as json response.
+     * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Achievement\LaporanPencapaianNewCinChartRequest  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function laporanPencapaianNewCinChart(LaporanPencapaianNewCinChartRequest $request)
+    public function store(Request $request)
     {
-        $data = $this->achievementRepository->chartLaporanPencapaianNewCin(
-            $request->date('start_date'),
-            $request->date('end_date'),
-            $request->periodicity
-        );
-
-        return response()->json($data);
+        //
     }
 
     /**
-     * Display dashboard growth newcin page.
+     * Display the specified resource.
      *
+     * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function dashboardGrowthNewCin()
+    public function show(Achievement $achievement)
     {
-        return view('achievement.dashboard-growth-new-cin');
+        //
     }
 
     /**
-     * Display dashboard penutupancin page.
+     * Show the form for editing the specified resource.
      *
+     * @param  \App\Models\Achievement  $achievement
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function dashboardPenutupanCin()
+    public function edit(Achievement $achievement)
     {
-        return view('achievement.dashboard-penutupan-cin');
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Achievement  $achievement
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, Achievement $achievement)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Achievement  $achievement
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Achievement $achievement)
+    {
+        //
     }
 }

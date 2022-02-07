@@ -9,4 +9,5 @@ return [
     'education' => 'fa-book-open',
     'monitoring' => 'fa-eye',
     'achievement' => 'fa-trophy',
+    'report' => 'fa-chart-bar',
 ];

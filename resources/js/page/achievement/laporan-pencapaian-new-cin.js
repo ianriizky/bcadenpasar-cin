@@ -80,22 +80,30 @@ $(function() {
         display: false,
       },
       scales: {
+        xAxes: [
+          {
+            gridLines: {
+              display: false,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: xAxesLabelString,
+            },
+          },
+        ],
         yAxes: [
           {
             gridLines: {
               drawBorder: false,
               color: "#f2f2f2",
             },
+            scaleLabel: {
+              display: true,
+              labelString: yAxesLabelString,
+            },
             ticks: {
               beginAtZero: true,
               stepSize: 150,
-            },
-          },
-        ],
-        xAxes: [
-          {
-            gridLines: {
-              display: false,
             },
           },
         ],
