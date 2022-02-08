@@ -6,7 +6,7 @@
 
 @section('script')
     <script src="{{ mix('node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ mix('node_modules/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ mix('node_modules/chart.js/dist/chart.min.js') }}"></script>
     <script src="{{ mix('node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js') }}"></script>
     <script>
         const initialStartDate = moment().startOf('days');
