@@ -6,9 +6,10 @@ function daterangeHandler(start, end) {
   startDate = start;
   endDate = end;
 
-  const text = endDate.diff(startDate, "days") > 0
-    ? `${start.format("DD MMMM YYYY")} - ${end.format("DD MMMM YYYY")}`
-    : start.format("DD MMMM YYYY");
+  const text =
+    endDate.diff(startDate, "days") > 0
+      ? `${start.format("DD MMMM YYYY")} - ${end.format("DD MMMM YYYY")}`
+      : start.format("DD MMMM YYYY");
 
   $(".btn-daterange span").html(text);
 }
@@ -37,18 +38,21 @@ async function getChartLabelsAndDatasets(url) {
   return await response.json();
 }
 
-$(function() {
-  $(".btn-daterange").daterangepicker({
-    ranges: daterangepickerRanges,
-    startDate,
-    endDate,
-    maxDate: moment(),
-    locale: {
-      applyLabel,
-      cancelLabel,
-      customRangeLabel,
+$(function () {
+  $(".btn-daterange").daterangepicker(
+    {
+      ranges: daterangepickerRanges,
+      startDate,
+      endDate,
+      maxDate: moment(),
+      locale: {
+        applyLabel,
+        cancelLabel,
+        customRangeLabel,
+      },
     },
-  }, daterangeHandler);
+    daterangeHandler
+  );
 
   daterangeHandler(startDate, endDate);
 
@@ -59,57 +63,42 @@ $(function() {
     $(".btn-daterange span").html(customRangeLabel);
   });
 
-  $(".periodicity-dropdown-item").on("click", function() {
+  $(".periodicity-dropdown-item").on("click", function () {
     const value = $(this).attr("data-value");
     const label = $(this).html();
 
-    periodicity = value !== '__reset' ? value : null;
+    periodicity = value !== "__reset" ? value : null;
 
     $(".periodicity-dropdown-item").removeClass("active");
     $(this).addClass("active");
 
-    $("#periodicity-dropdown-toggle").html(value !== '__reset' ? label : periodicityLabel);
+    $("#periodicity-dropdown-toggle").html(
+      value !== "__reset" ? label : periodicityLabel
+    );
   });
 
   const chartElement = document.getElementById("chart").getContext("2d");
 
   let chart = new Chart(chartElement, {
     type: "bar",
+    plugins: [ChartDataLabels],
     options: {
-      legend: {
-        display: false,
-      },
       scales: {
-        xAxes: [
-          {
-            gridLines: {
-              display: false,
-            },
-            scaleLabel: {
-              display: true,
-              labelString: xAxesLabelString,
-            },
+        x: {
+          grid: {
+            display: false,
           },
-        ],
-        yAxes: [
-          {
-            gridLines: {
-              drawBorder: false,
-              color: "#f2f2f2",
-            },
-            scaleLabel: {
-              display: true,
-              labelString: yAxesLabelString,
-            },
-            ticks: {
-              beginAtZero: true,
-              stepSize: 150,
-            },
+          title: {
+            display: true,
+            text: xAxesTitleText,
           },
-        ],
+        },
       },
-      elements: {
-        pointRadius: 4,
+      plugins: {
+        datalabels: {
+          color: "#f2f2f2",
+          display: true,
+        },
       },
     },
   });

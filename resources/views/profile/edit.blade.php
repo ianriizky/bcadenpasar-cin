@@ -1,20 +1,5 @@
 @extends('layouts.admin')
 
-@section('pre-style')
-    <link rel="stylesheet" href="{{ mix('node_modules/select2/dist/css/select2.min.css') }}">
-@endsection
-
-@section('script')
-    <script src="{{ mix('node_modules/select2/dist/js/select2.full.min.js') }}"></script>
-    <script>
-        $(function() {
-            $('.select2').select2();
-
-            @include('components.select2-change', ['olds' => Arr::except(old() ?: $user, '_token')])
-        });
-    </script>
-@endsection
-
 @section('content')
     <section class="section">
         <div class="section-header">

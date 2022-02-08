@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Achievement\LaporanPencapaianNewCinChartRequest;
-use App\Repositories\AchievementRepository;
+use App\Http\Requests\Report\LaporanPencapaianNewCinChartRequest;
+use App\Repositories\ReportRepository;
 
 class ReportController extends Controller
 {
     /**
      * Create a new instance class.
      *
-     * @param  \App\Repositories\AchievementRepository  $achievementRepository
+     * @param  \App\Repositories\ReportRepository  $reportRepository
      * @return void
      */
     public function __construct(
-        protected AchievementRepository $achievementRepository
+        protected ReportRepository $reportRepository
     ) {
         //
     }
@@ -37,7 +37,7 @@ class ReportController extends Controller
      */
     public function laporanPencapaianNewCinChart(LaporanPencapaianNewCinChartRequest $request)
     {
-        $data = $this->achievementRepository->chartLaporanPencapaianNewCin(
+        $data = $this->reportRepository->chartLaporanPencapaianNewCin(
             $request->date('start_date'),
             $request->date('end_date'),
             $request->periodicity

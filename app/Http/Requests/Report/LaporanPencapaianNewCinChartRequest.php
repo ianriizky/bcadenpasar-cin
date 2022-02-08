@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Achievement;
+namespace App\Http\Requests\Report;
 
 use App\Enum\Periodicity;
 use App\Infrastructure\Foundation\Http\FormRequest;

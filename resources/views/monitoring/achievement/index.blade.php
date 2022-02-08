@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="card-body">
-                    Halaman Input Pencapaian Harian
+
                 </div>
             </div>
         </div>

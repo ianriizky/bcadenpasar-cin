@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\TargetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +62,14 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('/monitoring')->name('monitoring.')->group(function () {
         Route::view('/', 'monitoring.index')->name('index');
+
+        Route::prefix('/target')->name('target.')->group(function () {
+            Route::post('/datatable', [TargetController::class, 'datatable'])->name('datatable');
+            Route::delete('/multiple', [TargetController::class, 'destroyMultiple'])->name('destroy-multiple');
+        });
+        Route::resource('/target', TargetController::class);
+
+        Route::resource('/event', EventController::class);
 
         Route::resource('/achievement', AchievementController::class);
     });

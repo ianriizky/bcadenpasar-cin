@@ -5,8 +5,9 @@
 @endsection
 
 @section('script')
-    <script src="{{ mix('node_modules/chart.js/dist/Chart.min.js') }}"></script>
     <script src="{{ mix('node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ mix('node_modules/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ mix('node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js') }}"></script>
     <script>
         const initialStartDate = moment().startOf('days');
         const initialEndDate = moment().endOf('days');
@@ -16,8 +17,7 @@
         const cancelLabel = '@lang('Cancel')';
         const customRangeLabel = '@lang('Choose date')';
         const periodicityLabel = '@lang('Choose :field', ['field' => __('Periodicity') ])';
-        const xAxesLabelString = '@lang('menu.branch')';
-        const yAxesLabelString = '@lang('Number of New CiN')';
+        const xAxesTitleText = '{{ strtoupper(__('menu.branch')) }}';
         const daterangepickerRanges = {
             '@lang('Today')': [initialStartDate.clone(), initialEndDate.clone()],
             '@lang('Yesterday')': [initialStartDate.clone().subtract(1, 'days'), initialEndDate.clone().subtract(1, 'days')],
@@ -28,7 +28,7 @@
             '@lang('This Year')': [initialStartDate.clone().startOf('year'), initialEndDate.clone().endOf('year')],
         };
     </script>
-    <script src="{{ mix('js/page/achievement/laporan-pencapaian-new-cin.js') }}"></script>
+    <script src="{{ mix('js/page/report/laporan-pencapaian-new-cin.js') }}"></script>
     <script>
         $(function() {
             $('button#load-chart-data').trigger('click');
@@ -45,7 +45,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item">
                     <a href="{{ route('report.index') }}">
-                        <i class="fas @lang('icon.achievement')"></i> <span>@lang('menu.achievement')</span>
+                        <i class="fas @lang('icon.report')"></i> <span>@lang('menu.report')</span>
                     </a>
                 </div>
 

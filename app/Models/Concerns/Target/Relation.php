@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Concerns\User;
+namespace App\Models\Concerns\Target;
 
 use App\Models\Achievement;
 use App\Models\Branch;
@@ -10,12 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Role> $roles
- * @property int|null $branch_id Foreign key of \App\Models\Branch.
- * @property-read \App\Models\Branch|null $branch
+ * @property int $branch_id Foreign key of \App\Models\Branch.
+ * @property-read \App\Models\Branch $branch
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement> $achievements
  *
- * @see \App\Models\User
+ * @see \App\Models\Target
  */
 trait Relation
 {
@@ -34,9 +33,9 @@ trait Relation
     /**
      * Return \App\Models\Branch model relation value.
      *
-     * @return \App\Models\Branch|null
+     * @return \App\Models\Branch
      */
-    public function getBranchRelationValue(): ?Branch
+    public function getBranchRelationValue(): Branch
     {
         return $this->getRelationValue('branch');
     }

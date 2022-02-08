@@ -805,5 +805,8 @@
     "This Year": "Tahun Ini",
     "Periodicity": "Jangka Waktu",
     ":periodicity target": "Target :periodicity",
-    "Number of New CiN": "Jumlah New CiN"
+    "Number of New CiN": "Jumlah New CiN",
+    "Start Date": "Tanggal Awal",
+    "End Date": "Tanggal Akhir",
+    "Amount": "Jumlah"
 }

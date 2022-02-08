@@ -6,7 +6,7 @@ use App\Enum\Periodicity;
 use App\Models\Branch;
 use Illuminate\Support\Carbon;
 
-class AchievementRepository
+class ReportRepository
 {
     /**
      * Return chart data of laporan pencapaian new cin.

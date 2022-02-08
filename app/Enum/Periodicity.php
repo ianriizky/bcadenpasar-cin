@@ -9,6 +9,10 @@ use Spatie\Enum\Laravel\Enum;
  * @method static self weekly()
  * @method static self monthly()
  * @method static self yearly()
+ * @method bool isDaily() Determine when the current enum value is daily.
+ * @method bool isWeekly() Determine when the current enum value is weekly.
+ * @method bool isMonthly() Determine when the current enum value is monthly.
+ * @method bool isYearly() Determine when the current enum value is yearly.
  */
 class Periodicity extends Enum
 {

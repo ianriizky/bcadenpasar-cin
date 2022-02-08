@@ -18,7 +18,59 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        {{-- inputachievement --}}
+                        {{-- target --}}
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                            <article class="article">
+                                <div class="article-header">
+                                    <div class="article-image" data-background="{{ gravatar_image(null, 200) }}"></div>
+
+                                    <div class="article-title">
+                                        <h2>
+                                            <a href="{{ route('monitoring.target.index') }}">@lang('menu.target')</a>
+                                        </h2>
+                                    </div>
+                                </div>
+
+                                <div class="article-details">
+                                    <p>
+                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                    </p>
+
+                                    <div class="article-cta">
+                                        <a href="{{ route('monitoring.target.index') }}" class="btn btn-primary">@lang('View')</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        {{-- /.target --}}
+
+                        {{-- event --}}
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                            <article class="article">
+                                <div class="article-header">
+                                    <div class="article-image" data-background="{{ gravatar_image(null, 200) }}"></div>
+
+                                    <div class="article-title">
+                                        <h2>
+                                            <a href="{{ route('monitoring.event.index') }}">@lang('menu.event')</a>
+                                        </h2>
+                                    </div>
+                                </div>
+
+                                <div class="article-details">
+                                    <p>
+                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                    </p>
+
+                                    <div class="article-cta">
+                                        <a href="{{ route('monitoring.event.index') }}" class="btn btn-primary">@lang('View')</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        {{-- /.event --}}
+
+                        {{-- achievement --}}
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                             <article class="article">
                                 <div class="article-header">

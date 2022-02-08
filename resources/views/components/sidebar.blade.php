@@ -123,9 +123,21 @@
                 </a>
 
                 <ul class="dropdown-menu">
+                    <li class="nav-item @if (Route::is('monitoring.target.*')) active @endif">
+                        <a href="{{ route('monitoring.target.index') }}" class="nav-link">
+                            <i class="fas @lang('icon.target')"></i> <span class="narrow-line-height">@lang('menu.target')</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item @if (Route::is('monitoring.event.*')) active @endif">
+                        <a href="{{ route('monitoring.event.index') }}" class="nav-link">
+                            <i class="fas @lang('icon.event')"></i> <span class="narrow-line-height">@lang('menu.event')</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item @if (Route::is('monitoring.achievement.*')) active @endif">
                         <a href="{{ route('monitoring.achievement.index') }}" class="nav-link">
-                            <span class="narrow-line-height">Input Pencapaian Harian</span>
+                            <i class="fas @lang('icon.achievement')"></i> <span class="narrow-line-height">@lang('menu.achievement')</span>
                         </a>
                     </li>
                 </ul>

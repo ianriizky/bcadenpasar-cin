@@ -8,6 +8,8 @@ return [
     'branch' => 'Cabang',
     'education' => 'Edukasi',
     'monitoring' => 'Monitoring',
+    'target' => 'Target',
+    'event' => 'Kegiatan',
     'achievement' => 'Pencapaian',
     'report' => 'Laporan',
 ];

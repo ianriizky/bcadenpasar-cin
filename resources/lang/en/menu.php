@@ -8,6 +8,8 @@ return [
     'branch' => 'Branch',
     'education' => 'Education',
     'monitoring' => 'Monitoring',
+    'target' => 'Target',
+    'event' => 'Event',
     'achievement' => 'Achievement',
     'report' => 'Report',
 ];

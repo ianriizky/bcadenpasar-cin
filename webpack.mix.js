@@ -46,7 +46,7 @@ getFiles('resources/js/helpers').forEach(filename => {
 
 [
   // put the specified page js files here
-  'achievement',
+  'report',
 ].forEach(directory => {
   getFiles(`resources/js/page/${directory}`).forEach(filename => {
     mix.copy(`resources/js/page/${directory}/${filename}`, `public/js/page/${directory}`);
@@ -65,3 +65,4 @@ mix.combine('node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js'
 mix.combine('node_modules/datatables.net-plugins/i18n/id.json', 'public/node_modules/datatables.net-plugins/i18n/id.json');
 mix.combine('node_modules/bootstrap-daterangepicker/daterangepicker.js', 'public/node_modules/bootstrap-daterangepicker/daterangepicker.js');
 mix.combine('node_modules/chart.js/dist/Chart.min.js', 'public/node_modules/chart.js/dist/Chart.min.js');
+mix.combine('node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js', 'public/node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js');
