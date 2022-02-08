@@ -5,10 +5,10 @@ namespace App\Models;
 use App\Casts\TargetAmount;
 use App\Enum\Periodicity;
 use App\Infrastructure\Contracts\Model\HasCreatedByAttribute;
+use App\Infrastructure\Database\Eloquent\Model;
 use App\Listeners\FillCreatedByWhenCreatingModel;
 use App\Support\Model\HandleCreatedByAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Target extends Model implements HasCreatedByAttribute
 {

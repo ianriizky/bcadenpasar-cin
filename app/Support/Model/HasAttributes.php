@@ -6,6 +6,7 @@ use DomainException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
 /**
@@ -80,5 +81,17 @@ trait HasAttributes
         $this->isCollectionValid($models = $this->getRelationValue($key), $className);
 
         return $models;
+    }
+
+    /**
+     * Get the model's raw values from $attributes.
+     *
+     * @param  string|null  $key
+     * @param  mixed  $default
+     * @return mixed|array
+     */
+    public function getRawAttribute($key = null, $default = null)
+    {
+        return Arr::get($this->getAttributes(), $key, $default);
     }
 }

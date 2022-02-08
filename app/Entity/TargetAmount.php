@@ -36,7 +36,7 @@ class TargetAmount extends DataTransferObject
      */
     public static function fromModel(Target $model)
     {
-        $amount = $model->getAttributeFromArray('amount');
+        $amount = $model->getRawAttribute('amount');
 
         [$daily, $weekly, $monthly, $yearly] = match ($model->periodicity) {
             Periodicity::daily() => static::getAmountFromDaily($amount),
