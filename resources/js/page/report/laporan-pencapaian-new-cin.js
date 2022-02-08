@@ -83,6 +83,7 @@ $(function () {
     type: "bar",
     plugins: [ChartDataLabels],
     options: {
+      maintainAspectRatio: false,
       scales: {
         x: {
           grid: {
@@ -91,6 +92,9 @@ $(function () {
           title: {
             display: true,
             text: xAxesTitleText,
+            font: {
+              weight: "bold",
+            },
           },
         },
       },

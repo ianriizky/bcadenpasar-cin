@@ -106,7 +106,9 @@
                         </div>
                     </div>
 
-                    <canvas id="chart" height="120" class="mt-3"></canvas>
+                    <div class="mt-3 position-relative min-vh-100">
+                        <canvas id="chart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
