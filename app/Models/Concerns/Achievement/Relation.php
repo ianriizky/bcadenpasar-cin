@@ -6,21 +6,21 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int|null $user_id Foreign key of \App\Models\User.
- * @property-read \App\Models\User|null $user
+ * @property int|null $achieved_by Foreign key of \App\Models\User.
+ * @property-read \App\Models\User|null $achieved_by
  *
  * @see \App\Models\Achievement
  */
 trait Relation
 {
     /**
-     * Define an inverse one-to-one or many relationship with \App\Models\User.
+     * Define an inverse one-to-one relationship with \App\Models\User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user(): BelongsTo
+    public function achieved_by(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'achieved_by');
     }
 
     /**
@@ -28,9 +28,9 @@ trait Relation
      *
      * @return \App\Models\User|null
      */
-    public function getUserRelationValue(): ?User
+    public function getAchievedByRelationValue(): ?User
     {
-        return $this->getRelationValue('user');
+        return $this->getRelationValue('achieved_by');
     }
 
     /**
@@ -39,9 +39,9 @@ trait Relation
      * @param  \App\Models\User  $user
      * @return $this
      */
-    public function setUserRelationValue(User $user)
+    public function setAchievedByRelationValue(User $user)
     {
-        $this->user()->associate($user);
+        $this->achieved_by()->associate($user);
 
         return $this;
     }

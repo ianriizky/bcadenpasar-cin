@@ -3,7 +3,9 @@
 namespace App\Models\Concerns\Achievement;
 
 /**
- * @property string $name
+ * @property \Illuminate\Support\Carbon $achieved_date
+ * @property int $amount
+ * @property string|null $note
  *
  * @see \App\Models\Achievement
  */

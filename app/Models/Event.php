@@ -8,30 +8,11 @@ use App\Listeners\FillCreatedByWhenCreatingModel;
 use App\Support\Model\HandleCreatedByAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Achievement extends Model implements HasCreatedByAttribute
+class Event extends Model implements HasCreatedByAttribute
 {
     use HasFactory,
         HandleCreatedByAttribute,
-        Concerns\Achievement\Attribute,
-        Concerns\Achievement\Event,
-        Concerns\Achievement\Relation;
-
-    /**
-     * {@inheritDoc}
-     */
-    protected $fillable = [
-        'achieved_date',
-        'amount',
-        'note',
-    ];
-
-    /**
-     * {@inheritDoc}
-     */
-    protected $casts = [
-        'achieved_date' => 'datetime',
-        'amount' => 'integer',
-    ];
+        Concerns\Event\Attribute;
 
     /**
      * {@inheritDoc}
