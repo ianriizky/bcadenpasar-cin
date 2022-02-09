@@ -13,8 +13,8 @@ Source code ini sudah dilengkapi dengan *unit test* menggunakan [phpunit](https:
 
 ## Prasyarat
 
-- Laravel Framework ^8.65
-- PHP ^8.0
+- Laravel Framework ^9.0
+- PHP ^8.0.2
 - Composer ^2.0
 - MySQL ^5.7.36
 
