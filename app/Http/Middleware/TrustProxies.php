@@ -10,7 +10,7 @@ class TrustProxies extends Middleware
     /**
      * {@inheritDoc}
      */
-    protected $proxies;
+    protected $proxies = '*';
 
     /**
      * {@inheritDoc}

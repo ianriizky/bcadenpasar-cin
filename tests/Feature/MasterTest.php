@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Event;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
-use function Pest\Laravel\assertDatabaseMissing;
+use function Pest\Laravel\assertModelMissing;
 
 beforeEach(function () {
     $this->admin = pest_create_admin();
@@ -82,7 +82,7 @@ it('can destroy branch', function () {
         ->delete(route('master.branch.destroy', $branch))
         ->assertRedirect(route('master.branch.index'));
 
-    assertDatabaseMissing(Branch::class, $branch->only('id'));
+    assertModelMissing($branch);
 });
 
 it('can destroy multiple branch', function () {
@@ -98,7 +98,7 @@ it('can destroy multiple branch', function () {
         ->assertRedirect(route('master.branch.index'));
 
     foreach ($branches as $branch) {
-        assertDatabaseMissing(Branch::class, $branch->only('id'));
+        assertModelMissing($branch);
     }
 });
 #endregion branch
@@ -191,7 +191,7 @@ it('can destroy user', function () {
         ->delete(route('master.user.destroy', $user))
         ->assertRedirect(route('master.user.index'));
 
-    assertDatabaseMissing(User::class, $user->only('id'));
+    assertModelMissing($user);
 });
 
 it('can destroy multiple user', function () {
@@ -209,7 +209,7 @@ it('can destroy multiple user', function () {
         ->assertRedirect(route('master.user.index'));
 
     foreach ($users as $user) {
-        assertDatabaseMissing(User::class, $user->only('id'));
+        assertModelMissing($user);
     }
 });
 #endregion user
