@@ -11,7 +11,7 @@
     <script src="{{ mix('node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/helpers/data-checkboxes.js') }}"></script>
     <script>
-        const datatable_url = '{{ route('master.user.datatable') }}';
+        const datatable_url = @json(route('master.user.datatable'));
         const datatable_columns = [
             { data: 'checkbox', searchable: false, orderable: false, width: '5%' },
             { data: 'branch_name' },

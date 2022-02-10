@@ -25,8 +25,8 @@
                 autoApply: true,
                 showWeekNumbers: true,
                 locale: {
-                    separator: ' – ',
-                    format: '{{ \App\Models\Target::DATE_FORMAT_ISO }}',
+                    separator: @json(\App\Http\Requests\Target\StoreRequest::START_DATE_END_DATE_SEPARATOR),
+                    format: @json(\App\Models\Target::DATE_FORMAT_ISO),
                 },
             });
         });

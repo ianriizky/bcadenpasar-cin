@@ -1,9 +1,12 @@
 <?php
 
+use App\Models\Branch;
 use App\Models\Target;
+use Illuminate\Support\Arr;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertModelExists;
 use function Pest\Laravel\assertModelMissing;
 
 beforeEach(function () {
@@ -19,81 +22,99 @@ it('has monitoring index page', function () {
 #region target
 it('has target index page', function () {
     actingAs($this->admin)
-        ->get(route('master.target.index'))
+        ->get(route('monitoring.target.index'))
         ->assertOk();
 });
 
 it('has target create page', function () {
     actingAs($this->admin)
-        ->get(route('master.target.create'))
+        ->get(route('monitoring.target.create'))
         ->assertOk();
 });
 
 it('can store target', function () {
-    $data = Target::factory()->raw();
+    /** @var \App\Models\Branch $branch */
+    $branch = Branch::all('id')->random();
+
+    $data = Target::factory()->rawForm($branch);
 
     actingAs($this->admin)
-        ->post(route('master.target.store'), $data)
-        ->assertRedirect(route('master.target.index'));
+        ->post(route('monitoring.target.store'), $data)
+        ->assertRedirect(route('monitoring.target.index'));
 
-    assertDatabaseHas(Target::class, $data);
+    assertDatabaseHas(Target::class, Arr::except($data, 'start_date_end_date'));
 });
 
 it('has target show page', function () {
     /** @var \App\Models\Target $target */
-    $target = Target::factory()->create();
+    $target = Target::factory()
+        ->forBranch()
+        ->create();
 
     actingAs($this->admin)
-        ->get(route('master.target.show', $target))
+        ->get(route('monitoring.target.show', $target))
         ->assertOk();
 });
 
 it('has target edit page', function () {
     /** @var \App\Models\Target $target */
-    $target = Target::factory()->create();
+    $target = Target::factory()
+        ->forBranch()
+        ->create();
 
     actingAs($this->admin)
-        ->get(route('master.target.edit', $target))
+        ->get(route('monitoring.target.edit', $target))
         ->assertOk();
 });
 
 it('can update target', function () {
     /** @var \App\Models\Target $target */
-    $target = Target::factory()->create();
+    $target = Target::factory()
+        ->forBranch()
+        ->create();
 
-    $data = Target::factory()->raw();
+    /** @var \App\Models\Branch $branch */
+    $branch = Branch::all('id')->random();
 
-    actingAs($this->admin)
-        ->put(route('master.target.update', $target), $data)
-        ->assertRedirect(route('master.target.edit', Target::firstWhere('name', $data['name'])));
+    $data = Target::factory()->rawForm($branch);
 
-    assertDatabaseHas(Target::class, $data);
+    $response = actingAs($this->admin)
+        ->put(route('monitoring.target.update', $target), $data);
+
+    $updatedTarget = Target::where(Arr::except($data, 'start_date_end_date'))->first();
+
+    $response->assertRedirect(route('monitoring.target.edit', ['target' => $updatedTarget]));
+
+    assertModelExists($updatedTarget);
 });
 
 it('can destroy target', function () {
     /** @var \App\Models\Target $target */
-    $target = Target::factory()->create();
+    $target = Target::factory()
+        ->forBranch()
+        ->create();
 
     actingAs($this->admin)
-        ->delete(route('master.target.destroy', $target))
-        ->assertRedirect(route('master.target.index'));
+        ->delete(route('monitoring.target.destroy', $target))
+        ->assertRedirect(route('monitoring.target.index'));
 
     assertModelMissing($target);
 });
 
 it('can destroy multiple target', function () {
-    /** @var \Illuminate\Database\Eloquent\Collection<\App\Models\Target> $targetes */
-    $targetes = Target::factory()
+    /** @var \Illuminate\Database\Eloquent\Collection<\App\Models\Target> $targets */
+    $targets = Target::factory()
+        ->forBranch()
         ->count(rand(1, 5))
         ->create();
 
     actingAs($this->admin)
-        ->delete(route('master.target.destroy-multiple', [
-            'checkbox' => $targetes->pluck('id')->toArray(),
+        ->delete(route('monitoring.target.destroy-multiple', [
+            'checkbox' => $targets->pluck('id')->toArray(),
         ]))
-        ->assertRedirect(route('master.target.index'));
+        ->assertRedirect(route('monitoring.target.index'));
 
-    foreach ($targetes as $target) {
+    foreach ($targets as $target) {
         assertModelMissing($target);
     }
 });

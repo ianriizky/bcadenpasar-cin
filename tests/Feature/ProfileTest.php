@@ -17,10 +17,7 @@ it('has profile edit page', function () {
 });
 
 it('can update profile', function () {
-    $data = User::factory()->raw();
-    $data = array_merge($data, [
-        'password_confirmation' => $data['password'],
-    ]);
+    $data = Arr::except(User::factory()->rawForm(), 'role');
 
     actingAs($this->admin)
         ->put(route('profile.edit'), $data)

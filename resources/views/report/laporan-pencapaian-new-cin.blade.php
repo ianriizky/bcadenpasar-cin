@@ -11,13 +11,13 @@
     <script>
         const initialStartDate = moment().startOf('days');
         const initialEndDate = moment().endOf('days');
-        const initialPeriodicity = '{{ \App\Enum\Periodicity::daily() }}';
+        const initialPeriodicity = @json(\App\Enum\Periodicity::daily());
 
         const applyLabel = '@lang('Apply')';
         const cancelLabel = '@lang('Cancel')';
         const customRangeLabel = '@lang('Choose date')';
         const periodicityLabel = '@lang('Choose :field', ['field' => __('Periodicity') ])';
-        const xAxesTitleText = '{{ strtoupper(__('menu.branch')) }}';
+        const xAxesTitleText = @json(strtoupper(__('menu.branch')));
         const daterangepickerRanges = {
             '@lang('Today')': [initialStartDate.clone(), initialEndDate.clone()],
             '@lang('Yesterday')': [initialStartDate.clone().subtract(1, 'days'), initialEndDate.clone().subtract(1, 'days')],

@@ -21,6 +21,13 @@ abstract class AbstractRequest extends FormRequest
     use TransformsEnums;
 
     /**
+     * Separator value for "start_date_end_date" field.
+     *
+     * @var string
+     */
+    const START_DATE_END_DATE_SEPARATOR = ' – ';
+
+    /**
      * {@inheritDoc}
      */
     public function authorize()
@@ -122,7 +129,7 @@ abstract class AbstractRequest extends FormRequest
      */
     protected static function splitStartEndDate(string $value): array
     {
-        return array_pad(explode(' – ', $value), 2, null);
+        return array_pad(explode(static::START_DATE_END_DATE_SEPARATOR, $value), 2, null);
     }
 
     /**

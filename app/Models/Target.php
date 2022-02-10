@@ -10,6 +10,9 @@ use App\Infrastructure\Database\Eloquent\Model;
 use App\Support\Model\HandleCreatedByAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @method static \Database\Factories\TargetFactory<static> factory(callable|array|int|null $count = null, callable|array $state = []) Get a new factory instance for the model.
+ */
 class Target extends Model implements HasCreatedByAttribute
 {
     use HasFactory,

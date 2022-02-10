@@ -117,12 +117,7 @@ it('has user create page', function () {
 });
 
 it('can store user', function () {
-    $data = User::factory()->raw();
-    $data = array_merge($data, [
-        'branch_id' => Branch::value('id'),
-        'password_confirmation' => $data['password'],
-        'role' => Arr::random([Role::ROLE_ADMIN, Role::ROLE_STAFF]),
-    ]);
+    $data = User::factory()->rawForm(Branch::first('id'));
 
     Event::fake();
 
@@ -164,12 +159,7 @@ it('can update user', function () {
         ->create()
         ->syncRoles(Arr::random([Role::ROLE_ADMIN, Role::ROLE_STAFF]));
 
-    $data = User::factory()->raw();
-    $data = array_merge($data, [
-        'branch_id' => Branch::value('id'),
-        'password_confirmation' => $data['password'],
-        'role' => Arr::random([Role::ROLE_ADMIN, Role::ROLE_STAFF]),
-    ]);
+    $data = User::factory()->rawForm(Branch::first('id'));
 
     Event::fake();
 
