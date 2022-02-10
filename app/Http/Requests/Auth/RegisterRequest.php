@@ -22,7 +22,7 @@ class RegisterRequest extends StoreRequest
      */
     public function rules()
     {
-        return array_merge(Arr::except(parent::rules(), 'role'), [
+        return array_merge(Arr::except(parent::rules(), ['role', 'is_verified']), [
             'agree_with_terms' => 'required|boolean|in:1',
         ]);
     }
@@ -32,7 +32,7 @@ class RegisterRequest extends StoreRequest
      */
     public function attributes()
     {
-        return array_merge(Arr::except(parent::attributes(), 'role'), [
+        return array_merge(Arr::except(parent::attributes(), ['role', 'is_verified']), [
             'agree_with_terms' => trans('Terms of Service'),
         ]);
     }

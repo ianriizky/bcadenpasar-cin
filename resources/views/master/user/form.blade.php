@@ -167,6 +167,36 @@
                                 <x-invalid-feedback :name="'role'"/>
                             </div>
                             {{-- /.role --}}
+
+                            {{-- is_verified --}}
+                            <div class="form-group col-12 col-lg-6">
+                                <label for="is_verified" class="d-block">@lang('Verified')<span class="text-danger">*</span></label>
+
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio"
+                                        name="is_verified"
+                                        id="is_verified_true"
+                                        value="1"
+                                        @if (old('is_verified', $user->is_verified)) checked @endif
+                                        class="custom-control-input">
+
+                                    <label class="custom-control-label" for="is_verified_true">@lang('Yes')</label>
+                                </div>
+
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio"
+                                        name="is_verified"
+                                        id="is_verified_false"
+                                        value="0"
+                                        @unless (old('is_verified', $user->is_verified)) checked @endunless
+                                        class="custom-control-input">
+
+                                    <label class="custom-control-label" for="is_verified_false">@lang('No')</label>
+                                </div>
+
+                                <x-invalid-feedback :name="'is_verified'"/>
+                            </div>
+                            {{-- /.is_verified --}}
                         </div>
 
                         @if ($user->exists)

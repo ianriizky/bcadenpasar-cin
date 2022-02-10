@@ -23,6 +23,7 @@ class StoreRequest extends AbstractRequest
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', Rule::exists(Role::class, 'name')],
+            'is_verified' => ['required', 'boolean'],
         ];
     }
 

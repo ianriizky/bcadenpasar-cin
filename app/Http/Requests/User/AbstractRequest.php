@@ -26,6 +26,7 @@ abstract class AbstractRequest extends FormRequest
             'name' => trans('Name'),
             'email' => trans('Email'),
             'role' => trans('Role'),
+            'is_verified' => trans('Verified'),
         ];
     }
 

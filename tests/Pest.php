@@ -47,6 +47,7 @@ expect()->extend('toBeOne', function () {
 function pest_create_admin(): App\Models\User
 {
     return App\Models\User::factory()
+        ->verified()
         ->forBranch()
         ->create()
         ->syncRoles(App\Models\Role::ROLE_ADMIN);

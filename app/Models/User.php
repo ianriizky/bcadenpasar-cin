@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Infrastructure\Contracts\Auth\MustVerifyUser;
 use App\Infrastructure\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @method static \Database\Factories\UserFactory<static> factory(callable|array|int|null $count = null, callable|array $state = []) Get a new factory instance for the model.
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, MustVerifyUser
 {
     use HasApiTokens, HasFactory, Notifiable,
         Concerns\User\Attribute,
@@ -27,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'is_verified',
     ];
 
     /**
@@ -42,6 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_verified' => 'boolean',
     ];
 
     /**
@@ -75,5 +78,21 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->email_verified_at = $date ?? Carbon::now();
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hasVerifiedUser(): bool
+    {
+        return $this->is_verified;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function markUserAsVerified(): bool
+    {
+        return $this->forceFill(['is_verified' => true])->save();
     }
 }

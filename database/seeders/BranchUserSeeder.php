@@ -135,6 +135,7 @@ class BranchUserSeeder extends Seeder
                     'email' => env('ADMIN_EMAIL', 'admin@admin.com'),
                     'email_verified_at' => Carbon::now(),
                     'password' => env('ADMIN_PASSWORD', 'admin12345'),
+                    'is_verified' => true,
                 ]),
             ],
         ];
@@ -158,6 +159,7 @@ class BranchUserSeeder extends Seeder
                     'email' => 'staff@staff.com',
                     'email_verified_at' => Carbon::now(),
                     'password' => 'staff12345',
+                    'is_verified' => true,
                 ]),
             ],
         ];

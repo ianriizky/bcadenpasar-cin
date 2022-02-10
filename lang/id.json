@@ -808,5 +808,9 @@
     "Number of New CiN": "Jumlah New CiN",
     "Start Date": "Tanggal Awal",
     "End Date": "Tanggal Akhir",
-    "Amount": "Jumlah"
+    "Amount": "Jumlah",
+    "Verify User": "Verifikasi Pengguna",
+    "Verified": "Terverifikasi",
+    "Not Verified": "Tidak Terverifikasi",
+    "Thanks for signing up! Our administrator will verify your email address before you can start using the application. If your account is still unverified, please contact the administrator.": "Terima kasih telah mendaftar! Administrator kami akan memverifikasi alamat email Anda sebelum Anda dapat mulai menggunakan aplikasi. Jika akun Anda masih belum diverifikasi, harap hubungi administrator."
 }

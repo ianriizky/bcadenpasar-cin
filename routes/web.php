@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\Auth\UserVerificationPromptController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
@@ -24,7 +25,11 @@ require __DIR__.'/auth.php';
 
 Route::view('/', 'welcome');
 
-Route::middleware('auth')->group(function () {
+Route::get('/verify-user', [UserVerificationPromptController::class, '__invoke'])
+    ->middleware('auth')
+    ->name('verification-user.notice');
+
+Route::middleware('auth:web', 'user_is_verified')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 
     Route::prefix('/master')->name('master.')->group(function () {

@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Hash;
  * @property string $email
  * @property \Illuminate\Support\Carbon $email_verified_at
  * @property string $password
+ * @property boolean $is_verified
  * @property-read string $remember_token
  * @property-read string $role
  * @property-read string $profile_image
+ * @property-read string $is_verified_badge
  *
  * @see \App\Models\User
  */
@@ -51,5 +53,23 @@ trait Attribute
     public function getProfileImageAttribute(): string
     {
         return gravatar_image($this->email);
+    }
+
+    /**
+     * Return "is_verified_badge" attribute value.
+     *
+     * @return string
+     */
+    public function getIsActiveBadgeAttribute(): string
+    {
+        return sprintf(<<<'html'
+            <span class="badge badge-%s">
+                <i class="fa fa-%s"></i> %s
+            </span>
+        html,
+            $this->is_verified ? 'success' : 'danger',
+            $this->is_verified ? 'check-circle' : 'times-circle',
+            $this->is_verified ? trans('Active') : trans('Not Active')
+        );
     }
 }

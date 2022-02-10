@@ -23,6 +23,7 @@ class UpdateRequest extends AbstractRequest
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignoreModel($this->route('user'))],
             'password' => ['sometimes', 'nullable', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', Rule::exists(Role::class, 'name')],
+            'is_verified' => ['required', 'boolean'],
         ];
     }
 

@@ -26,19 +26,36 @@ class UserFactory extends Factory
             'email_verified_at' => Carbon::now(),
             'password' => 'password',
             'remember_token' => Str::random(10),
+            'is_verified' => $this->faker->boolean(),
         ];
     }
 
     /**
      * Indicate that the model's email address should be unverified.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return static
      */
     public function unverified()
     {
         return $this->state(function (array $attributes) {
             return [
                 'email_verified_at' => null,
+                'is_verified' => false,
+            ];
+        });
+    }
+
+    /**
+     * Indicate that the model's email address should be verified.
+     *
+     * @return static
+     */
+    public function verified()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'email_verified_at' => Carbon::now(),
+                'is_verified' => true,
             ];
         });
     }
