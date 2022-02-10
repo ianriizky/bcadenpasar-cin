@@ -14,6 +14,7 @@
         const datatable_url = @json(route('monitoring.target.datatable'));
         const datatable_columns = [
             { data: 'checkbox', searchable: false, orderable: false, width: '5%' },
+            { data: 'branch_name' },
             { data: 'periodicity' },
             { data: 'start_date' },
             { data: 'end_date' },
@@ -66,6 +67,7 @@
                                         <thead>
                                             <tr>
                                                 <th>@include('components.datatables.checkbox-all')</th>
+                                                <th>@lang('menu.branch')</th>
                                                 <th>@lang('Periodicity')</th>
                                                 <th>@lang('Start Date')</th>
                                                 <th>@lang('End Date')</th>

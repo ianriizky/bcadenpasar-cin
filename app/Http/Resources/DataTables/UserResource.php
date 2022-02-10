@@ -39,7 +39,7 @@ class UserResource extends JsonResource
                 'value' => $this->resource->getKey(),
             ])->render(),
             'branch_name' => view('components.datatables.link', [
-                'url' => route('master.branch.edit', $this->resource->branch),
+                'url' => route('master.branch.show', $this->resource->branch),
                 'name' => $this->resource->branch->name,
             ])->render(),
             'username' => $this->resource->username,

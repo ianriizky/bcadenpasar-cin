@@ -48,7 +48,7 @@ class UserController extends Controller
         return DataTables::eloquent(
             User::query()
                 ->join((new Branch)->getTable(), 'users.branch_id', '=', 'branches.id')
-                ->select('users.*', 'branches.id as branch_id', 'branches.name as branch_name')
+                ->select('users.*', 'branches.name as branch_name')
             )->setTransformer(fn ($model) => UserResource::make($model)->resolve())
             ->orderColumn('branch_name', function ($query, $direction) {
                 $query->orderBy('branches.name', $direction);

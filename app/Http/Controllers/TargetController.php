@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Target\StoreRequest;
 use App\Http\Requests\Target\UpdateRequest;
 use App\Http\Resources\DataTables\TargetResource;
+use App\Models\Branch;
 use App\Models\Target;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -35,15 +37,30 @@ class TargetController extends Controller
     /**
      * Return datatable server side response.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function datatable()
+    public function datatable(Request $request)
     {
         $this->authorize('viewAny', Target::class);
 
-        return DataTables::eloquent(Target::query())
+        if ($request->user()->isStaff()) {
+            $query = $request->user()->branch->targets();
+        } else {
+            $query = Target::query();
+        }
+
+        $query
+            ->join((new Branch)->getTable(), 'targets.branch_id', '=', 'branches.id')
+            ->select('targets.*', 'branches.name as branch_name');
+
+        return DataTables::eloquent($query)
             ->setTransformer(fn ($model) => TargetResource::make($model)->resolve())
-            ->toJson();
+            ->orderColumn('branch_name', function ($query, $direction) {
+                $query->orderBy('branches.name', $direction);
+            })->filterColumn('branch_name', function ($query, $keyword) {
+                $query->where('branches.name', 'like', '%' . $keyword . '%');
+            })->toJson();
     }
 
     /**

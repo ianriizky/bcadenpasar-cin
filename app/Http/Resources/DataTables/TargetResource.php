@@ -38,6 +38,10 @@ class TargetResource extends JsonResource
             'checkbox' => view('components.datatables.checkbox', [
                 'value' => $this->resource->getKey(),
             ])->render(),
+            'branch_name' => view('components.datatables.link', [
+                'url' => route('master.branch.show', $this->resource->branch),
+                'name' => $this->resource->branch->name,
+            ])->render(),
             'periodicity' => $this->resource->periodicity->label,
             'start_date' => $this->resource->start_date_iso_format,
             'end_date' => $this->resource->end_date_iso_format,

@@ -44,7 +44,7 @@ class BranchPolicy
      */
     public function view(User $user, Branch $branch)
     {
-        return $user->branch->is($branch);
+        return $user->isStaff() || $user->branch->is($branch);
     }
 
     /**

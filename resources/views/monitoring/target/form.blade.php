@@ -146,7 +146,7 @@
                                     id="amount"
                                     class="form-control @error('amount') is-invalid @enderror"
                                     value="{{ old('amount', $target->getRawAttribute('amount')) }}"
-                                    min="0"
+                                    min="0" step="1"
                                     required>
 
                                 <x-invalid-feedback :name="'amount'"/>

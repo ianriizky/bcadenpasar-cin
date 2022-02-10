@@ -4,6 +4,7 @@ namespace App\Models\Concerns\Branch;
 
 use App\Models\Event;
 use App\Models\Target;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 

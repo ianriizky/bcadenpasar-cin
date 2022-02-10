@@ -41,7 +41,7 @@ abstract class AbstractRequest extends FormRequest
     public function rules()
     {
         return [
-            'branch_id' => ['required', Rule::exists(Branch::class, 'id')],
+            'branch_id' => [Rule::requiredIf($this->user()->isAdmin()), Rule::exists(Branch::class, 'id')],
             'periodicity' => ['required', new EnumRule(Periodicity::class)],
             'start_date_end_date' => ['required', function ($attribute, $value, $fail) {
                 [$start_date, $end_date] = $this->splitStartEndDate($this->input('start_date_end_date'));
