@@ -69,17 +69,17 @@ Route::middleware('auth')->group(function () {
         });
         Route::resource('/target', TargetController::class);
 
-        // Route::prefix('/event')->name('event.')->group(function () {
-        //     Route::post('/datatable', [EventController::class, 'datatable'])->name('datatable');
-        //     Route::delete('/multiple', [EventController::class, 'destroyMultiple'])->name('destroy-multiple');
-        // });
-        // Route::resource('/event', EventController::class);
+        Route::prefix('/event')->name('event.')->group(function () {
+            Route::post('/datatable', [EventController::class, 'datatable'])->name('datatable');
+            Route::delete('/multiple', [EventController::class, 'destroyMultiple'])->name('destroy-multiple');
+        });
+        Route::resource('/event', EventController::class);
 
-        // Route::prefix('/achievement')->name('achievement.')->group(function () {
-        //     Route::post('/datatable', [AchievementController::class, 'datatable'])->name('datatable');
-        //     Route::delete('/multiple', [AchievementController::class, 'destroyMultiple'])->name('destroy-multiple');
-        // });
-        // Route::resource('/achievement', AchievementController::class);
+        Route::prefix('/achievement')->name('achievement.')->group(function () {
+            Route::post('/datatable', [AchievementController::class, 'datatable'])->name('datatable');
+            Route::delete('/multiple', [AchievementController::class, 'destroyMultiple'])->name('destroy-multiple');
+        });
+        Route::resource('/achievement', AchievementController::class);
     });
 
     Route::prefix('/report')->name('report.')->controller(ReportController::class)->group(function () {

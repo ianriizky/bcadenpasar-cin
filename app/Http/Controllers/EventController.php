@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Achievement;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
-class AchievementController extends Controller
+class EventController extends Controller
 {
     /**
      * Create a new instance class.
@@ -16,7 +16,7 @@ class AchievementController extends Controller
      */
     public function __construct()
     {
-        $this->authorizeResource(Achievement::class, 'achievement');
+        $this->authorizeResource(Event::class, 'event');
     }
 
     /**
@@ -26,7 +26,7 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        return view('monitoring.achievement.index');
+        return view('monitoring.event.index');
     }
 
     /**
@@ -36,10 +36,10 @@ class AchievementController extends Controller
      */
     public function datatable()
     {
-        $this->authorize('viewAny', Achievement::class);
+        $this->authorize('viewAny', Event::class);
 
-        return DataTables::eloquent(Achievement::query())
-            ->setTransformer(fn ($model) => AchievementResource::make($model)->resolve())
+        return DataTables::eloquent(Event::query())
+            ->setTransformer(fn ($model) => EventResource::make($model)->resolve())
             ->toJson();
     }
 
@@ -50,23 +50,23 @@ class AchievementController extends Controller
      */
     public function create()
     {
-        return view('monitoring.achievement.create');
+        return view('monitoring.event.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Achievement\StoreRequest  $request
+     * @param  \App\Http\Requests\Event\StoreRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreRequest $request)
     {
         $request->store();
 
-        return redirect()->route('monitoring.achievement.index')->with([
+        return redirect()->route('monitoring.event.index')->with([
             'alert' => [
                 'type' => 'alert-success',
-                'message' => trans('The :resource was created!', ['resource' => trans('menu.achievement')]),
+                'message' => trans('The :resource was created!', ['resource' => trans('menu.event')]),
             ],
         ]);
     }
@@ -74,40 +74,40 @@ class AchievementController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Achievement  $achievement
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function show(Achievement $achievement)
+    public function show(Event $event)
     {
-        return view('monitoring.achievement.show', compact('achievement'));
+        return view('monitoring.event.show', compact('event'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Achievement  $achievement
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function edit(Achievement $achievement)
+    public function edit(Event $event)
     {
-        return view('monitoring.achievement.edit', compact('achievement'));
+        return view('monitoring.event.edit', compact('event'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Achievement\UpdateRequest  $request
-     * @param  \App\Models\Achievement  $achievement
+     * @param  \App\Http\Requests\Event\UpdateRequest  $request
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateRequest $request, Achievement $achievement)
+    public function update(UpdateRequest $request, Event $event)
     {
-        $achievement = $request->update($achievement);
+        $event = $request->update($event);
 
-        return redirect()->route('monitoring.achievement.edit', $achievement)->with([
+        return redirect()->route('monitoring.event.edit', $event)->with([
             'alert' => [
                 'type' => 'alert-success',
-                'message' => trans('The :resource was updated!', ['resource' => trans('menu.achievement')]),
+                'message' => trans('The :resource was updated!', ['resource' => trans('menu.event')]),
             ],
         ]);
     }
@@ -115,17 +115,17 @@ class AchievementController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Achievement  $achievement
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Achievement $achievement)
+    public function destroy(Event $event)
     {
-        $achievement->delete();
+        $event->delete();
 
-        return redirect()->route('monitoring.achievement.index')->with([
+        return redirect()->route('monitoring.event.index')->with([
             'alert' => [
                 'type' => 'alert-success',
-                'message' => trans('The :resource was deleted!', ['resource' => trans('menu.achievement')]),
+                'message' => trans('The :resource was deleted!', ['resource' => trans('menu.event')]),
             ],
         ]);
     }
@@ -140,18 +140,18 @@ class AchievementController extends Controller
     {
         DB::transaction(function () use ($request) {
             foreach ($request->input('checkbox', []) as $id) {
-                $achievement = Achievement::find($id, 'id');
+                $event = Event::find($id, 'id');
 
-                $this->authorize('delete', $achievement);
+                $this->authorize('delete', $event);
 
-                $achievement->delete();
+                $event->delete();
             }
         });
 
-        return redirect()->route('monitoring.achievement.index')->with([
+        return redirect()->route('monitoring.event.index')->with([
             'alert' => [
                 'type' => 'alert-success',
-                'message' => trans('The :resource was deleted!', ['resource' => trans('menu.achievement')]),
+                'message' => trans('The :resource was deleted!', ['resource' => trans('menu.event')]),
             ],
         ]);
     }
