@@ -18,7 +18,7 @@ trait Relation
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function achieved_by(): BelongsTo
+    public function achievedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'achieved_by');
     }
@@ -41,7 +41,7 @@ trait Relation
      */
     public function setAchievedByRelationValue(User $user)
     {
-        $this->achieved_by()->associate($user);
+        $this->achievedBy()->associate($user);
 
         return $this;
     }

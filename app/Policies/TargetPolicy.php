@@ -67,7 +67,9 @@ class TargetPolicy
      */
     public function update(User $user, Target $target)
     {
-        return $user->isStaff() && $target->branch->users->contains($user);
+        return
+            $user->isAdmin() ||
+            ($user->isStaff() && $target->branch->users->contains($user));
     }
 
     /**
@@ -79,7 +81,9 @@ class TargetPolicy
      */
     public function delete(User $user, Target $target)
     {
-        return $user->isStaff() && $target->branch->users->contains($user);
+        return
+            $user->isAdmin() ||
+            ($user->isStaff() && $target->branch->users->contains($user));
     }
 
     /**

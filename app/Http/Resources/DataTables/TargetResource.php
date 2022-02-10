@@ -18,19 +18,19 @@ class TargetResource extends JsonResource
 
         if ($request->user()->can('view', $this->resource)) {
             $elements[] = view('components.datatables.link-show', [
-                'url' => route('master.target.show', $this->resource),
+                'url' => route('monitoring.target.show', $this->resource),
             ])->render();
         }
 
         if ($request->user()->can('update', $this->resource)) {
             $elements[] = view('components.datatables.link-edit', [
-                'url' => route('master.target.edit', $this->resource),
+                'url' => route('monitoring.target.edit', $this->resource),
             ])->render();
         }
 
         if ($request->user()->can('delete', $this->resource)) {
             $elements[] = view('components.datatables.link-destroy', [
-                'url' => route('master.target.destroy', $this->resource),
+                'url' => route('monitoring.target.destroy', $this->resource),
             ])->render();
         }
 
@@ -39,9 +39,9 @@ class TargetResource extends JsonResource
                 'value' => $this->resource->getKey(),
             ])->render(),
             'periodicity' => $this->resource->periodicity->label,
-            'start_date' => $this->resource->start_date->isoFormat('Y-m-d'),
-            'end_date' => $this->resource->end_date->isoFormat('Y-m-d'),
-            'amount' => $this->resource->amount,
+            'start_date' => $this->resource->start_date_iso_format,
+            'end_date' => $this->resource->end_date_iso_format,
+            'amount' => $this->resource->getRawAttribute('amount'),
             'action' => view('components.datatables.button-group', compact('elements'))->render(),
         ];
     }

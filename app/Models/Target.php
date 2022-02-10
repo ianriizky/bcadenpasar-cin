@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Casts\TargetAmount;
 use App\Enum\Periodicity;
+use App\Events\CreatingHasCreatedByAttribute;
 use App\Infrastructure\Contracts\Model\HasCreatedByAttribute;
 use App\Infrastructure\Database\Eloquent\Model;
-use App\Listeners\FillCreatedByWhenCreatingModel;
 use App\Support\Model\HandleCreatedByAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,6 +16,13 @@ class Target extends Model implements HasCreatedByAttribute
         HandleCreatedByAttribute,
         Concerns\Target\Attribute,
         Concerns\Target\Relation;
+
+    /**
+     * Value of date format ISO.
+     *
+     * @var string
+     */
+    const DATE_FORMAT_ISO = 'DD MMMM YYYY';
 
     /**
      * {@inheritDoc}
@@ -42,6 +49,6 @@ class Target extends Model implements HasCreatedByAttribute
      * {@inheritDoc}
      */
     protected $dispatchesEvents = [
-        'creating' => FillCreatedByWhenCreatingModel::class,
+        'creating' => CreatingHasCreatedByAttribute::class,
     ];
 }

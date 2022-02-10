@@ -3,9 +3,6 @@
 namespace App\Http\Requests\Branch;
 
 use App\Models\Branch;
-use App\Models\Role;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules;
 
 class StoreRequest extends AbstractRequest
 {

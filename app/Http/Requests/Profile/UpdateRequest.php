@@ -32,10 +32,14 @@ class UpdateRequest extends FormRequest
      */
     public function validated($key = null, $default = null)
     {
-        $validated = parent::validated($key, $default);
+        $validated = parent::validated();
 
         if ($this->isNotFilled('password')) {
             Arr::forget($validated, 'password');
+        }
+
+        if (!is_null($key)) {
+            return data_get($validated, $key, $default);
         }
 
         return $validated;

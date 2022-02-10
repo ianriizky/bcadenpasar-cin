@@ -12,7 +12,7 @@ trait HandleCreatedByAttribute
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function created_by(): BelongsTo
+    public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
@@ -35,7 +35,7 @@ trait HandleCreatedByAttribute
      */
     public function setCreatedByRelationValue(User $user)
     {
-        $this->created_by()->associate($user);
+        $this->createdBy()->associate($user);
 
         return $this;
     }

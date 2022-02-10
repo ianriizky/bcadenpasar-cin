@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Target\StoreRequest;
+use App\Http\Requests\Target\UpdateRequest;
 use App\Http\Resources\DataTables\TargetResource;
 use App\Models\Target;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class TargetController extends Controller
@@ -56,12 +59,19 @@ class TargetController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Target\StoreRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $request->store();
+
+        return redirect()->route('monitoring.target.index')->with([
+            'alert' => [
+                'type' => 'alert-success',
+                'message' => trans('The :resource was created!', ['resource' => trans('menu.target')]),
+            ],
+        ]);
     }
 
     /**
@@ -72,7 +82,7 @@ class TargetController extends Controller
      */
     public function show(Target $target)
     {
-        //
+        return view('monitoring.target.show', compact('target'));
     }
 
     /**
@@ -89,13 +99,20 @@ class TargetController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Target\UpdateRequest  $request
      * @param  \App\Models\Target  $target
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Target $target)
+    public function update(UpdateRequest $request, Target $target)
     {
-        //
+        $target = $request->update($target);
+
+        return redirect()->route('monitoring.target.edit', $target)->with([
+            'alert' => [
+                'type' => 'alert-success',
+                'message' => trans('The :resource was updated!', ['resource' => trans('menu.target')]),
+            ],
+        ]);
     }
 
     /**
@@ -106,6 +123,39 @@ class TargetController extends Controller
      */
     public function destroy(Target $target)
     {
-        //
+        $target->delete();
+
+        return redirect()->route('monitoring.target.index')->with([
+            'alert' => [
+                'type' => 'alert-success',
+                'message' => trans('The :resource was deleted!', ['resource' => trans('menu.target')]),
+            ],
+        ]);
+    }
+
+    /**
+     * Remove the specified list of resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroyMultiple(Request $request)
+    {
+        DB::transaction(function () use ($request) {
+            foreach ($request->input('checkbox', []) as $id) {
+                $target = Target::find($id, 'id');
+
+                $this->authorize('delete', $target);
+
+                $target->delete();
+            }
+        });
+
+        return redirect()->route('monitoring.target.index')->with([
+            'alert' => [
+                'type' => 'alert-success',
+                'message' => trans('The :resource was deleted!', ['resource' => trans('menu.target')]),
+            ],
+        ]);
     }
 }

@@ -15,7 +15,7 @@ interface HasCreatedByAttribute
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function created_by(): BelongsTo;
+    public function createdBy(): BelongsTo;
 
     /**
      * Return \App\Models\User model relation value.

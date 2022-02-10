@@ -45,7 +45,6 @@
                         {{-- /.target --}}
 
                         {{-- event --}}
-                        {{--
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                             <article class="article">
                                 <div class="article-header">
@@ -69,11 +68,9 @@
                                 </div>
                             </article>
                         </div>
-                        --}}
                         {{-- /.event --}}
 
                         {{-- achievement --}}
-                        {{--
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                             <article class="article">
                                 <div class="article-header">
@@ -97,7 +94,6 @@
                                 </div>
                             </article>
                         </div>
-                        --}}
                         {{-- /.achievement --}}
                     </div>
                 </div>

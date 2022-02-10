@@ -16,7 +16,7 @@ class UpdateRequest extends AbstractRequest
     public function rules()
     {
         return [
-            'branch_id' => ['required', Rule::Exists(Branch::class, 'id')],
+            'branch_id' => ['required', Rule::exists(Branch::class, 'id')],
 
             'username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignoreModel($this->route('user'))],
             'name' => 'required|string|max:255',

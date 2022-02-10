@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Infrastructure\Contracts\Model\HasCreatedByAttribute;
+use App\Events\CreatingHasCreatedByAttribute;
 use Illuminate\Support\Facades\Auth;
 
 class FillCreatedByWhenCreatingModel
@@ -10,13 +10,13 @@ class FillCreatedByWhenCreatingModel
     /**
      * Handle the event.
      *
-     * @param  \App\Infrastructure\Contracts\Model\HasCreatedByAttribute  $model
+     * @param  \App\Events\CreatingHasCreatedByAttribute  $event
      * @return void
      */
-    public function handle(HasCreatedByAttribute $model)
+    public function handle(CreatingHasCreatedByAttribute $event)
     {
         if (Auth::check()) {
-            $model->setCreatedByRelationValue(Auth::user());
+            $event->getModel()->setCreatedByRelationValue(Auth::user());
         }
     }
 }
