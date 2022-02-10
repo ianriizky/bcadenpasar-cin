@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Infrastructure\Contracts\Auth\MustVerifyUser;
 use App\Infrastructure\Foundation\Auth\User as Authenticatable;
+use App\Infrastructure\Models\Relation\BelongsToBranch;
+use App\Infrastructure\Models\Relation\HasManyAchievements;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
@@ -13,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @method static \Database\Factories\UserFactory<static> factory(callable|array|int|null $count = null, callable|array $state = []) Get a new factory instance for the model.
  */
-class User extends Authenticatable implements MustVerifyEmail, MustVerifyUser
+class User extends Authenticatable implements MustVerifyEmail, MustVerifyUser, BelongsToBranch, HasManyAchievements
 {
     use HasApiTokens, HasFactory, Notifiable,
         Concerns\User\Attribute,

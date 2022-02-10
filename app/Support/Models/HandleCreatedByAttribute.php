@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Support\Model;
+namespace App\Support\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $created_by Foreign key of \App\Models\User.
+ * @property-read \App\Models\User $createdBy
+ */
 trait HandleCreatedByAttribute
 {
     /**

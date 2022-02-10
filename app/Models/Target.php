@@ -7,13 +7,15 @@ use App\Enum\Periodicity;
 use App\Events\CreatingHasCreatedByAttribute;
 use App\Infrastructure\Contracts\Model\HasCreatedByAttribute;
 use App\Infrastructure\Database\Eloquent\Model;
-use App\Support\Model\HandleCreatedByAttribute;
+use App\Infrastructure\Models\Relation\BelongsToBranch;
+use App\Infrastructure\Models\Relation\HasManyAchievements;
+use App\Support\Models\HandleCreatedByAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @method static \Database\Factories\TargetFactory<static> factory(callable|array|int|null $count = null, callable|array $state = []) Get a new factory instance for the model.
  */
-class Target extends Model implements HasCreatedByAttribute
+class Target extends Model implements BelongsToBranch, HasManyAchievements, HasCreatedByAttribute
 {
     use HasFactory,
         HandleCreatedByAttribute,

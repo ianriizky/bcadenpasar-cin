@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\DataTables\UserResource;
-use App\Models\Branch;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -45,11 +44,12 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        return DataTables::eloquent(
-            User::query()
-                ->join((new Branch)->getTable(), 'users.branch_id', '=', 'branches.id')
-                ->select('users.*', 'branches.name as branch_name')
-            )->setTransformer(fn ($model) => UserResource::make($model)->resolve())
+        $query = User::query()
+            ->join('branches', 'users.branch_id', '=', 'branches.id')
+            ->select('users.*', 'branches.name as branch_name');
+
+        return DataTables::eloquent($query)
+            ->setTransformer(fn ($model) => UserResource::make($model)->resolve())
             ->orderColumn('branch_name', function ($query, $direction) {
                 $query->orderBy('branches.name', $direction);
             })->filterColumn('branch_name', function ($query, $keyword) {

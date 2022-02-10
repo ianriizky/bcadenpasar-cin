@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DataTables\AchievementResource;
 use App\Models\Achievement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,15 +33,35 @@ class AchievementController extends Controller
     /**
      * Return datatable server side response.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function datatable()
+    public function datatable(Request $request)
     {
         $this->authorize('viewAny', Achievement::class);
 
-        return DataTables::eloquent(Achievement::query())
+        if ($request->user()->isStaff()) {
+            $query = $request->user()->branch->achievements();
+        } else {
+            $query = Achievement::query();
+        }
+
+        $query
+            ->join('branches', 'targets.branch_id', '=', 'branches.id')
+            ->leftJoin('events', 'achievements.event_id', '=', 'events.id')
+            ->select('achievements.*', 'branches.name as branch_name', 'events.name as event_name');
+
+        return DataTables::eloquent($query)
             ->setTransformer(fn ($model) => AchievementResource::make($model)->resolve())
-            ->toJson();
+            ->orderColumn('branch_name', function ($query, $direction) {
+                $query->orderBy('branches.name', $direction);
+            })->filterColumn('branch_name', function ($query, $keyword) {
+                $query->where('branches.name', 'like', '%' . $keyword . '%');
+            })->orderColumn('event_name', function ($query, $direction) {
+                $query->orderBy('events.name', $direction);
+            })->filterColumn('event_name', function ($query, $keyword) {
+                $query->where('events.name', 'like', '%' . $keyword . '%');
+            })->toJson();
     }
 
     /**

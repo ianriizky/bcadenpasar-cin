@@ -3,7 +3,7 @@
 namespace App\Models\Concerns\Achievement;
 
 use App\Models\Achievement;
-use App\Support\Model\Event as ModelEvent;
+use App\Support\Models\Event as ModelEvent;
 use Illuminate\Support\Facades\Auth;
 
 /**

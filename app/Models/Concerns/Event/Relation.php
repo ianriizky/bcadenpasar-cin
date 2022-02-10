@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Concerns\Target;
+namespace App\Models\Concerns\Event;
 
 use App\Support\Models\BelongsToBranch;
 use App\Support\Models\HasManyAchievements;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * @see \App\Models\Target
+ * @see \App\Models\Event
  */
 trait Relation
 {

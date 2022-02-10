@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Target\StoreRequest;
 use App\Http\Requests\Target\UpdateRequest;
 use App\Http\Resources\DataTables\TargetResource;
-use App\Models\Branch;
 use App\Models\Target;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -51,7 +49,7 @@ class TargetController extends Controller
         }
 
         $query
-            ->join((new Branch)->getTable(), 'targets.branch_id', '=', 'branches.id')
+            ->join('branches', 'targets.branch_id', '=', 'branches.id')
             ->select('targets.*', 'branches.name as branch_name');
 
         return DataTables::eloquent($query)

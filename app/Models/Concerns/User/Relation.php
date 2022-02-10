@@ -4,8 +4,8 @@ namespace App\Models\Concerns\User;
 
 use App\Models\Achievement;
 use App\Models\Branch;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Support\Models\BelongsToBranch;
+use App\Support\Models\HasManyAchievements;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -19,17 +19,9 @@ use Spatie\Permission\Traits\HasRoles;
  */
 trait Relation
 {
-    use HasRoles;
-
-    /**
-     * Define an inverse one-to-many relationship with \App\Models\Branch.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function branch(): BelongsTo
-    {
-        return $this->belongsTo(Branch::class);
-    }
+    use HasRoles,
+        BelongsToBranch,
+        HasManyAchievements;
 
     /**
      * Return \App\Models\Branch model relation value.
@@ -42,50 +34,12 @@ trait Relation
     }
 
     /**
-     * Set \App\Models\Branch model relation value.
-     *
-     * @param  \App\Models\Branch  $branch
-     * @return $this
-     */
-    public function setBranchRelationValue(Branch $branch)
-    {
-        $this->branch()->associate($branch);
-
-        return $this;
-    }
-
-    /**
-     * Define a one-to-many relationship with App\Models\Achievement.
+     * Define a one-to-many relationship with \App\Models\Achievement.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function achievements(): HasMany
     {
-        return $this->hasMany(Achievement::class);
-    }
-
-    /**
-     * Return collection of \App\Models\Achievement model relation value.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement>
-     */
-    public function getAchievementsRelationValue(): Collection
-    {
-        return $this->getCollectionValue('achievements', Achievement::class);
-    }
-
-    /**
-     * Set collection of \App\Models\Achievement model relation value.
-     *
-     * @param  \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement>  $achievements
-     * @return $this
-     */
-    public function setAchievementsRelationValue(Collection $achievements)
-    {
-        if ($this->isCollectionValid($achievements, Achievement::class)) {
-            $this->setRelation('achievements', $achievements);
-        }
-
-        return $this;
+        return $this->hasMany(Achievement::class, 'achieved_by');
     }
 }

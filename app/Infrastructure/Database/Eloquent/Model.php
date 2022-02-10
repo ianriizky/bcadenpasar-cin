@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Database\Eloquent;
 
-use App\Support\Model\HasAttributes;
+use App\Support\Models\HasAttributes;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 

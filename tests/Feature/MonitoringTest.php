@@ -83,7 +83,7 @@ it('can update target', function () {
 
     $updatedTarget = Target::where(Arr::except($data, 'start_date_end_date'))->first();
 
-    $response->assertRedirect(route('monitoring.target.edit', ['target' => $updatedTarget]));
+    $response->assertRedirect(route('monitoring.target.edit', $updatedTarget));
 
     assertModelExists($updatedTarget);
 });

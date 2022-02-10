@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Model;
+namespace App\Support\Models;
 
 /**
  * @method static void retrieved(\Closure|string $callback) Register a retrieved model event with the dispatcher.

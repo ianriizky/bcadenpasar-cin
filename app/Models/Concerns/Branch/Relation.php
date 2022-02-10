@@ -2,23 +2,26 @@
 
 namespace App\Models\Concerns\Branch;
 
+use App\Models\Achievement;
 use App\Models\Event;
 use App\Models\Target;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\User> $users
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Target> $targets
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Event> $events
+ * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement> $achievements
  *
  * @see \App\Models\Branch
  */
 trait Relation
 {
     /**
-     * Define a one-to-many relationship with App\Models\User.
+     * Define a one-to-many relationship with \App\Models\User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -53,7 +56,7 @@ trait Relation
     }
 
     /**
-     * Define a one-to-many relationship with App\Models\Target.
+     * Define a one-to-many relationship with \App\Models\Target.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -88,7 +91,7 @@ trait Relation
     }
 
     /**
-     * Define a one-to-many relationship with App\Models\Event.
+     * Define a one-to-many relationship with \App\Models\Event.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -117,6 +120,41 @@ trait Relation
     {
         if ($this->isCollectionValid($events, Event::class)) {
             $this->setRelation('events', $events);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Define a has-many-through relationship with \App\Models\Achievement through \App\Models\Target.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function achievements(): HasManyThrough
+    {
+        return $this->hasManyThrough(Achievement::class, Target::class);
+    }
+
+    /**
+     * Return collection of \App\Models\Achievement model relation value.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement>
+     */
+    public function getAchievementsRelationValue(): Collection
+    {
+        return $this->getCollectionValue('achievements', Achievement::class);
+    }
+
+    /**
+     * Set collection of \App\Models\Achievement model relation value.
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement>  $achievements
+     * @return $this
+     */
+    public function setAchievementsRelationValue(Collection $achievements)
+    {
+        if ($this->isCollectionValid($achievements, Achievement::class)) {
+            $this->setRelation('achievements', $achievements);
         }
 
         return $this;

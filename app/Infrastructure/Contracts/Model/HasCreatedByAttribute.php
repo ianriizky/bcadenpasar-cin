@@ -5,9 +5,6 @@ namespace App\Infrastructure\Contracts\Model;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * @property \App\Models\User $created_by
- */
 interface HasCreatedByAttribute
 {
     /**

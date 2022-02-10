@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Model;
+namespace App\Support\Models;
 
 use DomainException;
 use Illuminate\Database\Eloquent\Collection;

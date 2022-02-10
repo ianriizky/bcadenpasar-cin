@@ -3,7 +3,7 @@
 namespace App\Models\Concerns\User;
 
 use App\Models\User;
-use App\Support\Model\Event as ModelEvent;
+use App\Support\Models\Event as ModelEvent;
 
 /**
  * @see \App\Models\User
