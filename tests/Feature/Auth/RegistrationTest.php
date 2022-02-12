@@ -25,7 +25,7 @@ class RegistrationTest extends TestCase
         Event::fake();
 
         $response = $this->post(route('register'), [
-            'branch_id' => Branch::value('id'),
+            'branch_id' => Branch::inRandomOrder()->value('id'),
 
             'username' => $user->username,
             'name' => $user->name,

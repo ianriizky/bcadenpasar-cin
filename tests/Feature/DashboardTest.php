@@ -3,11 +3,11 @@
 use function Pest\Laravel\actingAs;
 
 beforeEach(function () {
-    $this->admin = pest_create_random_user();
+    $this->user = pest_create_random_user();
 });
 
 it('has dashboard page', function () {
-    actingAs($this->admin)
+    actingAs($this->user)
         ->get(route('dashboard'))
         ->assertOk();
 });

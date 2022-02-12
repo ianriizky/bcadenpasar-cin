@@ -7,11 +7,11 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 
 beforeEach(function () {
-    $this->admin = pest_create_random_user();
+    $this->user = pest_create_random_user();
 });
 
 it('has profile edit page', function () {
-    actingAs($this->admin)
+    actingAs($this->user)
         ->get(route('profile.edit'))
         ->assertOk();
 });
@@ -19,7 +19,7 @@ it('has profile edit page', function () {
 it('can update profile', function () {
     $data = Arr::except(User::factory()->rawForm(), 'role');
 
-    actingAs($this->admin)
+    actingAs($this->user)
         ->put(route('profile.edit'), $data)
         ->assertRedirect(route('profile.edit'));
 
