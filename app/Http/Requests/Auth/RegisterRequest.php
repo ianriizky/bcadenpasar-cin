@@ -23,7 +23,7 @@ class RegisterRequest extends StoreRequest
     public function rules()
     {
         return array_merge(Arr::except(parent::rules(), ['role', 'is_verified']), [
-            'agree_with_terms' => 'required|boolean|in:1',
+            'agree_with_terms' => ['required', 'boolean', 'in:1'],
         ]);
     }
 

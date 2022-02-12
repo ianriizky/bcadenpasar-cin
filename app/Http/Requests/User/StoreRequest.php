@@ -19,7 +19,7 @@ class StoreRequest extends AbstractRequest
             'branch_id' => ['required', Rule::exists(Branch::class, 'id')],
 
             'username' => ['required', 'string', 'max:255', Rule::unique(User::class)],
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', Rule::exists(Role::class, 'name')],

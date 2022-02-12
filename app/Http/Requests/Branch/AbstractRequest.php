@@ -17,6 +17,17 @@ abstract class AbstractRequest extends FormRequest
     /**
      * {@inheritDoc}
      */
+    public function rules()
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string'],
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function attributes()
     {
         return [

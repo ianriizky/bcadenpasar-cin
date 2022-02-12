@@ -7,17 +7,6 @@ use App\Models\Branch;
 class StoreRequest extends AbstractRequest
 {
     /**
-     * {@inheritDoc}
-     */
-    public function rules()
-    {
-        return [
-            'name' => 'required|string|max:255',
-            'address' => 'required|string',
-        ];
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return \App\Models\Branch
