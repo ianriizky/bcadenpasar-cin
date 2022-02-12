@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Infrastructure\Contracts\Auth\HasRole;
 use App\Models\Branch;
 use App\Models\Role;
 use App\Models\User;
@@ -26,7 +27,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('view-dashboard', fn (User $user) => $user->isAdmin() || $user->isStaff());
+        Gate::define('view-dashboard', fn (HasRole $user) =>
+            $user->isAdmin() || $user->isStaff()
+        );
 
         Gate::define('view-master', fn (User $user) =>
             $user->can('viewAny', Branch::class) ||

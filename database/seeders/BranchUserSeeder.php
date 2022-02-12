@@ -19,7 +19,7 @@ class BranchUserSeeder extends Seeder
      */
     protected function data(): array
     {
-        return require_once 'users.php';
+        return require database_path('seeders/users.php');
     }
 
     /**

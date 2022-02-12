@@ -4,7 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Models\Branch;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
@@ -37,5 +37,7 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect(route('verification-user.notice'));
+
+        Event::assertDispatched(Registered::class);
     }
 }

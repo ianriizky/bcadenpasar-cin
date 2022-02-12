@@ -43,10 +43,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return
-            $user->isManager() ||
-            ($user->isStaff() && $user->branch->is($model->branch)) ||
-            $user->is($model);
+        return $this->update($user, $model) || $user->is($model);
     }
 
     /**
@@ -57,7 +54,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin() || $user->isManager();
+        return $user->isManager();
     }
 
     /**

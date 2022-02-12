@@ -38,6 +38,10 @@ abstract class AbstractRequest extends FormRequest
      */
     public function getBranch(string $key = 'branch_id'): Branch
     {
-        return Branch::find($this->input($key));
+        if ($this->user()->isAdmin()) {
+            return Branch::find($this->input($key));
+        }
+
+        return $this->user()->branch;
     }
 }

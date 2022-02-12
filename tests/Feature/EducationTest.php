@@ -3,7 +3,7 @@
 use function Pest\Laravel\actingAs;
 
 beforeEach(function () {
-    $this->admin = pest_create_admin();
+    $this->admin = pest_create_random_user();
 });
 
 it('has education index page', function () {

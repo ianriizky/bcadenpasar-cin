@@ -7,7 +7,7 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 
 beforeEach(function () {
-    $this->admin = pest_create_admin();
+    $this->admin = pest_create_random_user();
 });
 
 it('has profile edit page', function () {

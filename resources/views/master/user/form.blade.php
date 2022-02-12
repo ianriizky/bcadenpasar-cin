@@ -52,17 +52,23 @@
                             <div class="form-group col-12 col-lg-6">
                                 <label for="branch_id">@lang('menu.branch')<span class="text-danger">*</span></label>
 
-                                <select name="branch_id"
-                                    id="branch_id"
-                                    class="form-control select2 @error('branch_id') is-invalid @enderror"
-                                    data-placeholder="--@lang('Choose :field', ['field' => __('menu.branch') ])--"
-                                    data-allow-clear="true"
-                                    required
-                                    autofocus>
-                                    @foreach (\App\Models\Branch::pluck('name', 'id') as $value => $label)
-                                        <option value="{{ $value }}">{{ $label }}</option>
-                                    @endforeach
-                                </select>
+                                @role(\App\Models\Role::ROLE_ADMIN)
+                                    <select name="branch_id"
+                                        id="branch_id"
+                                        class="form-control select2 @error('branch_id') is-invalid @enderror"
+                                        data-placeholder="--@lang('Choose :field', ['field' => __('menu.branch') ])--"
+                                        data-allow-clear="true"
+                                        required
+                                        autofocus>
+                                        @foreach (\App\Models\Branch::pluck('name', 'id') as $value => $label)
+                                            <option value="{{ $value }}">{{ $label }}</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    <p class="form-control-plaintext">
+                                        {{ Auth::user()->branch->name }}
+                                    </p>
+                                @endrole
 
                                 <x-invalid-feedback :name="'branch_id'"/>
                             </div>

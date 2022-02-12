@@ -40,15 +40,67 @@ expect()->extend('toBeOne', function () {
 */
 
 /**
- * Create user data from factory with "admin" role.
+ * Create user data from factory with "admin" role and specified branch.
  *
+ * @param  string  $role
+ * @param  \App\Models\Branch  $branch
  * @return \App\Models\User
  */
-function pest_create_admin(): App\Models\User
+function pest_create_user(string $role, App\Models\Branch $branch = null): App\Models\User
 {
     return App\Models\User::factory()
         ->verified()
-        ->forBranch()
+        ->for($branch ?? App\Models\Branch::factory())
         ->create()
-        ->syncRoles(App\Models\Role::ROLE_ADMIN);
+        ->syncRoles($role);
+}
+
+/**
+ * Create user data from factory with "manager" role and related with the existed branch.
+ *
+ * @return \App\Models\User
+ */
+function pest_create_manager_from_existed_branch(): App\Models\User
+{
+    return pest_create_user(
+        App\Models\Role::ROLE_MANAGER,
+        App\Models\Branch::inRandomOrder()->first('id')
+    );
+}
+
+/**
+ * Create user data from factory with random role and specified branch.
+ *
+ * @param  \App\Models\Branch  $branch
+ * @return \App\Models\User
+ */
+function pest_create_random_user(App\Models\Branch $branch = null): App\Models\User
+{
+    return App\Models\User::factory()
+        ->verified()
+        ->for($branch ?? App\Models\Branch::factory())
+        ->create()
+        ->syncRoles(Illuminate\Support\Arr::random([
+            App\Models\Role::ROLE_ADMIN,
+            App\Models\Role::ROLE_MANAGER,
+            App\Models\Role::ROLE_STAFF,
+        ]));
+}
+
+/**
+ * Create user data from factory with manager or staff role and specified branch.
+ *
+ * @param  \App\Models\Branch  $branch
+ * @return \App\Models\User
+ */
+function pest_create_random_manager_or_staff(App\Models\Branch $branch = null): App\Models\User
+{
+    return App\Models\User::factory()
+        ->verified()
+        ->for($branch ?? App\Models\Branch::factory())
+        ->create()
+        ->syncRoles(Illuminate\Support\Arr::random([
+            App\Models\Role::ROLE_MANAGER,
+            App\Models\Role::ROLE_STAFF,
+        ]));
 }

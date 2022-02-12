@@ -44,7 +44,7 @@ class BranchPolicy
      */
     public function view(User $user, Branch $model)
     {
-        return $user->isManager() || $user->isStaff() || $user->branch->is($model);
+        return $user->branch->is($model);
     }
 
     /**
@@ -67,7 +67,7 @@ class BranchPolicy
      */
     public function update(User $user, Branch $model)
     {
-        return $user->isAdmin() || ($user->isManager() && $user->branch->is($model));
+        return $user->isManager() && $this->view($user, $model);
     }
 
     /**
@@ -79,7 +79,7 @@ class BranchPolicy
      */
     public function delete(User $user, Branch $model)
     {
-        return $this->update($user, $model);
+        return $user->isAdmin();
     }
 
     /**

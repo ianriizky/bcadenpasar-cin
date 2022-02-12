@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Infrastructure\Contracts\Auth\BypassVerifyEmail;
+use App\Infrastructure\Contracts\Auth\HasRole;
 use App\Infrastructure\Contracts\Auth\MustVerifyUser;
 use App\Infrastructure\Contracts\Models\Relation\BelongsToBranch;
 use App\Infrastructure\Contracts\Models\Relation\HasManyAchievements;
@@ -17,7 +18,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @method static \Database\Factories\UserFactory<static> factory(callable|array|int|null $count = null, callable|array $state = []) Get a new factory instance for the model.
  */
-class User extends Authenticatable implements MustVerifyEmail, BypassVerifyEmail, MustVerifyUser, BelongsToBranch, HasManyAchievements
+class User extends Authenticatable implements HasRole, MustVerifyEmail, BypassVerifyEmail, MustVerifyUser, BelongsToBranch, HasManyAchievements
 {
     use HasApiTokens, HasFactory, Notifiable, BypassEmailVerification,
         Concerns\User\Attribute,
@@ -52,9 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail, BypassVerifyEmail
     ];
 
     /**
-     * Determine if the user has the role of "admin".
-     *
-     * @return bool
+     * {@inheritDoc}
      */
     public function isAdmin(): bool
     {
@@ -62,9 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail, BypassVerifyEmail
     }
 
     /**
-     * Determine if the user has the role of "manager".
-     *
-     * @return bool
+     * {@inheritDoc}
      */
     public function isManager(): bool
     {
@@ -72,9 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail, BypassVerifyEmail
     }
 
     /**
-     * Determine if the user has the role of "staff".
-     *
-     * @return bool
+     * {@inheritDoc}
      */
     public function isStaff(): bool
     {

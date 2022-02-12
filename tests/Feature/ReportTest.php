@@ -3,7 +3,7 @@
 use function Pest\Laravel\actingAs;
 
 beforeEach(function () {
-    $this->admin = pest_create_admin();
+    $this->user = pest_create_manager_from_existed_branch();
 });
 
 it('has report index page', function () {

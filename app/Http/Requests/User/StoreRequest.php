@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\User;
 
-use App\Models\Branch;
 use App\Models\Role;
 use App\Models\User;
+use App\Rules\BranchExists;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
@@ -16,7 +16,7 @@ class StoreRequest extends AbstractRequest
     public function rules()
     {
         return [
-            'branch_id' => ['required', Rule::exists(Branch::class, 'id')],
+            'branch_id' => ['required', new BranchExists($this->user())],
 
             'username' => ['required', 'string', 'max:255', Rule::unique(User::class)],
             'name' => ['required', 'string', 'max:255'],

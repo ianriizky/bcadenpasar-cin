@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Branch;
+use App\Models\Event;
 use App\Models\Target;
 use Illuminate\Support\Arr;
 
@@ -10,7 +11,7 @@ use function Pest\Laravel\assertModelExists;
 use function Pest\Laravel\assertModelMissing;
 
 beforeEach(function () {
-    $this->admin = pest_create_admin();
+    $this->user = pest_create_manager_from_existed_branch();
 });
 
 it('has monitoring index page', function () {
@@ -119,3 +120,104 @@ it('can destroy multiple target', function () {
     }
 });
 #endregion target
+
+#region event
+it('has event index page', function () {
+    actingAs($this->admin)
+        ->get(route('monitoring.event.index'))
+        ->assertOk();
+});
+
+it('has event create page', function () {
+    actingAs($this->admin)
+        ->get(route('monitoring.event.create'))
+        ->assertOk();
+});
+
+it('can store event', function () {
+    /** @var \App\Models\Branch $branch */
+    $branch = Branch::all('id')->random();
+
+    $data = Event::factory()->rawForm($branch);
+
+    actingAs($this->admin)
+        ->post(route('monitoring.event.store'), $data)
+        ->assertRedirect(route('monitoring.event.index'));
+
+    assertDatabaseHas(Event::class, Arr::except($data, 'start_date_end_date'));
+});
+
+it('has event show page', function () {
+    /** @var \App\Models\Event $event */
+    $event = Event::factory()
+        ->forBranch()
+        ->create();
+
+    actingAs($this->admin)
+        ->get(route('monitoring.event.show', $event))
+        ->assertOk();
+});
+
+it('has event edit page', function () {
+    /** @var \App\Models\Event $event */
+    $event = Event::factory()
+        ->forBranch()
+        ->create();
+
+    actingAs($this->admin)
+        ->get(route('monitoring.event.edit', $event))
+        ->assertOk();
+});
+
+it('can update event', function () {
+    /** @var \App\Models\Event $event */
+    $event = Event::factory()
+        ->forBranch()
+        ->create();
+
+    /** @var \App\Models\Branch $branch */
+    $branch = Branch::all('id')->random();
+
+    $data = Event::factory()->rawForm($branch);
+
+    $response = actingAs($this->admin)
+        ->put(route('monitoring.event.update', $event), $data);
+
+    $updatedEvent = Event::where(Arr::except($data, 'start_date_end_date'))->first();
+
+    $response->assertRedirect(route('monitoring.event.edit', $updatedEvent));
+
+    assertModelExists($updatedEvent);
+});
+
+it('can destroy event', function () {
+    /** @var \App\Models\Event $event */
+    $event = Event::factory()
+        ->forBranch()
+        ->create();
+
+    actingAs($this->admin)
+        ->delete(route('monitoring.event.destroy', $event))
+        ->assertRedirect(route('monitoring.event.index'));
+
+    assertModelMissing($event);
+});
+
+it('can destroy multiple event', function () {
+    /** @var \Illuminate\Database\Eloquent\Collection<\App\Models\Event> $events */
+    $events = Event::factory()
+        ->forBranch()
+        ->count(rand(1, 5))
+        ->create();
+
+    actingAs($this->admin)
+        ->delete(route('monitoring.event.destroy-multiple', [
+            'checkbox' => $events->pluck('id')->toArray(),
+        ]))
+        ->assertRedirect(route('monitoring.event.index'));
+
+    foreach ($events as $event) {
+        assertModelMissing($event);
+    }
+});
+#endregion event

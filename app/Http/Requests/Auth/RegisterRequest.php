@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use App\Http\Requests\User\StoreRequest;
+use App\Models\Branch;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Arr;
@@ -43,5 +44,13 @@ class RegisterRequest extends StoreRequest
     public function store(): User
     {
         return parent::store()->syncRoles(Role::ROLE_STAFF);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBranch(string $key = 'branch_id'): Branch
+    {
+        return Branch::find($this->input($key));
     }
 }
