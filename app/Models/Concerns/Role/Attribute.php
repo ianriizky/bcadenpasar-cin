@@ -17,6 +17,7 @@ interface Attribute
      */
     const ROLES = [
         self::ROLE_ADMIN,
+        self::ROLE_MANAGER,
         self::ROLE_STAFF,
     ];
 
@@ -26,6 +27,13 @@ interface Attribute
      * @var string
      */
     const ROLE_ADMIN = 'admin';
+
+    /**
+     * Role name for "manager".
+     *
+     * @var string
+     */
+    const ROLE_MANAGER = 'manager';
 
     /**
      * Role name for "staff".

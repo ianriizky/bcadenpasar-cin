@@ -20,6 +20,10 @@ class RolePermissionSeeder extends Seeder
                 'guard_name' => 'web',
             ],
             [
+                'name' => Role::ROLE_MANAGER,
+                'guard_name' => 'web',
+            ],
+            [
                 'name' => Role::ROLE_STAFF,
                 'guard_name' => 'web',
             ],

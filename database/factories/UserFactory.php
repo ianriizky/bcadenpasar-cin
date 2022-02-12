@@ -23,7 +23,6 @@ class UserFactory extends Factory
             'username' => $this->faker->userName(),
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => Carbon::now(),
             'password' => 'password',
             'remember_token' => Str::random(10),
             'is_verified' => $this->faker->boolean(),

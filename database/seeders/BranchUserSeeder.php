@@ -7,50 +7,48 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class BranchUserSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Return list of branch and user data.
      *
-     * @return void
+     * @return array[]
      */
-    public function run()
+    protected function data(): array
     {
-        DB::transaction(function () {
-            foreach ($this->generateBranch() as $branchName => $branch) {
-                $branch->save();
-
-                foreach ($this->generateAdmin($branchName) as $user) {
-                    $user->setBranchRelationValue($branch);
-                    $user->save();
-
-                    $user->syncRoles(Role::ROLE_ADMIN);
-                }
-
-                foreach ($this->generateStaff($branchName) as $user) {
-                    $user->setBranchRelationValue($branch);
-                    $user->save();
-
-                    $user->syncRoles(Role::ROLE_STAFF);
-                }
-            }
-        });
-    }
-
-    /**
-     * Generate the specified branch data into storage.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Branch>
-     */
-    protected function generateBranch(): Collection
-    {
-        $branches = new Collection([
+        return [
             [
                 'name' => 'BCA KCU Denpasar',
                 'address' => 'Jl. Hasanuddin No.58, Pemecutan, Kec. Denpasar Bar., Kota Denpasar, Bali 80232',
+                'users' => [
+                    [
+                        'username' => env('ADMIN_USERNAME', 'admin'),
+                        'name' => env('ADMIN_FULLNAME', 'Administrator'),
+                        'email' => env('ADMIN_EMAIL', 'admin@admin.com'),
+                        'password' => env('ADMIN_PASSWORD', 'admin12345'),
+                        'is_verified' => true,
+                        'role' => Role::ROLE_ADMIN,
+                    ],
+                    [
+                        'username' => 'manager',
+                        'name' => 'Manager',
+                        'email' => 'manager@manager.com',
+                        'password' => 'manager12345',
+                        'is_verified' => true,
+                        'role' => Role::ROLE_MANAGER,
+                    ],
+                    [
+                        'username' => 'staff',
+                        'name' => 'Staff',
+                        'email' => 'staff@staff.com',
+                        'password' => 'staff12345',
+                        'is_verified' => true,
+                        'role' => Role::ROLE_STAFF,
+                    ],
+                ],
             ],
             [
                 'name' => 'BCA KCP Gianyar',
@@ -112,58 +110,84 @@ class BranchUserSeeder extends Seeder
                 'name' => 'BCA KCP Benoa',
                 'address' => 'Jl. Suwung Batan Kendal No.2, Sesetan, Denpasar Selatan, Kota Denpasar, Bali 80222',
             ],
-        ]);
+        ];
+    }
 
-        return $branches->mapWithKeys(fn (array $branch) => [
-            $branch['name'] => new Branch($branch),
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::transaction(function () {
+            foreach ($this->data() as $branch) {
+                $users = $branch['users'] ?? [];
+
+                $branch = new Branch(Arr::except($branch, 'users'));
+
+                $branch->save();
+
+                foreach ($users as $user) {
+                    $role = $user['role'];
+
+                    $user = new User(Arr::except($user, 'role'));
+
+                    $user->setBranchRelationValue($branch);
+                    $user->save();
+
+                    $user->syncRoles($role);
+                }
+            }
+        });
+    }
+
+    /**
+     * Generate list of branch data.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<string, \App\Models\Branch>
+     */
+    protected function generateBranch(): Collection
+    {
+        return (new Collection($this->data()))->mapWithKeys(fn (array $branch) => [
+            $branch['name'] => new Branch(Arr::only($branch, ['name', 'address'])),
         ]);
     }
 
     /**
-     * Generate the specified user model class with admin role.
+     * Generate list of role and branch with its user data.
      *
-     * @param  string  $branchName
-     * @return \App\Models\User[]
+     * @return array<string, array<string, \App\Models\User>>
      */
-    protected function generateAdmin(string $branchName): array
+    protected function generateUser(): array
     {
-        $users = [
+        return [
             'BCA KCU Denpasar' => [
-                User::make([
+                [
                     'username' => env('ADMIN_USERNAME', 'admin'),
                     'name' => env('ADMIN_FULLNAME', 'Administrator'),
                     'email' => env('ADMIN_EMAIL', 'admin@admin.com'),
-                    'email_verified_at' => Carbon::now(),
                     'password' => env('ADMIN_PASSWORD', 'admin12345'),
                     'is_verified' => true,
-                ]),
-            ],
-        ];
-
-        return $users[$branchName] ?? [];
-    }
-
-    /**
-     * Generate the specified user model class with staff role.
-     *
-     * @param  string  $branchName
-     * @return \App\Models\User[]
-     */
-    protected function generateStaff(string $branchName): array
-    {
-        $users = [
-            'BCA KCU Denpasar' => [
-                User::make([
+                    'role' => Role::ROLE_ADMIN,
+                ],
+                [
+                    'username' => 'manager',
+                    'name' => 'Manager',
+                    'email' => 'manager@manager.com',
+                    'password' => 'manager12345',
+                    'is_verified' => true,
+                    'role' => Role::ROLE_MANAGER,
+                ],
+                [
                     'username' => 'staff',
                     'name' => 'Staff',
                     'email' => 'staff@staff.com',
-                    'email_verified_at' => Carbon::now(),
                     'password' => 'staff12345',
                     'is_verified' => true,
-                ]),
+                    'role' => Role::ROLE_STAFF,
+                ],
             ],
         ];
-
-        return $users[$branchName] ?? [];
     }
 }

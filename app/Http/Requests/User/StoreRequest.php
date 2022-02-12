@@ -37,7 +37,6 @@ class StoreRequest extends AbstractRequest
         /** @var \App\Models\User $user */
         $user = User::make($this->validated());
 
-        $user->bypassEmailVerification();
         $user->setBranchRelationValue($this->getBranch())->save();
 
         return $user;
