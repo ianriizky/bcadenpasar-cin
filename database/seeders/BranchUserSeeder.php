@@ -19,98 +19,31 @@ class BranchUserSeeder extends Seeder
      */
     protected function data(): array
     {
-        return [
-            [
-                'name' => 'BCA KCU Denpasar',
-                'address' => 'Jl. Hasanuddin No.58, Pemecutan, Kec. Denpasar Bar., Kota Denpasar, Bali 80232',
-                'users' => [
-                    [
-                        'username' => env('ADMIN_USERNAME', 'admin'),
-                        'name' => env('ADMIN_FULLNAME', 'Administrator'),
-                        'email' => env('ADMIN_EMAIL', 'admin@admin.com'),
-                        'password' => env('ADMIN_PASSWORD', 'admin12345'),
-                        'is_verified' => true,
-                        'role' => Role::ROLE_ADMIN,
-                    ],
-                    [
-                        'username' => 'manager',
-                        'name' => 'Manager',
-                        'email' => 'manager@manager.com',
-                        'password' => 'manager12345',
-                        'is_verified' => true,
-                        'role' => Role::ROLE_MANAGER,
-                    ],
-                    [
-                        'username' => 'staff',
-                        'name' => 'Staff',
-                        'email' => 'staff@staff.com',
-                        'password' => 'staff12345',
-                        'is_verified' => true,
-                        'role' => Role::ROLE_STAFF,
-                    ],
-                ],
-            ],
-            [
-                'name' => 'BCA KCP Gianyar',
-                'address' => 'Jl. By Pass Dharma Giri, Gianyar, Kec. Gianyar, Kabupaten Gianyar, Bali 80511',
-            ],
-            [
-                'name' => 'BCA KCP Cokroaminoto',
-                'address' => 'Pemecutan Kaja, North Denpasar, Denpasar City, Bali',
-            ],
-            [
-                'name' => 'BCA KCP Gatot Subroto Barat',
-                'address' => 'Jl. Gatot Subroto Barat No.508-509, Padangsambian Kaja, Kec. Denpasar Bar., Kota Denpasar, Bali 80117',
-            ],
-            [
-                'name' => 'BCA KCP Gatot Subroto',
-                'address' => 'Jl. Gatot Subroto Barat No.80, Dangin Puri Kaja, Kec. Denpasar Utara, Kota Denpasar, Bali 80234',
-            ],
-            [
-                'name' => 'BCA KCP Gatot Subroto Timur',
-                'address' => 'Jl. Gatot Subroto Tim. No.42- 43, Kesiman Kertalangu, Kec. Denpasar Tim., Kota Denpasar, Bali 80237',
-            ],
-            [
-                'name' => 'BCA KCP Gianyar',
-                'address' => 'Jl. By Pass Dharma Giri, Gianyar, Kec. Gianyar, Kabupaten Gianyar, Bali 80511',
-            ],
-            [
-                'name' => 'BCA KCP Klungkung',
-                'address' => 'Jl. Puputan Galiran No.88C, Semarapura Kelod, Kec. Klungkung, Kabupaten Klungkung, Bali 80715',
-            ],
-            [
-                'name' => 'BCA KCP Mahendradata',
-                'address' => 'Jl. Mahendradatta No.99, Pemecutan Kaja, Kec. Denpasar Utara, Kota Denpasar, Bali 80111',
-            ],
-            [
-                'name' => 'BCA KCP Renon',
-                'address' => 'Jl. Raya Puputan No.10, Sumerta Kelod, Kec. Denpasar Tim., Kota Denpasar, Bali 80239',
-            ],
-            [
-                'name' => 'BCA KCP Sesetan',
-                'address' => 'Jl. Raya Sesetan, Sesetan, Denpasar Selatan, Kota Denpasar, Bali 80223',
-            ],
-            [
-                'name' => 'BCA KCP Ubud',
-                'address' => 'Jl. Raya Ubud No.10X, Petulu, Kecamatan Ubud, Kabupaten Gianyar, Bali 80571',
-            ],
-            [
-                'name' => 'BCA KCP Grand Sudirman',
-                'address' => 'Jl. PB Sudirman Blok C5-C6 Ruko Grand Sudirman, Dauh Puri Klod, Kec. Denpasar Bar., Kota Denpasar, Bali 80232',
-            ],
-            [
-                'name' => 'BCA KCP Maluku',
-                'address' => 'Jl. Pulau Maluku III No.10, Dauh Puri, Kec. Denpasar Bar., Kota Denpasar, Bali 80232',
-            ],
-            [
-                'name' => 'BCA KCP Teuku Umar',
-                'address' => 'Jl. Teuku Umar No.99 D, Dauh Puri Klod, Kec. Denpasar Bar., Kota Denpasar, Bali 80114',
-            ],
-            [
-                'name' => 'BCA KCP Benoa',
-                'address' => 'Jl. Suwung Batan Kendal No.2, Sesetan, Denpasar Selatan, Kota Denpasar, Bali 80222',
-            ],
-        ];
+        return require_once 'users.php';
+    }
+
+    /**
+     * Store user data with role "admin" into storage.
+     *
+     * @param  \App\Models\Branch  $branch
+     * @return void
+     */
+    protected function generateAdmin(Branch $branch)
+    {
+        if ($branch->name === 'BCA KCU Denpasar') {
+            $user = new User([
+                'username' => env('ADMIN_USERNAME', 'admin'),
+                'name' => env('ADMIN_FULLNAME', 'Administrator'),
+                'email' => env('ADMIN_EMAIL', 'admin@admin.com'),
+                'password' => env('ADMIN_PASSWORD', 'admin12345'),
+                'is_verified' => true,
+            ]);
+
+            $user->setBranchRelationValue($branch);
+            $user->save();
+
+            $user->syncRoles(Role::ROLE_ADMIN);
+        }
     }
 
     /**
@@ -127,6 +60,8 @@ class BranchUserSeeder extends Seeder
                 $branch = new Branch(Arr::except($branch, 'users'));
 
                 $branch->save();
+
+                $this->generateAdmin($branch);
 
                 foreach ($users as $user) {
                     $role = $user['role'];
