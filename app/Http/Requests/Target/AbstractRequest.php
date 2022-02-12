@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Event;
+namespace App\Http\Requests\Target;
 
 use App\Enum\Periodicity;
 use App\Infrastructure\Foundation\Http\FormRequest;
 use App\Models\Branch;
-use App\Models\Event;
+use App\Models\Target;
 use App\Rules\DateFormatLocaleISO;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
@@ -42,9 +42,20 @@ abstract class AbstractRequest extends FormRequest
     {
         return [
             'branch_id' => [Rule::requiredIf($this->user()->isAdmin()), Rule::exists(Branch::class, 'id')],
-            'name' => ['required', 'string', 'max:255'],
-            'date' => ['required', new DateFormatLocaleISO(Event::DATE_FORMAT_ISO)],
-            'location' => ['required', 'string'],
+            'periodicity' => ['required', new EnumRule(Periodicity::class)],
+            'start_date_end_date' => ['required', function ($attribute, $value, $fail) {
+                [$start_date, $end_date] = $this->splitStartEndDate($this->input('start_date_end_date'));
+
+                $validator = Validator::make(compact('start_date', 'end_date'), [
+                    'start_date' => ['required', new DateFormatLocaleISO(Target::DATE_FORMAT_ISO)],
+                    'end_date' => ['required', new DateFormatLocaleISO(Target::DATE_FORMAT_ISO)],
+                ]);
+
+                if ($validator->fails()) {
+                    $fail($validator->getMessageBag()->first());
+                }
+            }],
+            'amount' => ['required', 'numeric', 'min:0'],
             'note' => ['sometimes', 'nullable', 'string'],
         ];
     }
@@ -98,8 +109,8 @@ abstract class AbstractRequest extends FormRequest
             ->map(fn ($value, $key) => $this->input($key))
             ->forget('start_date_end_date')
             ->merge([
-                'start_date' => DateFormatLocaleISO::parseDate(Event::DATE_FORMAT_ISO, $this->input('start_date'))->startOfDay(),
-                'end_date' => DateFormatLocaleISO::parseDate(Event::DATE_FORMAT_ISO, $this->input('end_date'))->endOfDay(),
+                'start_date' => DateFormatLocaleISO::parseDate(Target::DATE_FORMAT_ISO, $this->input('start_date'))->startOfDay(),
+                'end_date' => DateFormatLocaleISO::parseDate(Target::DATE_FORMAT_ISO, $this->input('end_date'))->endOfDay(),
             ])
             ->toArray();
 
