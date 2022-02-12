@@ -7,6 +7,8 @@ use App\Models\Branch;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
 
 class RegisterRequest extends StoreRequest
 {
@@ -23,9 +25,14 @@ class RegisterRequest extends StoreRequest
      */
     public function rules()
     {
-        return array_merge(Arr::except(parent::rules(), ['role', 'is_verified']), [
-            'agree_with_terms' => ['required', 'boolean', 'in:1'],
-        ]);
+        return [
+            'branch_id' => ['required', Rule::exists(Branch::class, 'id')],
+
+            'username' => ['required', 'string', 'max:255', Rule::unique(User::class)],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ];
     }
 
     /**
