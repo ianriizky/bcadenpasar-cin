@@ -19,7 +19,7 @@ class BranchPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->isAdmin() && in_array($ability, ['viewAny', 'view'])) {
+        if ($user->isAdmin()) {
             return true;
         }
     }
@@ -32,19 +32,19 @@ class BranchPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isStaff();
+        return $user->isManager() || $user->isStaff();
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Branch  $branch
+     * @param  \App\Models\Branch  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Branch $branch)
+    public function view(User $user, Branch $model)
     {
-        return $user->isStaff() || $user->branch->is($branch);
+        return $user->isManager() || $user->isStaff() || $user->branch->is($model);
     }
 
     /**
@@ -62,34 +62,34 @@ class BranchPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Branch  $branch
+     * @param  \App\Models\Branch  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Branch $branch)
+    public function update(User $user, Branch $model)
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || ($user->isManager() && $user->branch->is($model));
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Branch  $branch
+     * @param  \App\Models\Branch  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Branch $branch)
+    public function delete(User $user, Branch $model)
     {
-        return $user->isAdmin();
+        return $this->update($user, $model);
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Branch  $branch
+     * @param  \App\Models\Branch  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Branch $branch)
+    public function restore(User $user, Branch $model)
     {
         return $user->isAdmin();
     }
@@ -98,10 +98,10 @@ class BranchPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Branch  $branch
+     * @param  \App\Models\Branch  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Branch $branch)
+    public function forceDelete(User $user, Branch $model)
     {
         return $user->isAdmin();
     }

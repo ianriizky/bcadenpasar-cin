@@ -8,6 +8,7 @@ use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\DataTables\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -38,14 +39,18 @@ class UserController extends Controller
     /**
      * Return datatable server side response.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function datatable()
+    public function datatable(Request $request)
     {
         $this->authorize('viewAny', User::class);
 
         $query = User::query()
             ->join('branches', 'users.branch_id', '=', 'branches.id')
+            ->when($request->user()->isManager() || $request->user()->isStaff(), function (Builder $query) use ($request) {
+                $query->where('branches.id', $request->user()->branch->getKey());
+            })
             ->select('users.*', 'branches.name as branch_name');
 
         return DataTables::eloquent($query)

@@ -62,6 +62,16 @@ class User extends Authenticatable implements MustVerifyEmail, BypassVerifyEmail
     }
 
     /**
+     * Determine if the user has the role of "manager".
+     *
+     * @return bool
+     */
+    public function isManager(): bool
+    {
+        return $this->hasRole(Role::ROLE_MANAGER);
+    }
+
+    /**
      * Determine if the user has the role of "staff".
      *
      * @return bool

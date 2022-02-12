@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->isAdmin() && in_array($ability, ['viewAny', 'view'])) {
+        if ($user->isAdmin()) {
             return true;
         }
     }
@@ -31,7 +31,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isStaff();
+        return $user->isManager() || $user->isStaff();
     }
 
     /**
@@ -43,7 +43,10 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->isStaff() || $user->is($model);
+        return
+            $user->isManager() ||
+            ($user->isStaff() && $user->branch->is($model->branch)) ||
+            $user->is($model);
     }
 
     /**
@@ -54,7 +57,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isManager();
     }
 
     /**
@@ -66,7 +69,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->isAdmin() || $user->is($model);
+        return $user->isManager() && $user->branch->is($model->branch);
     }
 
     /**
@@ -82,7 +85,7 @@ class UserPolicy
             return false;
         }
 
-        return $user->isAdmin();
+        return $this->update($user, $model);
     }
 
     /**
