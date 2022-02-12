@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use App\Infrastructure\Contracts\Model\HasCreatedByAttribute;
+use App\Infrastructure\Contracts\Models\Relation\BelongsToBranch;
+use App\Infrastructure\Contracts\Models\Relation\BelongsToCreatedBy;
+use App\Infrastructure\Contracts\Models\Relation\HasManyAchievements;
 use App\Infrastructure\Database\Eloquent\Model;
-use App\Infrastructure\Models\Relation\BelongsToBranch;
-use App\Infrastructure\Models\Relation\HasManyAchievements;
 use App\Listeners\FillCreatedByWhenCreatingModel;
-use App\Support\Models\HandleCreatedByAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Event extends Model implements BelongsToBranch, HasManyAchievements, HasCreatedByAttribute
+class Event extends Model implements BelongsToBranch, HasManyAchievements, BelongsToCreatedBy
 {
     use HasFactory,
-        HandleCreatedByAttribute,
         Concerns\Event\Attribute,
         Concerns\Event\Relation;
 

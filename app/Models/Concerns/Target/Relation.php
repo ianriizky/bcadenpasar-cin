@@ -2,8 +2,9 @@
 
 namespace App\Models\Concerns\Target;
 
-use App\Support\Models\BelongsToBranch;
-use App\Support\Models\HasManyAchievements;
+use App\Support\Models\Relation\BelongsToBranch;
+use App\Support\Models\Relation\BelongsToCreatedBy;
+use App\Support\Models\Relation\HasManyAchievements;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -13,5 +14,6 @@ trait Relation
 {
     use HasRoles,
         BelongsToBranch,
+        BelongsToCreatedBy,
         HasManyAchievements;
 }

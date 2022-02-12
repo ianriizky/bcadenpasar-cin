@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Infrastructure\Contracts\Model;
+namespace App\Infrastructure\Contracts\Models\Relation;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-interface HasCreatedByAttribute
+interface BelongsToCreatedBy
 {
     /**
      * Define an inverse one-to-one relationship with \App\Models\User.

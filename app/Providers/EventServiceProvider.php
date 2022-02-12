@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Events\CreatingHasCreatedByAttribute;
+use App\Events\CreatingBelongsToCreatedBy;
 use App\Listeners\FillCreatedByWhenCreatingModel;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -18,7 +18,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        CreatingHasCreatedByAttribute::class => [
+        CreatingBelongsToCreatedBy::class => [
             FillCreatedByWhenCreatingModel::class,
         ],
     ];

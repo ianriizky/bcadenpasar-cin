@@ -2,23 +2,23 @@
 
 namespace App\Events;
 
-use App\Infrastructure\Contracts\Model\HasCreatedByAttribute;
+use App\Infrastructure\Contracts\Models\Relation\BelongsToCreatedBy;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CreatingHasCreatedByAttribute
+class CreatingBelongsToCreatedBy
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      *
-     * @param  \App\Infrastructure\Contracts\Model\HasCreatedByAttribute  $model
+     * @param  \App\Infrastructure\Contracts\Models\Relation\BelongsToCreatedBy  $model
      * @return void
      */
     public function __construct(
-        protected HasCreatedByAttribute $model
+        protected BelongsToCreatedBy $model
     ) {
         //
     }
@@ -26,9 +26,9 @@ class CreatingHasCreatedByAttribute
     /**
      * Return HasCreatedByAttribute model instance.
      *
-     * @return \App\Infrastructure\Contracts\Model\HasCreatedByAttribute
+     * @return \App\Infrastructure\Contracts\Models\Relation\BelongsToCreatedBy
      */
-    public function getModel()
+    public function getModel(): BelongsToCreatedBy
     {
         return $this->model;
     }

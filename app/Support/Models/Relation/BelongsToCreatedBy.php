@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Models;
+namespace App\Support\Models\Relation;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $created_by Foreign key of \App\Models\User.
  * @property-read \App\Models\User $createdBy
  */
-trait HandleCreatedByAttribute
+trait BelongsToCreatedBy
 {
     /**
      * Define an inverse one-to-one relationship with \App\Models\User.

@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
-use App\Infrastructure\Contracts\Model\HasCreatedByAttribute;
+use App\Infrastructure\Contracts\Models\Relation\BelongsToCreatedBy;
 use App\Infrastructure\Database\Eloquent\Model;
 use App\Listeners\FillCreatedByWhenCreatingModel;
-use App\Support\Models\HandleCreatedByAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Achievement extends Model implements HasCreatedByAttribute
+class Achievement extends Model implements BelongsToCreatedBy
 {
     use HasFactory,
-        HandleCreatedByAttribute,
         Concerns\Achievement\Attribute,
         Concerns\Achievement\Event,
         Concerns\Achievement\Relation;

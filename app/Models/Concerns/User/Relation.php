@@ -4,8 +4,8 @@ namespace App\Models\Concerns\User;
 
 use App\Models\Achievement;
 use App\Models\Branch;
-use App\Support\Models\BelongsToBranch;
-use App\Support\Models\HasManyAchievements;
+use App\Support\Models\Relation\BelongsToBranch;
+use App\Support\Models\Relation\HasManyAchievements;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 

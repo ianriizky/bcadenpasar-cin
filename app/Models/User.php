@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Infrastructure\Contracts\Auth\BypassVerifyEmail;
 use App\Infrastructure\Contracts\Auth\MustVerifyUser;
+use App\Infrastructure\Contracts\Models\Relation\BelongsToBranch;
+use App\Infrastructure\Contracts\Models\Relation\HasManyAchievements;
 use App\Infrastructure\Foundation\Auth\User as Authenticatable;
-use App\Infrastructure\Models\Relation\BelongsToBranch;
-use App\Infrastructure\Models\Relation\HasManyAchievements;
 use App\Support\Models\BypassEmailVerification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

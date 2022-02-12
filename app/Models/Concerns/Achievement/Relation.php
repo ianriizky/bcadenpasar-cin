@@ -4,6 +4,7 @@ namespace App\Models\Concerns\Achievement;
 
 use App\Models\Target;
 use App\Models\User;
+use App\Support\Models\Relation\BelongsToCreatedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -18,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 trait Relation
 {
+    use BelongsToCreatedBy;
+
     /**
      * Define an inverse one-to-many relationship with \App\Models\Target.
      *

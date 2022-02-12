@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Models;
+namespace App\Support\Models\Relation;
 
 use App\Models\Achievement;
 use Illuminate\Database\Eloquent\Collection;

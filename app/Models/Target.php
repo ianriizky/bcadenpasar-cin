@@ -4,21 +4,19 @@ namespace App\Models;
 
 use App\Casts\TargetAmount;
 use App\Enum\Periodicity;
-use App\Events\CreatingHasCreatedByAttribute;
-use App\Infrastructure\Contracts\Model\HasCreatedByAttribute;
+use App\Events\CreatingBelongsToCreatedBy;
+use App\Infrastructure\Contracts\Models\Relation\BelongsToBranch;
+use App\Infrastructure\Contracts\Models\Relation\BelongsToCreatedBy;
+use App\Infrastructure\Contracts\Models\Relation\HasManyAchievements;
 use App\Infrastructure\Database\Eloquent\Model;
-use App\Infrastructure\Models\Relation\BelongsToBranch;
-use App\Infrastructure\Models\Relation\HasManyAchievements;
-use App\Support\Models\HandleCreatedByAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @method static \Database\Factories\TargetFactory<static> factory(callable|array|int|null $count = null, callable|array $state = []) Get a new factory instance for the model.
  */
-class Target extends Model implements BelongsToBranch, HasManyAchievements, HasCreatedByAttribute
+class Target extends Model implements BelongsToBranch, HasManyAchievements, BelongsToCreatedBy
 {
     use HasFactory,
-        HandleCreatedByAttribute,
         Concerns\Target\Attribute,
         Concerns\Target\Relation;
 
@@ -54,6 +52,6 @@ class Target extends Model implements BelongsToBranch, HasManyAchievements, HasC
      * {@inheritDoc}
      */
     protected $dispatchesEvents = [
-        'creating' => CreatingHasCreatedByAttribute::class,
+        'creating' => CreatingBelongsToCreatedBy::class,
     ];
 }
