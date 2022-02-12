@@ -6,6 +6,7 @@ use App\Http\Requests\Target\StoreRequest;
 use App\Http\Requests\Target\UpdateRequest;
 use App\Http\Resources\DataTables\TargetResource;
 use App\Models\Target;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -42,14 +43,11 @@ class TargetController extends Controller
     {
         $this->authorize('viewAny', Target::class);
 
-        if ($request->user()->isStaff()) {
-            $query = $request->user()->branch->targets();
-        } else {
-            $query = Target::query();
-        }
-
-        $query
+        $query = Target::query()
             ->join('branches', 'targets.branch_id', '=', 'branches.id')
+            ->when($request->user()->isManager() || $request->user()->isStaff(), function (Builder $query) use ($request) {
+                $query->where('branches.id', $request->user()->branch->getKey());
+            })
             ->select('targets.*', 'branches.name as branch_name');
 
         return DataTables::eloquent($query)
@@ -158,7 +156,7 @@ class TargetController extends Controller
     {
         DB::transaction(function () use ($request) {
             foreach ($request->input('checkbox', []) as $id) {
-                $target = Target::find($id, 'id');
+                $target = Target::find($id, ['id', 'branch_id']);
 
                 $this->authorize('delete', $target);
 

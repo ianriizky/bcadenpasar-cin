@@ -46,8 +46,10 @@ it('can store user', function () {
         assertDatabaseHas(User::class, Arr::only($data, 'username'));
 
         Event::assertDispatched(Registered::class);
+    } elseif ($this->user->isStaff()) {
+        $response->assertForbidden();
     } else {
-        $response->assertSessionHas('errors');
+        $response->assertSessionHasErrors('branch_id');
     }
 });
 
@@ -91,8 +93,6 @@ it('can update user', function () {
             ? Branch::inRandomOrder()->first('id')
             : $branch
     );
-
-    Event::fake();
 
     $response = actingAs($this->user)->put(route('master.user.update', $user), $data);
 

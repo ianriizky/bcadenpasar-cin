@@ -6,6 +6,7 @@ use App\Enum\Periodicity;
 use App\Infrastructure\Foundation\Http\FormRequest;
 use App\Models\Branch;
 use App\Models\Target;
+use App\Rules\BranchExists;
 use App\Rules\DateFormatLocaleISO;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
@@ -41,7 +42,7 @@ abstract class AbstractRequest extends FormRequest
     public function rules()
     {
         return [
-            'branch_id' => [Rule::requiredIf($this->user()->isAdmin()), Rule::exists(Branch::class, 'id')],
+            'branch_id' => [Rule::requiredIf($this->user()->isAdmin()), new BranchExists($this->user())],
             'periodicity' => ['required', new EnumRule(Periodicity::class)],
             'start_date_end_date' => ['required', function ($attribute, $value, $fail) {
                 [$start_date, $end_date] = $this->splitStartEndDate($this->input('start_date_end_date'));
@@ -140,10 +141,10 @@ abstract class AbstractRequest extends FormRequest
      */
     public function getBranch(string $key = 'branch_id'): Branch
     {
-        if ($this->user()->isStaff()) {
-            return $this->user()->branch;
+        if ($this->user()->isAdmin()) {
+            return Branch::find($this->input($key));
         }
 
-        return Branch::find($this->input($key));
+        return $this->user()->branch;
     }
 }

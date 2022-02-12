@@ -66,7 +66,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->isManager() && $user->branch->is($model->branch);
+        return $this->create($user) && $user->branch->is($model->branch);
     }
 
     /**

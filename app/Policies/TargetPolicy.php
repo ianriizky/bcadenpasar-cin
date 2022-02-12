@@ -19,7 +19,7 @@ class TargetPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->isAdmin() && in_array($ability, ['viewAny', 'view'])) {
+        if ($user->isAdmin()) {
             return true;
         }
     }
@@ -32,19 +32,19 @@ class TargetPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isStaff();
+        return $user->isManager() || $user->isStaff();
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Target  $target
+     * @param  \App\Models\Target  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Target $target)
+    public function view(User $user, Target $model)
     {
-        return $user->isStaff() && $target->branch->users->contains($user);
+        return $model->branch->users->contains($user);
     }
 
     /**
@@ -55,45 +55,41 @@ class TargetPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin() || $user->isStaff();
+        return $user->isManager();
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Target  $target
+     * @param  \App\Models\Target  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Target $target)
+    public function update(User $user, Target $model)
     {
-        return
-            $user->isAdmin() ||
-            ($user->isStaff() && $target->branch->users->contains($user));
+        return $this->create($user) && $this->view($user, $model);
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Target  $target
+     * @param  \App\Models\Target  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Target $target)
+    public function delete(User $user, Target $model)
     {
-        return
-            $user->isAdmin() ||
-            ($user->isStaff() && $target->branch->users->contains($user));
+        return $this->update($user, $model);
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Target  $target
+     * @param  \App\Models\Target  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Target $target)
+    public function restore(User $user, Target $model)
     {
         return $user->isAdmin();
     }
@@ -102,10 +98,10 @@ class TargetPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Target  $target
+     * @param  \App\Models\Target  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Target $target)
+    public function forceDelete(User $user, Target $model)
     {
         return $user->isAdmin();
     }
