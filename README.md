@@ -1,6 +1,6 @@
 # BCA Denpasar CiNEMA
 
-[![Build Status](https://github.com/ianriizky/bcadenpasar-cinema/workflows/test/badge.svg)](https://github.com/ianriizky/bcadenpasar-cinema/actions)
+[![Build Status](https://github.com/ianriizky/bcadenpasar-cinema/actions/workflows/test.yml/badge.svg)](https://github.com/ianriizky/bcadenpasar-cinema/actions)
 [![Quality Score](https://img.shields.io/scrutinizer/g/ianriizky/bcadenpasar-cinema.svg?style=flat)](https://scrutinizer-ci.com/g/ianriizky/bcadenpasar-cinema)
 [![Coverage Status](https://coveralls.io/repos/github/ianriizky/bcadenpasar-cinema/badge.svg)](https://coveralls.io/github/ianriizky/bcadenpasar-cinema)
 [![Latest Stable Version](https://poser.pugx.org/ianriizky/bcadenpasar-cinema/v/stable.svg)](https://packagist.org/packages/ianriizky/bcadenpasar-cinema)
