@@ -17,17 +17,20 @@
 
             @include('components.select2-change', ['olds' => Arr::except(old() ?: $event, '_token')])
 
-            $('.daterange').daterangepicker({
-                drops: 'down',
-                opens: 'right',
-                startDate: moment().startOf('month'),
-                endDate: moment().endOf('month'),
-                autoApply: true,
-                showWeekNumbers: true,
+            @if ($oldDate = old('date', $event->date_iso_format))
+                const startDate = moment(@json($oldDate), @json(\App\Models\Event::DATE_FORMAT_ISO)).startOf('days');
+            @else
+                const startDate = moment().startOf('days');
+            @endif
+
+            $('#date').daterangepicker({
                 locale: {
-                    separator: @json(\App\Http\Requests\Event\StoreRequest::START_DATE_END_DATE_SEPARATOR),
                     format: @json(\App\Models\Event::DATE_FORMAT_ISO),
                 },
+                startDate,
+                singleDatePicker: true,
+                autoApply: true,
+                showWeekNumbers: true,
             });
         });
     </script>
@@ -94,29 +97,25 @@
 
                             <div class="col-12 col-lg-6"></div>
 
-                            {{-- periodicity --}}
+                            {{-- name --}}
                             <div class="form-group col-12 col-lg-6">
-                                <label for="periodicity">@lang('Periodicity')<span class="text-danger">*</span></label>
+                                <label for="name">@lang('Name')<span class="text-danger">*</span></label>
 
-                                <select name="periodicity"
-                                    id="periodicity"
-                                    class="form-control select2 @error('periodicity') is-invalid @enderror"
-                                    data-placeholder="--@lang('Choose :field', ['field' => __('Periodicity') ])--"
-                                    data-allow-clear="true"
-                                    required
-                                    autofocus>
-                                    @foreach (\App\Enum\Periodicity::toArray() as $value => $label)
-                                        <option value="{{ $value }}">{{ $label }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text"
+                                    name="name"
+                                    id="name"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    value="{{ old('name', $event->name) }}"
+                                    min="0"
+                                    required>
 
-                                <x-invalid-feedback :name="'periodicity'"/>
+                                <x-invalid-feedback :name="'name'"/>
                             </div>
-                            {{-- /.periodicity --}}
+                            {{-- /.name --}}
 
-                            {{-- start_date && end_date --}}
+                            {{-- date --}}
                             <div class="form-group col-12 col-lg-6">
-                                <label for="name">@lang('Start Date') & @lang('End Date')<span class="text-danger">*</span></label>
+                                <label for="name">@lang('Date')<span class="text-danger">*</span></label>
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -126,32 +125,38 @@
                                     </div>
 
                                     <input type="text"
-                                        name="start_date_end_date"
-                                        id="start_date_end_date"
-                                        class="form-control daterange @error('start_date_end_date') is-invalid @enderror"
-                                        value="{{ old('start_date_end_date', $event->start_date_end_date) }}"
-                                        required>
+                                        name="date"
+                                        id="date"
+                                        class="form-control @error('date') is-invalid @enderror"
+                                        required readonly>
 
-                                    <x-invalid-feedback :name="'start_date_end_date'"/>
+                                    <x-invalid-feedback :name="'date'"/>
                                 </div>
                             </div>
-                            {{-- /.start_date && end_date --}}
+                            {{-- date --}}
 
-                            {{-- amount --}}
+                            {{-- location --}}
                             <div class="form-group col-12 col-lg-6">
-                                <label for="amount">@lang('Amount')<span class="text-danger">*</span></label>
+                                <label for="location">@lang('Location')<span class="text-danger">*</span></label>
 
-                                <input type="number"
-                                    name="amount"
-                                    id="amount"
-                                    class="form-control @error('amount') is-invalid @enderror"
-                                    value="{{ old('amount', $event->getRawAttribute('amount')) }}"
-                                    min="0"
-                                    required>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                    </div>
 
-                                <x-invalid-feedback :name="'amount'"/>
+                                    <input type="text"
+                                        name="location"
+                                        id="location"
+                                        class="form-control @error('location') is-invalid @enderror"
+                                        value="{{ old('location', $event->location) }}"
+                                        required>
+
+                                    <x-invalid-feedback :name="'location'"/>
+                                </div>
                             </div>
-                            {{-- /.amount --}}
+                            {{-- /.location --}}
 
                             {{-- note --}}
                             <div class="form-group col-12 col-lg-6">

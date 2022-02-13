@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Event\StoreRequest;
+use App\Http\Requests\Event\UpdateRequest;
+use App\Http\Resources\DataTables\EventResource;
 use App\Models\Event;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -32,15 +36,27 @@ class EventController extends Controller
     /**
      * Return datatable server side response.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function datatable()
+    public function datatable(Request $request)
     {
         $this->authorize('viewAny', Event::class);
 
-        return DataTables::eloquent(Event::query())
+        $query = Event::query()
+            ->join('branches', 'events.branch_id', '=', 'branches.id')
+            ->when($request->user()->isManager() || $request->user()->isStaff(), function (Builder $query) use ($request) {
+                $query->where('branches.id', $request->user()->branch->getKey());
+            })
+            ->select('events.*', 'branches.name as branch_name');
+
+        return DataTables::eloquent($query)
             ->setTransformer(fn ($model) => EventResource::make($model)->resolve())
-            ->toJson();
+            ->orderColumn('branch_name', function ($query, $direction) {
+                $query->orderBy('branches.name', $direction);
+            })->filterColumn('branch_name', function ($query, $keyword) {
+                $query->where('branches.name', 'like', '%' . $keyword . '%');
+            })->toJson();
     }
 
     /**
@@ -140,7 +156,7 @@ class EventController extends Controller
     {
         DB::transaction(function () use ($request) {
             foreach ($request->input('checkbox', []) as $id) {
-                $event = Event::find($id, 'id');
+                $event = Event::find($id, ['id', 'branch_id']);
 
                 $this->authorize('delete', $event);
 
