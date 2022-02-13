@@ -2,6 +2,7 @@
 
 namespace App\Models\Concerns\Achievement;
 
+use App\Models\Event;
 use App\Models\Target;
 use App\Models\User;
 use App\Support\Models\Relation\BelongsToCreatedBy;
