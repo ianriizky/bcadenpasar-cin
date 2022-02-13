@@ -17,16 +17,39 @@
 
             @include('components.select2-change', ['olds' => Arr::except(old() ?: $target, '_token')])
 
-            $('.daterange').daterangepicker({
+            const startDate = moment().startOf('days');
+            const endDate = moment().endOf('days');
+
+            @if ($oldStartDateEndDate = old('start_date_end_date', $target->start_date_end_date_iso_format))
+                const initialStartEndDate = @json($oldStartDateEndDate).split(@json(\App\Http\Requests\Target\StoreRequest::START_DATE_END_DATE_SEPARATOR));
+
+                const initialStartDate = moment(initialStartEndDate[0], @json(\App\Models\Target::DATE_FORMAT_ISO)).startOf('days');
+                const initialEndDate = moment(initialStartEndDate[1], @json(\App\Models\Target::DATE_FORMAT_ISO)).endOf('days');
+            @else
+                const initialStartDate = startDate;
+                const initialEndDate = endDate;
+            @endif
+
+            $('#start_date_end_date').daterangepicker({
                 drops: 'down',
                 opens: 'right',
-                startDate: moment().startOf('month'),
-                endDate: moment().endOf('month'),
+                startDate: initialStartDate,
+                endDate: initialEndDate,
                 autoApply: true,
                 showWeekNumbers: true,
+                ranges: {
+                    '@lang('Today')': [startDate.clone(), endDate.clone()],
+                    '@lang('Yesterday')': [startDate.clone().subtract(1, 'days'), endDate.clone().subtract(1, 'days')],
+                    '@lang('Last 7 Days')': [startDate.clone().subtract(6, 'days'), endDate.clone()],
+                    '@lang('Last 30 Days')': [startDate.clone().subtract(29, 'days'), endDate.clone()],
+                    '@lang('This Month')': [startDate.clone().startOf('month'), endDate.clone().endOf('month')],
+                    '@lang('Last Month')': [startDate.clone().subtract(1, 'month').startOf('month'), endDate.clone().subtract(1, 'month').endOf('month')],
+                    '@lang('This Year')': [startDate.clone().startOf('year'), endDate.clone().endOf('year')],
+                },
                 locale: {
                     separator: @json(\App\Http\Requests\Target\StoreRequest::START_DATE_END_DATE_SEPARATOR),
                     format: @json(\App\Models\Target::DATE_FORMAT_ISO),
+                    customRangeLabel: '@lang('Choose date')',
                 },
             });
         });
@@ -128,8 +151,7 @@
                                     <input type="text"
                                         name="start_date_end_date"
                                         id="start_date_end_date"
-                                        class="form-control daterange @error('start_date_end_date') is-invalid @enderror"
-                                        value="{{ old('start_date_end_date', $target->start_date_end_date) }}"
+                                        class="form-control @error('start_date_end_date') is-invalid @enderror"
                                         required>
 
                                     <x-invalid-feedback :name="'start_date_end_date'"/>

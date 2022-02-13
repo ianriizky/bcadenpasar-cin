@@ -18,6 +18,10 @@ final class Periodicity extends Enum
 {
     /**
      * {@inheritDoc}
+     *
+     * @return (\Illuminate\Contracts\Translation\Translator|array|null|string)[]
+     *
+     * @psalm-return array{daily: \Illuminate\Contracts\Translation\Translator|array|null|string, weekly: \Illuminate\Contracts\Translation\Translator|array|null|string, monthly: \Illuminate\Contracts\Translation\Translator|array|null|string, yearly: \Illuminate\Contracts\Translation\Translator|array|null|string}
      */
     protected static function labels(): array
     {

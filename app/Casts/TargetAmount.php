@@ -12,6 +12,8 @@ class TargetAmount implements Castable
 {
     /**
      * {@inheritDoc}
+     *
+     * @return \Illuminate\Contracts\Database\Eloquent\CastsAttributes
      */
     public static function castUsing(array $arguments)
     {

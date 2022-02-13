@@ -94,7 +94,9 @@ class TargetAmount extends DataTransferObject
      * Return list of target amount from weekly periodicity.
      *
      * @param  int  $amount
-     * @return int[]
+     * @return (float|int)[]
+     *
+     * @psalm-return array{0: float|int, 1: int, 2: int, 3: int}
      */
     protected static function getAmountFromWeekly(int $amount): array
     {
@@ -103,7 +105,6 @@ class TargetAmount extends DataTransferObject
         $monthly = $weekly * Carbon::WEEKS_PER_MONTH;
         $yearly = $monthly * Carbon::MONTHS_PER_YEAR;
 
-
         return [$daily, $weekly, $monthly, $yearly];
     }
 
@@ -111,7 +112,9 @@ class TargetAmount extends DataTransferObject
      * Return list of target amount from monthly periodicity.
      *
      * @param  int  $amount
-     * @return int[]
+     * @return (float|int)[]
+     *
+     * @psalm-return array{0: float|int, 1: int, 2: int, 3: int}
      */
     protected static function getAmountFromMonthly(int $amount): array
     {
@@ -127,7 +130,9 @@ class TargetAmount extends DataTransferObject
      * Return list of target amount from yearly periodicity.
      *
      * @param  int  $amount
-     * @return int[]
+     * @return (float|int)[]
+     *
+     * @psalm-return array{0: float|int, 1: int, 2: int, 3: int}
      */
     protected static function getAmountFromYearly(int $amount): array
     {
