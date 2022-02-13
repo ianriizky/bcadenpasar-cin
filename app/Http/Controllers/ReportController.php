@@ -32,7 +32,7 @@ class ReportController extends Controller
     /**
      * Return laporan pencapaian new cin chart data as json response.
      *
-     * @param  \App\Http\Requests\Achievement\LaporanPencapaianNewCinChartRequest  $request
+     * @param  \App\Http\Requests\Report\LaporanPencapaianNewCinChartRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function laporanPencapaianNewCinChart(LaporanPencapaianNewCinChartRequest $request)

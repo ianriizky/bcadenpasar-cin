@@ -152,7 +152,7 @@
                                         name="start_date_end_date"
                                         id="start_date_end_date"
                                         class="form-control @error('start_date_end_date') is-invalid @enderror"
-                                        required>
+                                        required readonly>
 
                                     <x-invalid-feedback :name="'start_date_end_date'"/>
                                 </div>
