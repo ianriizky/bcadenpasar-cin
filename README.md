@@ -14,7 +14,7 @@ Source code ini sudah dilengkapi dengan *unit test* menggunakan [phpunit](https:
 ## Prasyarat
 
 - Laravel Framework ^9.0
-- PHP ^8.0.2
+- PHP ^8.0.15
 - Composer ^2.0
 - MySQL ^5.7.36
 
