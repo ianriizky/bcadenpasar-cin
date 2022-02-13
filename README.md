@@ -15,6 +15,7 @@ Source code ini sudah dilengkapi dengan *unit test* menggunakan [phpunit](https:
 
 - Laravel Framework ^9.0
 - PHP ^8.0.15
+- Node.js ^16.13.2
 - Composer ^2.0
 - MySQL ^5.7.36
 
