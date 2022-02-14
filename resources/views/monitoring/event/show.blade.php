@@ -32,7 +32,7 @@
                     <div class="row">
                         {{-- branch_id --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="branch_id">@lang('menu.branch')<span class="text-danger">*</span></label>
+                            <label for="branch_id">@lang('menu.branch')</label>
 
                             <p class="form-control-plaintext">{{ $event->branch->name }}</p>
                         </div>
@@ -40,29 +40,29 @@
 
                         <div class="col-12 col-lg-6"></div>
 
-                        {{-- periodicity --}}
+                        {{-- name --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="periodicity">@lang('Periodicity')<span class="text-danger">*</span></label>
+                            <label for="name">@lang('Name')</label>
 
-                            <p class="form-control-plaintext">{{ $event->periodicity->label }}</p>
+                            <p class="form-control-plaintext">{{ $event->name }}</p>
                         </div>
-                        {{-- /.periodicity --}}
+                        {{-- /.name --}}
 
-                        {{-- start_date && end_date --}}
+                        {{-- date --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="name">@lang('Start Date') & @lang('End Date')<span class="text-danger">*</span></label>
+                            <label for="name">@lang('Date')</label>
 
-                            <p class="form-control-plaintext">{{ $event->start_date_iso_format }} & {{ $event->end_date_iso_format }}</p>
+                            <p class="form-control-plaintext">{{ $event->date_iso_format }}</p>
                         </div>
-                        {{-- /.start_date && end_date --}}
+                        {{-- /.date --}}
 
-                        {{-- amount --}}
+                        {{-- location --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="amount">@lang('Amount')<span class="text-danger">*</span></label>
+                            <label for="location">@lang('Location')</label>
 
-                            <p class="form-control-plaintext">{{ $event->getRawAttribute('amount') }}</p>
+                            <p class="form-control-plaintext">{{ $event->location }}</p>
                         </div>
-                        {{-- /.amount --}}
+                        {{-- /.location --}}
 
                         {{-- note --}}
                         <div class="form-group col-12 col-lg-6">

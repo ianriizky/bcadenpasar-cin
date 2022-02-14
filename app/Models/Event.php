@@ -20,7 +20,7 @@ class Event extends Model implements BelongsToBranch, HasManyAchievements, Belon
      *
      * @var string
      */
-    const DATE_FORMAT_ISO = 'DD MMMM YYYY';
+    const DATE_FORMAT_ISO = 'dddd, DD MMMM YYYY';
 
     /**
      * {@inheritDoc}

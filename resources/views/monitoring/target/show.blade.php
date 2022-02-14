@@ -32,7 +32,7 @@
                     <div class="row">
                         {{-- branch_id --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="branch_id">@lang('menu.branch')<span class="text-danger">*</span></label>
+                            <label for="branch_id">@lang('menu.branch')</label>
 
                             <p class="form-control-plaintext">{{ $target->branch->name }}</p>
                         </div>
@@ -42,7 +42,7 @@
 
                         {{-- periodicity --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="periodicity">@lang('Periodicity')<span class="text-danger">*</span></label>
+                            <label for="periodicity">@lang('Periodicity')</label>
 
                             <p class="form-control-plaintext">{{ $target->periodicity->label }}</p>
                         </div>
@@ -50,15 +50,15 @@
 
                         {{-- start_date && end_date --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="name">@lang('Start Date') & @lang('End Date')<span class="text-danger">*</span></label>
+                            <label for="name">@lang('Start Date') & @lang('End Date')</label>
 
-                            <p class="form-control-plaintext">{{ $target->start_date_iso_format }} & {{ $target->end_date_iso_format }}</p>
+                            <p class="form-control-plaintext">{{ $target->start_date_end_date_iso_format }}</p>
                         </div>
                         {{-- /.start_date && end_date --}}
 
                         {{-- amount --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="amount">@lang('Amount')<span class="text-danger">*</span></label>
+                            <label for="amount">@lang('Amount')</label>
 
                             <p class="form-control-plaintext">{{ $target->getRawAttribute('amount') }}</p>
                         </div>
