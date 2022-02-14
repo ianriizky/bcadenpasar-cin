@@ -7,6 +7,9 @@ use Illuminate\Foundation\Http\FormRequest as BaseFormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @method \App\Models\User|null user() Get the user making the request.
+ */
 abstract class FormRequest extends BaseFormRequest
 {
     /**

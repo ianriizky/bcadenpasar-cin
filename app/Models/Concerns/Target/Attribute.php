@@ -13,6 +13,7 @@ use App\Http\Requests\Target\StoreRequest;
  * @property-read string|null $start_date_iso_format
  * @property-read string|null $end_date_iso_format
  * @property-read string|null $start_date_end_date_iso_format
+ * @property-read string $name
  *
  * @see \App\Models\Target
  */
@@ -58,5 +59,15 @@ trait Attribute
         }
 
         return $this->start_date_iso_format . StoreRequest::START_DATE_END_DATE_SEPARATOR . $this->end_date_iso_format;
+    }
+
+    /**
+     * Return "name" attribute value.
+     *
+     * @return string
+     */
+    public function getNameAttribute(): string
+    {
+        return sprintf('%s (%s)', $this->periodicity->label, $this->start_date_end_date_iso_format);
     }
 }
