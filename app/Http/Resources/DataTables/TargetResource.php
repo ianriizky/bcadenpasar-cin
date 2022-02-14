@@ -39,8 +39,8 @@ class TargetResource extends JsonResource
                 'value' => $this->resource->getKey(),
             ])->render(),
             'branch_name' => view('components.datatables.link', [
-                'url' => route('master.branch.show', $this->resource->branch),
-                'name' => $this->resource->branch->name,
+                'url' => route('master.branch.show', $this->resource->branch_id),
+                'name' => $this->resource->branch_name,
             ])->render(),
             'periodicity' => $this->resource->periodicity->label,
             'start_date' => $this->resource->start_date_iso_format,

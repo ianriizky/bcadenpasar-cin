@@ -50,8 +50,11 @@ class UserController extends Controller
             ->join('branches', 'users.branch_id', '=', 'branches.id')
             ->when($request->user()->isManager() || $request->user()->isStaff(), function (Builder $query) use ($request) {
                 $query->where('branches.id', $request->user()->branch->getKey());
-            })
-            ->select('users.*', 'branches.name as branch_name');
+            })->select(
+                'users.*',
+                'branches.id as branch_id',
+                'branches.name as branch_name'
+            );
 
         return DataTables::eloquent($query)
             ->setTransformer(fn ($model) => UserResource::make($model)->resolve())

@@ -47,8 +47,11 @@ class EventController extends Controller
             ->join('branches', 'events.branch_id', '=', 'branches.id')
             ->when($request->user()->isManager() || $request->user()->isStaff(), function (Builder $query) use ($request) {
                 $query->where('branches.id', $request->user()->branch->getKey());
-            })
-            ->select('events.*', 'branches.name as branch_name');
+            })->select(
+                'events.*',
+                'branches.id as branch_id',
+                'branches.name as branch_name'
+            );
 
         return DataTables::eloquent($query)
             ->setTransformer(fn ($model) => EventResource::make($model)->resolve())

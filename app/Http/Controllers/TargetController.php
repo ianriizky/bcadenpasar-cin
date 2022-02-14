@@ -47,8 +47,11 @@ class TargetController extends Controller
             ->join('branches', 'targets.branch_id', '=', 'branches.id')
             ->when($request->user()->isManager() || $request->user()->isStaff(), function (Builder $query) use ($request) {
                 $query->where('branches.id', $request->user()->branch->getKey());
-            })
-            ->select('targets.*', 'branches.name as branch_name');
+            })->select(
+                'targets.*',
+                'branches.id as branch_id',
+                'branches.name as branch_name'
+            );
 
         return DataTables::eloquent($query)
             ->setTransformer(fn ($model) => TargetResource::make($model)->resolve())
