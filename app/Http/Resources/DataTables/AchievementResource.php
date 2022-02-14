@@ -39,17 +39,17 @@ class AchievementResource extends JsonResource
                 'value' => $this->resource->getKey(),
             ])->render(),
             'branch_name' => view('components.datatables.link', [
-                'url' => route('master.branch.show', $this->resource->target->branch),
-                'name' => $this->resource->target->branch->name,
+                'url' => route('master.branch.show', $this->resource->branch_name),
+                'name' => $this->resource->branch_name,
             ])->render(),
             'event_name' => view('components.datatables.link', [
-                'url' => $this->resource->event ? route('monitoring.event.show', $this->resource->event->branch) : '#',
-                'name' => $this->resource->event ? $this->resource->event->name : '-',
+                'url' => $this->resource->event_id ? route('monitoring.event.show', $this->resource->event_id) : '#',
+                'name' => $this->resource->event_id ? $this->resource->event_name : '-',
             ])->render(),
             'achieved_date' => $this->resource->achieved_date_iso_format,
-            'achieved_by' => view('components.datatables.link', [
-                'url' => $this->resource->achievedBy ? route('master.user.show', $this->resource->achievedBy) : '#',
-                'name' => $this->resource->achievedBy ? $this->resource->achievedBy->name : '-',
+            'achieved_by_name' => view('components.datatables.link', [
+                'url' => $this->resource->achieved_by_id ? route('master.user.show', $this->resource->achieved_by_id) : '#',
+                'name' => $this->resource->achieved_by_id ? $this->resource->achieved_by_name : '-',
             ])->render(),
             'amount' => $this->resource->getRawAttribute('amount'),
             'action' => view('components.datatables.button-group', compact('elements'))->render(),

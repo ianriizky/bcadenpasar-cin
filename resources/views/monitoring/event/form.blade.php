@@ -79,8 +79,7 @@
                                         class="form-control select2 @error('branch_id') is-invalid @enderror"
                                         data-placeholder="--@lang('Choose :field', ['field' => __('menu.branch') ])--"
                                         data-allow-clear="true"
-                                        required
-                                        autofocus>
+                                        required>
                                         @foreach (\App\Models\Branch::pluck('name', 'id') as $value => $label)
                                             <option value="{{ $value }}">{{ $label }}</option>
                                         @endforeach

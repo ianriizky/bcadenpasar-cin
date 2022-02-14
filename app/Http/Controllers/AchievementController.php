@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\DataTables\AchievementResource;
 use App\Models\Achievement;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -40,16 +41,19 @@ class AchievementController extends Controller
     {
         $this->authorize('viewAny', Achievement::class);
 
-        if ($request->user()->isStaff()) {
-            $query = $request->user()->branch->achievements();
-        } else {
-            $query = Achievement::query();
-        }
-
-        $query
+        $query = Achievement::query()
+            ->join('targets', 'achievements.target_id', '=', 'targets.id')
             ->join('branches', 'targets.branch_id', '=', 'branches.id')
             ->leftJoin('events', 'achievements.event_id', '=', 'events.id')
-            ->select('achievements.*', 'branches.name as branch_name', 'events.name as event_name');
+            ->leftJoin('users', 'achievements.achieved_by', '=', 'users.id')
+            ->when($request->user()->isManager() || $request->user()->isStaff(), function (Builder $query) use ($request) {
+                $query->where('branches.id', $request->user()->branch->getKey());
+            })->select(
+                'achievements.*',
+                'branches.id as branch_id', 'branches.name as branch_name',
+                'events.id as event_id', 'events.name as event_name',
+                'users.id as achieved_by_id', 'users.name as achieved_by_name'
+            );
 
         return DataTables::eloquent($query)
             ->setTransformer(fn ($model) => AchievementResource::make($model)->resolve())
@@ -61,6 +65,10 @@ class AchievementController extends Controller
                 $query->orderBy('events.name', $direction);
             })->filterColumn('event_name', function ($query, $keyword) {
                 $query->where('events.name', 'like', '%' . $keyword . '%');
+            })->orderColumn('achieved_by_name', function ($query, $direction) {
+                $query->orderBy('users.name', $direction);
+            })->filterColumn('achieved_by_name', function ($query, $keyword) {
+                $query->where('users.name', 'like', '%' . $keyword . '%');
             })->toJson();
     }
 

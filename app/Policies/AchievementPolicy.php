@@ -19,7 +19,7 @@ class AchievementPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->isAdmin() && in_array($ability, ['viewAny', 'view'])) {
+        if ($user->isAdmin()) {
             return true;
         }
     }
@@ -32,19 +32,19 @@ class AchievementPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isStaff();
+        return $user->isManager() || $user->isStaff();
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Achievement  $achievement
+     * @param  \App\Models\Achievement  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Achievement $achievement)
+    public function view(User $user, Achievement $model)
     {
-        return $user->isStaff() && $achievement->branch->users->contains($user);
+        return $model->target->branch->users->contains($user);
     }
 
     /**
@@ -55,45 +55,41 @@ class AchievementPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin() || $user->isStaff();
+        return $this->viewAny($user);
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Achievement  $achievement
+     * @param  \App\Models\Achievement  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Achievement $achievement)
+    public function update(User $user, Achievement $model)
     {
-        return
-            $user->isAdmin() ||
-            ($user->isStaff() && $achievement->branch->users->contains($user));
+        return $this->create($user) && $this->view($user, $model);
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Achievement  $achievement
+     * @param  \App\Models\Achievement  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Achievement $achievement)
+    public function delete(User $user, Achievement $model)
     {
-        return
-            $user->isAdmin() ||
-            ($user->isStaff() && $achievement->branch->users->contains($user));
+        return $this->update($user, $model);
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Achievement  $achievement
+     * @param  \App\Models\Achievement  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Achievement $achievement)
+    public function restore(User $user, Achievement $model)
     {
         return $user->isAdmin();
     }
@@ -102,10 +98,10 @@ class AchievementPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Achievement  $achievement
+     * @param  \App\Models\Achievement  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Achievement $achievement)
+    public function forceDelete(User $user, Achievement $model)
     {
         return $user->isAdmin();
     }

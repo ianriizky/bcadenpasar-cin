@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Events\CreatingBelongsToCreatedBy;
 use App\Infrastructure\Contracts\Models\Relation\BelongsToBranch;
 use App\Infrastructure\Contracts\Models\Relation\BelongsToCreatedBy;
 use App\Infrastructure\Contracts\Models\Relation\HasManyAchievements;
 use App\Infrastructure\Database\Eloquent\Model;
-use App\Listeners\FillCreatedByWhenCreatingModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model implements BelongsToBranch, HasManyAchievements, BelongsToCreatedBy
@@ -43,6 +43,6 @@ class Event extends Model implements BelongsToBranch, HasManyAchievements, Belon
      * {@inheritDoc}
      */
     protected $dispatchesEvents = [
-        'creating' => FillCreatedByWhenCreatingModel::class,
+        'creating' => CreatingBelongsToCreatedBy::class,
     ];
 }
