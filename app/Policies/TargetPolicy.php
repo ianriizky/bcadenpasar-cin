@@ -41,7 +41,7 @@ class TargetPolicy
      */
     public function create(User $user)
     {
-        return $user->isManager();
+        return $user->isManager() && !$user->branch->currentTarget;
     }
 
     /**
@@ -53,7 +53,7 @@ class TargetPolicy
      */
     public function update(User $user, Target $model)
     {
-        return $this->create($user) && $this->view($user, $model);
+        return $user->isManager() && $this->view($user, $model);
     }
 
     /**
