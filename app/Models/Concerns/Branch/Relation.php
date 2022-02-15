@@ -107,8 +107,8 @@ trait Relation
             $now = Carbon::now();
 
             $query
-                ->where('start_date', '<=', $now->copy()->startOfDay()->toDateTimeString())
-                ->where('end_date', '>=', $now->copy()->endOfDay()->toDateTimeString());
+                ->where('start_date', '<=', $now->copy()->startOfDay())
+                ->where('end_date', '>=', $now->copy()->endOfDay());
         });
     }
 
