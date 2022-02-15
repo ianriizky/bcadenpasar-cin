@@ -73,34 +73,6 @@
                             </div>
                         @endcan
                         {{-- /.user --}}
-
-                        {{-- role --}}
-                        @can('viewAny', \App\Models\Role::class)
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-4">
-                                <article class="article">
-                                    <div class="article-header">
-                                        <div class="article-image" data-background="{{ gravatar_image(null, 200) }}"></div>
-
-                                        <div class="article-title">
-                                            <h2>
-                                                <a href="{{ route('master.role.index') }}">@lang('menu.role')</a>
-                                            </h2>
-                                        </div>
-                                    </div>
-
-                                    <div class="article-details">
-                                        <p>
-                                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                        </p>
-
-                                        <div class="article-cta">
-                                            <a href="{{ route('master.role.index') }}" class="btn btn-primary">@lang('View')</a>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                        @endcan
-                        {{-- /.role --}}
                     </div>
                 </div>
             </div>
