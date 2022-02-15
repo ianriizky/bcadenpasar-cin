@@ -35,15 +35,15 @@ Route::middleware('auth:web', 'user_is_verified')->group(function () {
     Route::prefix('/master')->name('master.')->group(function () {
         Route::view('/', 'master.index')->name('index')->middleware('can:view-master');
 
-        Route::prefix('/branch')->name('branch.')->group(function () {
-            Route::post('/datatable', [BranchController::class, 'datatable'])->name('datatable');
-            Route::delete('/multiple', [BranchController::class, 'destroyMultiple'])->name('destroy-multiple');
+        Route::prefix('/branch')->name('branch.')->controller(BranchController::class)->group(function () {
+            Route::post('/datatable', 'datatable')->name('datatable');
+            Route::delete('/multiple', 'destroyMultiple')->name('destroy-multiple');
         });
         Route::resource('/branch', BranchController::class);
 
-        Route::prefix('/user')->name('user.')->group(function () {
-            Route::post('/datatable', [UserController::class, 'datatable'])->name('datatable');
-            Route::delete('/multiple', [UserController::class, 'destroyMultiple'])->name('destroy-multiple');
+        Route::prefix('/user')->name('user.')->controller(UserController::class)->group(function () {
+            Route::post('/datatable', 'datatable')->name('datatable');
+            Route::delete('/multiple', 'destroyMultiple')->name('destroy-multiple');
         });
         Route::resource('/user', UserController::class);
     });
@@ -68,21 +68,21 @@ Route::middleware('auth:web', 'user_is_verified')->group(function () {
     Route::prefix('/monitoring')->name('monitoring.')->group(function () {
         Route::view('/', 'monitoring.index')->name('index');
 
-        Route::prefix('/target')->name('target.')->group(function () {
-            Route::post('/datatable', [TargetController::class, 'datatable'])->name('datatable');
-            Route::delete('/multiple', [TargetController::class, 'destroyMultiple'])->name('destroy-multiple');
+        Route::prefix('/target')->name('target.')->controller(TargetController::class)->group(function () {
+            Route::post('/datatable', 'datatable')->name('datatable');
+            Route::delete('/multiple', 'destroyMultiple')->name('destroy-multiple');
         });
         Route::resource('/target', TargetController::class);
 
-        Route::prefix('/event')->name('event.')->group(function () {
-            Route::post('/datatable', [EventController::class, 'datatable'])->name('datatable');
-            Route::delete('/multiple', [EventController::class, 'destroyMultiple'])->name('destroy-multiple');
+        Route::prefix('/event')->name('event.')->controller(EventController::class)->group(function () {
+            Route::post('/datatable', 'datatable')->name('datatable');
+            Route::delete('/multiple', 'destroyMultiple')->name('destroy-multiple');
         });
         Route::resource('/event', EventController::class);
 
-        Route::prefix('/achievement')->name('achievement.')->group(function () {
-            Route::post('/datatable', [AchievementController::class, 'datatable'])->name('datatable');
-            Route::delete('/multiple', [AchievementController::class, 'destroyMultiple'])->name('destroy-multiple');
+        Route::prefix('/achievement')->name('achievement.')->controller(AchievementController::class)->group(function () {
+            Route::post('/datatable', 'datatable')->name('datatable');
+            Route::delete('/multiple', 'destroyMultiple')->name('destroy-multiple');
         });
         Route::resource('/achievement', AchievementController::class);
     });
@@ -95,16 +95,14 @@ Route::middleware('auth:web', 'user_is_verified')->group(function () {
             Route::post('/chart', 'laporanPencapaianNewCinChart')->name('chart');
         });
 
-        Route::prefix('/dashboard-growth-new-cin')->name('dashboard-growth-new-cin.')->group(function () {
-            Route::view('/', 'report.dashboard-growth-new-cin')->name('index');
-        });
+        Route::get('/dashboard-growth-new-cin', 'dashboardGrowthNewCin')->name('dashboard-growth-new-cin.index');
 
-        Route::prefix('/dashboard-penutupan-cin')->name('dashboard-penutupan-cin.')->group(function () {
-            Route::view('/', 'report.dashboard-penutupan-cin')->name('index');
-        });
+        Route::get('/dashboard-penutupan-cin', 'dashboardPenutupanCin')->name('dashboard-penutupan-cin.index');
     });
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::prefix('/profile')->name('profile.')->controller(ProfileController::class)->group(function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::put('/', 'update')->name('update');
+    });
 });
 

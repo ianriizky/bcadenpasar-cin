@@ -28,9 +28,7 @@ class ReportRepository
         );
 
         $branchesTargetAmount = $branches->map(fn (Branch $branch) =>
-            $branch->currentTarget
-                ? $branch->currentTarget->amount->amountForPeriodicity($periodicity)
-                : 0
+            $branch->currentTargetAmountForPeriodicity($periodicity)
         );
 
         return [
