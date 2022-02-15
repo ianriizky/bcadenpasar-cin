@@ -93,6 +93,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Achievement[] $achievements
  * @property-read int|null $achievements_count
+ * @property-read \App\Models\Target|null $currentTarget
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
  * @property-read int|null $events_count
  * @property-read mixed|array $raw
@@ -130,12 +131,14 @@ namespace App\Models{
  * @property-read int|null $achievements_count
  * @property-read \App\Models\Branch $branch
  * @property-read \App\Models\User|null $createdBy
- * @property-read string $date_iso_format
+ * @property-read string|null $date_iso_format
+ * @property-read string $name_with_date_iso_format
  * @property-read mixed|array $raw
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  * @property-read int|null $roles_count
+ * @method static \Database\Factories\EventFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Event newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Event permission($permissions)
@@ -199,9 +202,11 @@ namespace App\Models{
  * @property-read int|null $achievements_count
  * @property-read \App\Models\Branch $branch
  * @property-read \App\Models\User|null $createdBy
- * @property-read string $end_date_iso_format
+ * @property-read string|null $end_date_iso_format
+ * @property-read string $name
  * @property-read mixed|array $raw
- * @property-read string $start_date_iso_format
+ * @property-read string|null $start_date_end_date_iso_format
+ * @property-read string|null $start_date_iso_format
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles

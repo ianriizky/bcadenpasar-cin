@@ -6,13 +6,17 @@ use App\Models\Achievement;
 use App\Models\Event;
 use App\Models\Target;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 
 /**
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\User> $users
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Target> $targets
+ * @property-read \App\Models\Target|null $currentTarget
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Event> $events
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement> $achievements
  *
@@ -88,6 +92,34 @@ trait Relation
         }
 
         return $this;
+    }
+
+    /**
+     * Define a one-to-one relationship with \App\Models\Target.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function currentTarget(): HasOne
+    {
+        return $this->hasOne(Target::class)->ofMany([
+            static::CREATED_AT => 'max',
+        ], function (Builder $query) {
+            $now = Carbon::now();
+
+            $query
+                ->where('start_date', '<=', $now->copy()->startOfDay()->toDateTimeString())
+                ->where('end_date', '>=', $now->copy()->endOfDay()->toDateTimeString());
+        });
+    }
+
+    /**
+     * Return \App\Models\Target model relation value.
+     *
+     * @return \App\Models\Target|null
+     */
+    public function getCurrentTargetRelationValue(): ?Target
+    {
+        return $this->getRelationValue('currentTarget');
     }
 
     /**
