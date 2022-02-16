@@ -10,19 +10,23 @@ use function Pest\Laravel\assertModelExists;
 use function Pest\Laravel\assertModelMissing;
 
 beforeEach(function () {
-    $this->user = pest_create_user(\App\Models\Role::ROLE_MANAGER);
+    $this->user = pest_create_random_user();
 });
 
 it('has target index page', function () {
-    actingAs($this->user)
-        ->get(route('monitoring.target.index'))
-        ->assertOk();
+    $response = actingAs($this->user)->get(route('monitoring.target.index'));
+
+    if ($this->user->can('viewAny', Target::class)) {
+        $response->assertOk();
+    } else {
+        $response->assertForbidden();
+    }
 });
 
 it('has target create page', function () {
     $response = actingAs($this->user)->get(route('monitoring.target.create'));
 
-    if ($this->user->isAdmin() || $this->user->isManager()) {
+    if ($this->user->can('create', Target::class)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -36,28 +40,28 @@ it('can store target', function () {
 
     $response = actingAs($this->user)->post(route('monitoring.target.store'), $data);
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
-        $response->assertRedirect(route('monitoring.target.index'));
+    if ($this->user->can('create', Target::class)) {
+        if (!$this->user->isAdmin() && !$this->user->branch->is($branch)) {
+            $response->assertSessionHasErrors('branch_id');
+        } else {
+            $response->assertRedirect(route('monitoring.target.index'));
 
-        assertDatabaseHas(Target::class, Arr::except($data, 'start_date_end_date'));
-    } elseif ($this->user->isStaff()) {
-        $response->assertForbidden();
+            assertDatabaseHas(Target::class, Arr::except($data, 'start_date_end_date'));
+        }
     } else {
-        $response->assertSessionHasErrors('branch_id');
+        $response->assertForbidden();
     }
 });
 
 it('has target show page', function () {
     /** @var \App\Models\Target $target */
     $target = Target::factory()
-        ->for($branch = Branch::inRandomOrder()->first('id'))
+        ->for(Branch::inRandomOrder()->first('id'))
         ->create();
 
     $response = actingAs($this->user)->get(route('monitoring.target.show', $target));
 
-    if ($this->user->isAdmin() ||
-        ($this->user->isManager() && $this->user->branch->is($branch)) ||
-        $this->user->is($target)) {
+    if ($this->user->can('view', $target)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -67,12 +71,12 @@ it('has target show page', function () {
 it('has target edit page', function () {
     /** @var \App\Models\Target $target */
     $target = Target::factory()
-        ->for($branch = Branch::inRandomOrder()->first('id'))
+        ->for(Branch::inRandomOrder()->first('id'))
         ->create();
 
     $response = actingAs($this->user)->get(route('monitoring.target.edit', $target));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('update', $target)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -95,7 +99,7 @@ it('can update target', function () {
 
     $updatedTarget = Target::where(Arr::except($data, 'start_date_end_date'))->first();
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('update', $target)) {
         $response->assertRedirect(route('monitoring.target.edit', $updatedTarget));
 
         assertModelExists($updatedTarget);
@@ -107,12 +111,12 @@ it('can update target', function () {
 it('can destroy target', function () {
     /** @var \App\Models\Target $target */
     $target = Target::factory()
-        ->for($branch = Branch::inRandomOrder()->first('id'))
+        ->for(Branch::inRandomOrder()->first('id'))
         ->create();
 
     $response = actingAs($this->user)->delete(route('monitoring.target.destroy', $target));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('delete', $target)) {
         $response->assertRedirect(route('monitoring.target.index'));
 
         assertModelMissing($target);
@@ -124,7 +128,7 @@ it('can destroy target', function () {
 it('can destroy multiple target', function () {
     /** @var \Illuminate\Database\Eloquent\Collection<\App\Models\Target> $targets */
     $targets = Target::factory()
-        ->for($branch = Branch::inRandomOrder()->first('id'))
+        ->for(Branch::inRandomOrder()->first('id'))
         ->count(rand(1, 5))
         ->create();
 
@@ -132,13 +136,13 @@ it('can destroy multiple target', function () {
         'checkbox' => $targets->pluck('id')->toArray(),
     ]));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
-        $response->assertRedirect(route('monitoring.target.index'));
+    foreach ($targets as $target) {
+        if ($this->user->can('delete', $target)) {
+            $response->assertRedirect(route('monitoring.target.index'));
 
-        foreach ($targets as $target) {
             assertModelMissing($target);
+        } else {
+            $response->assertForbidden();
         }
-    } else {
-        $response->assertForbidden();
     }
 });

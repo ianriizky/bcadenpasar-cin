@@ -7,7 +7,11 @@ beforeEach(function () {
 });
 
 it('has dashboard page', function () {
-    actingAs($this->user)
-        ->get(route('dashboard'))
-        ->assertOk();
+    $response = actingAs($this->user)->get(route('dashboard'));
+
+    if ($this->user->can('view-report')) {
+        $response->assertOk();
+    } else {
+        $response->assertForbidden();
+    }
 });

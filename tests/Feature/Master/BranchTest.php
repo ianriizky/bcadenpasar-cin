@@ -10,15 +10,19 @@ beforeEach(function () {
 });
 
 it('has branch index page', function () {
-    actingAs($this->user)
-        ->get(route('master.branch.index'))
-        ->assertOk();
+    $response = actingAs($this->user)->get(route('master.branch.index'));
+
+    if ($this->user->can('viewAny', Branch::class)) {
+        $response->assertOk();
+    } else {
+        $response->assertForbidden();
+    }
 });
 
 it('has branch create page', function () {
     $response = actingAs($this->user)->get(route('master.branch.create'));
 
-    if ($this->user->isAdmin()) {
+    if ($this->user->can('create', Branch::class)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -30,7 +34,7 @@ it('can store branch', function () {
 
     $response = actingAs($this->user)->post(route('master.branch.store'), $data);
 
-    if ($this->user->isAdmin()) {
+    if ($this->user->can('create', Branch::class)) {
         $response->assertRedirect(route('master.branch.index'));
 
         assertDatabaseHas(Branch::class, $data);
@@ -45,7 +49,7 @@ it('has branch show page', function () {
 
     $response = actingAs($this->user)->get(route('master.branch.show', $branch));
 
-    if ($this->user->isAdmin()) {
+    if ($this->user->can('view', $branch)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -58,7 +62,7 @@ it('has branch edit page', function () {
 
     $response = actingAs($this->user)->get(route('master.branch.edit', $branch));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('update', $branch)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -73,7 +77,7 @@ it('can update branch', function () {
 
     $response = actingAs($this->user)->put(route('master.branch.update', $branch), $data);
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('update', $branch)) {
         $response->assertRedirect(route('master.branch.edit', Branch::firstWhere('name', $data['name'])));
 
         assertDatabaseHas(Branch::class, $data);
@@ -88,7 +92,7 @@ it('can destroy branch', function () {
 
     $response = actingAs($this->user)->delete(route('master.branch.destroy', $branch));
 
-    if ($this->user->isAdmin()) {
+    if ($this->user->can('delete', $branch)) {
         $response->assertRedirect(route('master.branch.index'));
 
         assertModelMissing($branch);
@@ -107,13 +111,13 @@ it('can destroy multiple branch', function () {
         'checkbox' => $branches->pluck('id')->toArray(),
     ]));
 
-    if ($this->user->isAdmin()) {
-        $response->assertRedirect(route('master.branch.index'));
+    foreach ($branches as $branch) {
+        if ($this->user->can('delete', $branch)) {
+            $response->assertRedirect(route('master.branch.index'));
 
-        foreach ($branches as $branch) {
             assertModelMissing($branch);
+        } else {
+            $response->assertForbidden();
         }
-    } else {
-        $response->assertForbidden();
     }
 });

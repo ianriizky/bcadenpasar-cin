@@ -16,15 +16,19 @@ beforeEach(function () {
 });
 
 it('has user index page', function () {
-    actingAs($this->user)
-        ->get(route('master.user.index'))
-        ->assertOk();
+    $response = actingAs($this->user)->get(route('master.user.index'));
+
+    if ($this->user->can('viewAny', User::class)) {
+        $response->assertOk();
+    } else {
+        $response->assertForbidden();
+    }
 });
 
 it('has user create page', function () {
     $response = actingAs($this->user)->get(route('master.user.create'));
 
-    if ($this->user->isAdmin() || $this->user->isManager()) {
+    if ($this->user->can('create', User::class)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -40,29 +44,29 @@ it('can store user', function () {
 
     $response = actingAs($this->user)->post(route('master.user.store'), $data);
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
-        $response->assertRedirect(route('master.user.index'));
+    if ($this->user->can('create', User::class)) {
+        if (!$this->user->isAdmin() && !$this->user->branch->is($branch)) {
+            $response->assertSessionHasErrors('branch_id');
+        } else {
+            $response->assertRedirect(route('master.user.index'));
 
-        assertDatabaseHas(User::class, Arr::only($data, 'username'));
+            assertDatabaseHas(User::class, $data);
 
-        Event::assertDispatched(Registered::class);
-    } elseif ($this->user->isStaff()) {
-        $response->assertForbidden();
+            Event::assertDispatched(Registered::class);
+        }
     } else {
-        $response->assertSessionHasErrors('branch_id');
+        $response->assertForbidden();
     }
 });
 
 it('has user show page', function () {
     $user = pest_create_random_manager_or_staff(
-        $branch = Branch::inRandomOrder()->first('id')
+        Branch::inRandomOrder()->first('id')
     );
 
     $response = actingAs($this->user)->get(route('master.user.show', $user));
 
-    if ($this->user->isAdmin() ||
-        ($this->user->isManager() && $this->user->branch->is($branch)) ||
-        $this->user->is($user)) {
+    if ($this->user->can('view', $user)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -71,12 +75,12 @@ it('has user show page', function () {
 
 it('has user edit page', function () {
     $user = pest_create_random_manager_or_staff(
-        $branch = Branch::inRandomOrder()->first('id')
+        Branch::inRandomOrder()->first('id')
     );
 
     $response = actingAs($this->user)->get(route('master.user.edit', $user));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('update', $user)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -96,7 +100,7 @@ it('can update user', function () {
 
     $response = actingAs($this->user)->put(route('master.user.update', $user), $data);
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('update', $user)) {
         $response->assertRedirect(route('master.user.edit', User::firstWhere('username', $data['username'])));
 
         assertDatabaseHas(User::class, Arr::only($data, 'username'));
@@ -107,12 +111,12 @@ it('can update user', function () {
 
 it('can destroy user', function () {
     $user = pest_create_random_manager_or_staff(
-        $branch = Branch::inRandomOrder()->first('id')
+        Branch::inRandomOrder()->first('id')
     );
 
     $response = actingAs($this->user)->delete(route('master.user.destroy', $user));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('delete', $user)) {
         $response->assertRedirect(route('master.user.index'));
 
         assertModelMissing($user);
@@ -124,7 +128,7 @@ it('can destroy user', function () {
 it('can destroy multiple user', function () {
     /** @var \Illuminate\Database\Eloquent\Collection<\App\Models\User> $users */
     $users = User::factory()
-        ->for($branch = Branch::inRandomOrder()->first('id'))
+        ->for(Branch::inRandomOrder()->first('id'))
         ->count(rand(1, 5))
         ->create()
         ->map(fn (User $user) => $user->syncRoles(Arr::random([Role::ROLE_ADMIN, Role::ROLE_STAFF])));
@@ -133,13 +137,13 @@ it('can destroy multiple user', function () {
         'checkbox' => $users->pluck('id')->toArray(),
     ]));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
-        $response->assertRedirect(route('master.user.index'));
+    foreach ($users as $user) {
+        if ($this->user->can('delete', $user)) {
+            $response->assertRedirect(route('master.user.index'));
 
-        foreach ($users as $user) {
             assertModelMissing($user);
+        } else {
+            $response->assertForbidden();
         }
-    } else {
-        $response->assertForbidden();
     }
 });

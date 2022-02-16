@@ -10,19 +10,23 @@ use function Pest\Laravel\assertModelExists;
 use function Pest\Laravel\assertModelMissing;
 
 beforeEach(function () {
-    $this->user = pest_create_user(\App\Models\Role::ROLE_MANAGER);
+    $this->user = pest_create_random_user();
 });
 
 it('has event index page', function () {
-    actingAs($this->user)
-        ->get(route('monitoring.event.index'))
-        ->assertOk();
+    $response = actingAs($this->user)->get(route('monitoring.event.index'));
+
+    if ($this->user->can('viewAny', Event::class)) {
+        $response->assertOk();
+    } else {
+        $response->assertForbidden();
+    }
 });
 
 it('has event create page', function () {
     $response = actingAs($this->user)->get(route('monitoring.event.create'));
 
-    if ($this->user->isAdmin() || $this->user->isManager()) {
+    if ($this->user->can('create', Event::class)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -31,33 +35,33 @@ it('has event create page', function () {
 
 it('can store event', function () {
     $data = Event::factory()->rawForm(
-        $branch = Branch::inRandomOrder()->first('id')
+        $branch = $this->user->branch
     );
 
     $response = actingAs($this->user)->post(route('monitoring.event.store'), $data);
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
-        $response->assertRedirect(route('monitoring.event.index'));
+    if ($this->user->can('create', Event::class)) {
+        if (!$this->user->isAdmin() && !$this->user->branch->is($branch)) {
+            $response->assertSessionHasErrors('branch_id');
+        } else {
+            $response->assertRedirect(route('monitoring.event.index'));
 
-        assertDatabaseHas(Event::class, Arr::except($data, 'start_date_end_date'));
-    } elseif ($this->user->isStaff()) {
-        $response->assertForbidden();
+            assertDatabaseHas(Event::class, Arr::only($data, 'name'));
+        }
     } else {
-        $response->assertSessionHasErrors('branch_id');
+        $response->assertForbidden();
     }
 });
 
 it('has event show page', function () {
     /** @var \App\Models\Event $event */
     $event = Event::factory()
-        ->for($branch = Branch::inRandomOrder()->first('id'))
+        ->for(Branch::inRandomOrder()->first('id'))
         ->create();
 
     $response = actingAs($this->user)->get(route('monitoring.event.show', $event));
 
-    if ($this->user->isAdmin() ||
-        ($this->user->isManager() && $this->user->branch->is($branch)) ||
-        $this->user->is($event)) {
+    if ($this->user->can('view', $event)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -67,12 +71,12 @@ it('has event show page', function () {
 it('has event edit page', function () {
     /** @var \App\Models\Event $event */
     $event = Event::factory()
-        ->for($branch = Branch::inRandomOrder()->first('id'))
+        ->for(Branch::inRandomOrder()->first('id'))
         ->create();
 
     $response = actingAs($this->user)->get(route('monitoring.event.edit', $event));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('update', $event)) {
         $response->assertOk();
     } else {
         $response->assertForbidden();
@@ -95,7 +99,7 @@ it('can update event', function () {
 
     $updatedEvent = Event::where(Arr::except($data, 'start_date_end_date'))->first();
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('update', $event)) {
         $response->assertRedirect(route('monitoring.event.edit', $updatedEvent));
 
         assertModelExists($updatedEvent);
@@ -107,12 +111,12 @@ it('can update event', function () {
 it('can destroy event', function () {
     /** @var \App\Models\Event $event */
     $event = Event::factory()
-        ->for($branch = Branch::inRandomOrder()->first('id'))
+        ->for(Branch::inRandomOrder()->first('id'))
         ->create();
 
     $response = actingAs($this->user)->delete(route('monitoring.event.destroy', $event));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
+    if ($this->user->can('delete', $event)) {
         $response->assertRedirect(route('monitoring.event.index'));
 
         assertModelMissing($event);
@@ -124,7 +128,7 @@ it('can destroy event', function () {
 it('can destroy multiple event', function () {
     /** @var \Illuminate\Database\Eloquent\Collection<\App\Models\Event> $events */
     $events = Event::factory()
-        ->for($branch = Branch::inRandomOrder()->first('id'))
+        ->for(Branch::inRandomOrder()->first('id'))
         ->count(rand(1, 5))
         ->create();
 
@@ -132,13 +136,13 @@ it('can destroy multiple event', function () {
         'checkbox' => $events->pluck('id')->toArray(),
     ]));
 
-    if ($this->user->isAdmin() || ($this->user->isManager() && $this->user->branch->is($branch))) {
-        $response->assertRedirect(route('monitoring.event.index'));
+    foreach ($events as $event) {
+        if ($this->user->can('delete', $event)) {
+            $response->assertRedirect(route('monitoring.event.index'));
 
-        foreach ($events as $event) {
             assertModelMissing($event);
+        } else {
+            $response->assertForbidden();
         }
-    } else {
-        $response->assertForbidden();
     }
 });
