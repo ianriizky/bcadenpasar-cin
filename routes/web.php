@@ -32,8 +32,8 @@ Route::get('/verify-user', [UserVerificationPromptController::class, '__invoke']
 Route::middleware('auth:web', 'user_is_verified')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 
-    Route::prefix('/master')->name('master.')->group(function () {
-        Route::view('/', 'master.index')->name('index')->middleware('can:view-master');
+    Route::prefix('/master')->name('master.')->middleware('can:view-master')->group(function () {
+        Route::view('/', 'master.index')->name('index');
 
         Route::prefix('/branch')->name('branch.')->controller(BranchController::class)->group(function () {
             Route::post('/datatable', 'datatable')->name('datatable');
@@ -65,7 +65,7 @@ Route::middleware('auth:web', 'user_is_verified')->group(function () {
         Route::view('/employee-get-cin', 'education.employee-get-cin')->name('employee-get-cin');
     });
 
-    Route::prefix('/monitoring')->name('monitoring.')->group(function () {
+    Route::prefix('/monitoring')->name('monitoring.')->middleware('can:view-monitoring')->group(function () {
         Route::view('/', 'monitoring.index')->name('index');
 
         Route::prefix('/target')->name('target.')->controller(TargetController::class)->group(function () {
@@ -87,7 +87,7 @@ Route::middleware('auth:web', 'user_is_verified')->group(function () {
         Route::resource('/achievement', AchievementController::class);
     });
 
-    Route::prefix('/report')->name('report.')->controller(ReportController::class)->group(function () {
+    Route::prefix('/report')->name('report.')->controller(ReportController::class)->middleware('can:view-report')->group(function () {
         Route::view('/', 'report.index')->name('index');
 
         Route::prefix('/laporan-pencapaian-new-cin')->name('laporan-pencapaian-new-cin.')->group(function () {

@@ -29,23 +29,29 @@
                 </li>
             @endcan
 
-            <li class="nav-item @if (Route::is('education.*')) active @endif">
-                <a href="{{ route('education.index') }}" class="nav-link">
-                    <span>@lang('menu.education')</span>
-                </a>
-            </li>
+            @can('view-education')
+                <li class="nav-item @if (Route::is('education.*')) active @endif">
+                    <a href="{{ route('education.index') }}" class="nav-link">
+                        <span>@lang('menu.education')</span>
+                    </a>
+                </li>
+            @endcan
 
-            <li class="nav-item @if (Route::is('monitoring.*')) active @endif">
-                <a href="{{ route('monitoring.index') }}" class="nav-link">
-                    <span>@lang('menu.monitoring')</span>
-                </a>
-            </li>
+            @can('view-monitoring')
+                <li class="nav-item @if (Route::is('monitoring.*')) active @endif">
+                    <a href="{{ route('monitoring.index') }}" class="nav-link">
+                        <span>@lang('menu.monitoring')</span>
+                    </a>
+                </li>
+            @endcan
 
-            <li class="nav-item @if (Route::is('report.*')) active @endif">
-                <a href="{{ route('report.index') }}" class="nav-link">
-                    <span>@lang('menu.report')</span>
-                </a>
-            </li>
+            @can('view-report')
+                <li class="nav-item @if (Route::is('report.*')) active @endif">
+                    <a href="{{ route('report.index') }}" class="nav-link">
+                        <span>@lang('menu.report')</span>
+                    </a>
+                </li>
+            @endcan
         </ul>
     </div>
 

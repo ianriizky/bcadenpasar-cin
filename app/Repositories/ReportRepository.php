@@ -21,10 +21,7 @@ class ReportRepository
         $branches = Branch::all();
 
         $branchesAchievementAmount = $branches->map(fn (Branch $branch) =>
-            $branch->achievements()
-                ->whereBetween('achievements.achieved_date', [$startDate->startOfDay(), $endDate->endOfDay()])
-                ->where('targets.periodicity', $periodicity)
-                ->sum('achievements.amount')
+            $branch->achievementAmount($startDate, $endDate, $periodicity)
         );
 
         $branchesTargetAmount = $branches->map(fn (Branch $branch) =>
@@ -52,6 +49,49 @@ class ReportRepository
                     'pointBackgroundColor' => '#999999',
                     'pointRadius' => 4,
                 ],
+            ],
+        ];
+    }
+
+    /**
+     * Return table data of penutupan cin.
+     *
+     * @param  \Illuminate\Support\Carbon  $period
+     * @return array
+     */
+    public function tablePenutupanCin(Carbon $period): array
+    {
+        $branches = Branch::with('currentTarget')->get(['id', 'name']);
+
+        return [
+            'period' => $period->isoFormat('MMMM YYYY'),
+            'branches' => $branches->pluck('name', 'id'),
+            'targets' => collect(Periodicity::toValues())->mapWithKeys(fn (string $periodicity) => [
+                $periodicity => $branches->mapWithKeys(fn (Branch $branch) => [
+                    $branch->getKey() => $branch->currentTargetAmountForPeriodicity(Periodicity::from($periodicity)),
+                ]),
+            ]),
+            'achievements' => [
+                Periodicity::daily()->value => $branches->mapWithKeys(fn (Branch $branch) => [
+                    $branch->getKey() => $branch->achievementAmount(
+                        $period->startOfMonth(), $period->endOfMonth(), Periodicity::daily()
+                    ),
+                ]),
+                Periodicity::weekly()->value => $branches->mapWithKeys(fn (Branch $branch) => [
+                    $branch->getKey() => $branch->achievementAmount(
+                        $period->startOfWeek(), $period->endOfWeek(), Periodicity::weekly()
+                    ),
+                ]),
+                Periodicity::monthly()->value => $branches->mapWithKeys(fn (Branch $branch) => [
+                    $branch->getKey() => $branch->achievementAmount(
+                        $period->startOfMonth(), $period->endOfMonth(), Periodicity::monthly()
+                    ),
+                ]),
+                Periodicity::yearly()->value => $branches->mapWithKeys(fn (Branch $branch) => [
+                    $branch->getKey() => $branch->achievementAmount(
+                        $period->startOfMonth(), $period->endOfMonth(), Periodicity::yearly()
+                    ),
+                ]),
             ],
         ];
     }

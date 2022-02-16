@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Infrastructure\Contracts\Auth\HasRole;
+use App\Models\Achievement;
 use App\Models\Branch;
-use App\Models\Role;
+use App\Models\Event;
+use App\Models\Target;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -34,13 +36,26 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('view-dashboard', fn (HasRole $user) =>
-            $user->isAdmin() || $user->isStaff()
+            $user->isManager() || $user->isStaff()
         );
 
         Gate::define('view-master', fn (User $user) =>
             $user->can('viewAny', Branch::class) ||
-            $user->can('viewAny', User::class) ||
-            $user->can('viewAny', Role::class)
+            $user->can('viewAny', User::class)
+        );
+
+        Gate::define('view-education', fn (HasRole $user) =>
+            $user->isManager() || $user->isStaff()
+        );
+
+        Gate::define('view-monitoring', fn (User $user) =>
+            $user->can('viewAny', Target::class) ||
+            $user->can('viewAny', Event::class) ||
+            $user->can('viewAny', Achievement::class)
+        );
+
+        Gate::define('view-report', fn (User $user) =>
+            $user->isManager()
         );
     }
 }

@@ -59,115 +59,121 @@
                 </li>
             @endcan
 
-            <li class="nav-item dropdown @if (Route::is('education.*')) active @endif">
-                <a href="{{ route('education.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
-                    <i class="fas @lang('icon.education')"></i> <span>@lang('menu.education')</span>
-                </a>
+            @can('view-education')
+                <li class="nav-item dropdown @if (Route::is('education.*')) active @endif">
+                    <a href="{{ route('education.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
+                        <i class="fas @lang('icon.education')"></i> <span>@lang('menu.education')</span>
+                    </a>
 
-                <ul class="dropdown-menu">
-                    <li class="nav-item dropdown @if (Route::is('education.webinar-literasi-keuangan.*')) active @endif">
-                        <a href="{{ route('education.webinar-literasi-keuangan.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
-                            <span class="narrow-line-height">Webinar Literasi Keuangan</span>
-                        </a>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item dropdown @if (Route::is('education.webinar-literasi-keuangan.*')) active @endif">
+                            <a href="{{ route('education.webinar-literasi-keuangan.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
+                                <span class="narrow-line-height">Webinar Literasi Keuangan</span>
+                            </a>
 
-                        <ul class="dropdown-menu dropdown-menu-mobile" data-dropdown-menu-mobile-class="dropdown-submenu">
-                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.template-surat-penawaran-webinar')) active @endif">
-                                <a href="{{ route('education.webinar-literasi-keuangan.template-surat-penawaran-webinar') }}" class="nav-link">
-                                    <span class="narrow-line-height">Template Surat Penawaran Webinar</span>
-                                </a>
-                            </li>
+                            <ul class="dropdown-menu dropdown-menu-mobile" data-dropdown-menu-mobile-class="dropdown-submenu">
+                                <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.template-surat-penawaran-webinar')) active @endif">
+                                    <a href="{{ route('education.webinar-literasi-keuangan.template-surat-penawaran-webinar') }}" class="nav-link">
+                                        <span class="narrow-line-height">Template Surat Penawaran Webinar</span>
+                                    </a>
+                                </li>
 
-                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.template-presentasi-webinar-literasi-keuangan')) active @endif">
-                                <a href="{{ route('education.webinar-literasi-keuangan.template-presentasi-webinar-literasi-keuangan') }}" class="nav-link">
-                                    <span class="narrow-line-height">Template Presentasi Webinar Literasi Keuangan</span>
-                                </a>
-                            </li>
+                                <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.template-presentasi-webinar-literasi-keuangan')) active @endif">
+                                    <a href="{{ route('education.webinar-literasi-keuangan.template-presentasi-webinar-literasi-keuangan') }}" class="nav-link">
+                                        <span class="narrow-line-height">Template Presentasi Webinar Literasi Keuangan</span>
+                                    </a>
+                                </li>
 
-                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.template-rundown-webinar-literasi-keuangan')) active @endif">
-                                <a href="{{ route('education.webinar-literasi-keuangan.template-rundown-webinar-literasi-keuangan') }}" class="nav-link">
-                                    <span class="narrow-line-height">Template Rundown Webinar Literasi Keuangan</span>
-                                </a>
-                            </li>
+                                <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.template-rundown-webinar-literasi-keuangan')) active @endif">
+                                    <a href="{{ route('education.webinar-literasi-keuangan.template-rundown-webinar-literasi-keuangan') }}" class="nav-link">
+                                        <span class="narrow-line-height">Template Rundown Webinar Literasi Keuangan</span>
+                                    </a>
+                                </li>
 
-                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.pemetaan-sekolah-kampus-potensi-webinar')) active @endif">
-                                <a href="{{ route('education.webinar-literasi-keuangan.pemetaan-sekolah-kampus-potensi-webinar') }}" class="nav-link">
-                                    <span class="narrow-line-height">Pemetaan Sekolah / Kampus Potensi Webinar</span>
-                                </a>
-                            </li>
+                                <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.pemetaan-sekolah-kampus-potensi-webinar')) active @endif">
+                                    <a href="{{ route('education.webinar-literasi-keuangan.pemetaan-sekolah-kampus-potensi-webinar') }}" class="nav-link">
+                                        <span class="narrow-line-height">Pemetaan Sekolah / Kampus Potensi Webinar</span>
+                                    </a>
+                                </li>
 
-                            <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.input-rencana-penyelenggaraan-webinar')) active @endif">
-                                <a href="{{ route('education.webinar-literasi-keuangan.input-rencana-penyelenggaraan-webinar') }}" class="nav-link">
-                                    <span class="narrow-line-height">Input Rencana Penyelenggaraan Webinar</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                                <li class="nav-item mb-xl-0 mb-4 @if (Route::is('education.webinar-literasi-keuangan.input-rencana-penyelenggaraan-webinar')) active @endif">
+                                    <a href="{{ route('education.webinar-literasi-keuangan.input-rencana-penyelenggaraan-webinar') }}" class="nav-link">
+                                        <span class="narrow-line-height">Input Rencana Penyelenggaraan Webinar</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <li class="nav-item @if (Route::is('education.pembukaan-rekening-online')) active @endif">
-                        <a href="{{ route('education.pembukaan-rekening-online') }}" class="nav-link">
-                            <span class="narrow-line-height">Video Pembukaan Rekening Online</span>
-                        </a>
-                    </li>
+                        <li class="nav-item @if (Route::is('education.pembukaan-rekening-online')) active @endif">
+                            <a href="{{ route('education.pembukaan-rekening-online') }}" class="nav-link">
+                                <span class="narrow-line-height">Video Pembukaan Rekening Online</span>
+                            </a>
+                        </li>
 
-                    <li class="nav-item @if (Route::is('education.employee-get-cin')) active @endif">
-                        <a href="{{ route('education.employee-get-cin') }}" class="nav-link">
-                            <span class="narrow-line-height">Employee Get CiN</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                        <li class="nav-item @if (Route::is('education.employee-get-cin')) active @endif">
+                            <a href="{{ route('education.employee-get-cin') }}" class="nav-link">
+                                <span class="narrow-line-height">Employee Get CiN</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
 
-            <li class="nav-item dropdown @if (Route::is('monitoring.*')) active @endif">
-                <a href="{{ route('monitoring.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
-                    <i class="fas @lang('icon.monitoring')"></i> <span>@lang('menu.monitoring')</span>
-                </a>
+            @can('view-monitoring')
+                <li class="nav-item dropdown @if (Route::is('monitoring.*')) active @endif">
+                    <a href="{{ route('monitoring.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
+                        <i class="fas @lang('icon.monitoring')"></i> <span>@lang('menu.monitoring')</span>
+                    </a>
 
-                <ul class="dropdown-menu">
-                    <li class="nav-item @if (Route::is('monitoring.target.*')) active @endif">
-                        <a href="{{ route('monitoring.target.index') }}" class="nav-link">
-                            <i class="fas @lang('icon.target')"></i> <span class="narrow-line-height">@lang('menu.target')</span>
-                        </a>
-                    </li>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item @if (Route::is('monitoring.target.*')) active @endif">
+                            <a href="{{ route('monitoring.target.index') }}" class="nav-link">
+                                <i class="fas @lang('icon.target')"></i> <span class="narrow-line-height">@lang('menu.target')</span>
+                            </a>
+                        </li>
 
-                    <li class="nav-item @if (Route::is('monitoring.event.*')) active @endif">
-                        <a href="{{ route('monitoring.event.index') }}" class="nav-link">
-                            <i class="fas @lang('icon.event')"></i> <span class="narrow-line-height">@lang('menu.event')</span>
-                        </a>
-                    </li>
+                        <li class="nav-item @if (Route::is('monitoring.event.*')) active @endif">
+                            <a href="{{ route('monitoring.event.index') }}" class="nav-link">
+                                <i class="fas @lang('icon.event')"></i> <span class="narrow-line-height">@lang('menu.event')</span>
+                            </a>
+                        </li>
 
-                    <li class="nav-item @if (Route::is('monitoring.achievement.*')) active @endif">
-                        <a href="{{ route('monitoring.achievement.index') }}" class="nav-link">
-                            <i class="fas @lang('icon.achievement')"></i> <span class="narrow-line-height">@lang('menu.achievement')</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                        <li class="nav-item @if (Route::is('monitoring.achievement.*')) active @endif">
+                            <a href="{{ route('monitoring.achievement.index') }}" class="nav-link">
+                                <i class="fas @lang('icon.achievement')"></i> <span class="narrow-line-height">@lang('menu.achievement')</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
 
-            <li class="nav-item dropdown @if (Route::is('report.*')) active @endif">
-                <a href="{{ route('report.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
-                    <i class="fas @lang('icon.report')"></i> <span>@lang('menu.report')</span>
-                </a>
+            @can('view-report')
+                <li class="nav-item dropdown @if (Route::is('report.*')) active @endif">
+                    <a href="{{ route('report.index') }}" data-toggle="dropdown" class="nav-link has-dropdown">
+                        <i class="fas @lang('icon.report')"></i> <span>@lang('menu.report')</span>
+                    </a>
 
-                <ul class="dropdown-menu">
-                    <li class="nav-item @if (Route::is('report.laporan-pencapaian-new-cin.*')) active @endif">
-                        <a href="{{ route('report.laporan-pencapaian-new-cin.index') }}" class="nav-link">
-                            <span class="narrow-line-height">Laporan Pencapaian New CiN</span>
-                        </a>
-                    </li>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item @if (Route::is('report.laporan-pencapaian-new-cin.*')) active @endif">
+                            <a href="{{ route('report.laporan-pencapaian-new-cin.index') }}" class="nav-link">
+                                <span class="narrow-line-height">Laporan Pencapaian New CiN</span>
+                            </a>
+                        </li>
 
-                    <li class="nav-item @if (Route::is('report.dashboard-growth-new-cin.*')) active @endif">
-                        <a href="{{ route('report.dashboard-growth-new-cin.index') }}" class="nav-link">
-                            <span class="narrow-line-height">Dashboard Growth New CiN</span>
-                        </a>
-                    </li>
+                        <li class="nav-item @if (Route::is('report.dashboard-growth-new-cin.*')) active @endif">
+                            <a href="{{ route('report.dashboard-growth-new-cin.index') }}" class="nav-link">
+                                <span class="narrow-line-height">Dashboard Growth New CiN</span>
+                            </a>
+                        </li>
 
-                    <li class="nav-item @if (Route::is('report.dashboard-penutupan-cin.*')) active @endif">
-                        <a href="{{ route('report.dashboard-penutupan-cin.index') }}" class="nav-link">
-                            <span class="narrow-line-height">Dashboard Penutupan CiN</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                        <li class="nav-item @if (Route::is('report.dashboard-penutupan-cin.*')) active @endif">
+                            <a href="{{ route('report.dashboard-penutupan-cin.index') }}" class="nav-link">
+                                <span class="narrow-line-height">Dashboard Penutupan CiN</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
         </ul>
     </div>
 </nav>

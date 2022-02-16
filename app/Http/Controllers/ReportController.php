@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Report\DashboardPenutupanCin;
 use App\Http\Requests\Report\LaporanPencapaianNewCinChartRequest;
 use App\Repositories\ReportRepository;
 
@@ -59,10 +60,13 @@ class ReportController extends Controller
     /**
      * Display dashboard penutupancin page.
      *
+     * @param  \App\Http\Requests\Report\DashboardPenutupanCin  $request
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function dashboardPenutupanCin()
+    public function dashboardPenutupanCin(DashboardPenutupanCin $request)
     {
-        return view('report.dashboard-penutupan-cin');
+        $data = $this->reportRepository->tablePenutupanCin($request->getPeriod());
+
+        return view('report.dashboard-penutupan-cin', $data);
     }
 }
