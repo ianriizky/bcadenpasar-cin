@@ -40,18 +40,16 @@ class Branch extends Model
     }
 
     /**
-     * Return the specified amount of this achievement based on the given parameter.
+     * Return the specified amount of this current achievement based on the given parameter.
      *
      * @param  \Illuminate\Support\Carbon  $startDate
      * @param  \Illuminate\Support\Carbon  $endDate
-     * @param  \App\Enum\Periodicity  $periodicity
-     * @return mixed
+     * @return int
      */
-    public function achievementAmount(Carbon $startDate, Carbon $endDate, Periodicity $periodicity)
+    public function currentAchievementAmount(Carbon $startDate, Carbon $endDate): int
     {
-        return $this->achievements()
+        return $this->currentAchievements()
             ->whereBetween('achievements.achieved_date', [$startDate->startOfDay(), $endDate->endOfDay()])
-            ->where('targets.periodicity', $periodicity)
             ->sum('achievements.amount');
     }
 }

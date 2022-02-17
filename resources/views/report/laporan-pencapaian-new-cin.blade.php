@@ -30,7 +30,7 @@
     </script>
     <script src="{{ mix('js/page/report/laporan-pencapaian-new-cin.js') }}"></script>
     <script>
-        $(function() {
+        $(function () {
             $('button#load-chart-data').trigger('click');
             $(`a.periodicity-dropdown-item[data-value=${initialPeriodicity}]`).trigger('click');
         });

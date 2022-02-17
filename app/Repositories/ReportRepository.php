@@ -21,7 +21,7 @@ class ReportRepository
         $branches = Branch::all();
 
         $branchesAchievementAmount = $branches->map(fn (Branch $branch) =>
-            $branch->achievementAmount($startDate, $endDate, $periodicity)
+            $branch->currentAchievementAmount($startDate, $endDate)
         );
 
         $branchesTargetAmount = $branches->map(fn (Branch $branch) =>
@@ -73,23 +73,23 @@ class ReportRepository
             ]),
             'achievements' => [
                 Periodicity::daily()->value => $branches->mapWithKeys(fn (Branch $branch) => [
-                    $branch->getKey() => $branch->achievementAmount(
-                        $period->startOfMonth(), $period->endOfMonth(), Periodicity::daily()
+                    $branch->getKey() => $branch->currentAchievementAmount(
+                        $period->copy()->startOfMonth(), $period->copy()->endOfMonth()
                     ),
                 ]),
                 Periodicity::weekly()->value => $branches->mapWithKeys(fn (Branch $branch) => [
-                    $branch->getKey() => $branch->achievementAmount(
-                        $period->startOfWeek(), $period->endOfWeek(), Periodicity::weekly()
+                    $branch->getKey() => $branch->currentAchievementAmount(
+                        $period->copy()->startOfWeek(), $period->copy()->endOfWeek()
                     ),
                 ]),
                 Periodicity::monthly()->value => $branches->mapWithKeys(fn (Branch $branch) => [
-                    $branch->getKey() => $branch->achievementAmount(
-                        $period->startOfMonth(), $period->endOfMonth(), Periodicity::monthly()
+                    $branch->getKey() => $branch->currentAchievementAmount(
+                        $period->copy()->startOfMonth(), $period->copy()->endOfMonth()
                     ),
                 ]),
                 Periodicity::yearly()->value => $branches->mapWithKeys(fn (Branch $branch) => [
-                    $branch->getKey() => $branch->achievementAmount(
-                        $period->startOfMonth(), $period->endOfMonth(), Periodicity::yearly()
+                    $branch->getKey() => $branch->currentAchievementAmount(
+                        $period->copy()->startOfMonth(), $period->copy()->endOfMonth()
                     ),
                 ]),
             ],

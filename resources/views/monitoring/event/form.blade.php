@@ -12,7 +12,7 @@
     <script src="{{ mix('node_modules/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ mix('node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
-        $(function() {
+        $(function () {
             $('.select2').select2();
 
             @include('components.select2-change', ['olds' => Arr::except(old() ?: $event, '_token')])

@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property-read \App\Models\Target|null $currentTarget
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Event> $events
  * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement> $achievements
+ * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Achievement> $currentAchievements
  *
  * @see \App\Models\Branch
  */
@@ -190,5 +191,25 @@ trait Relation
         }
 
         return $this;
+    }
+
+    /**
+     * Define a has-many-through relationship with \App\Models\Achievement through \App\Models\Target.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function currentAchievements(): HasManyThrough
+    {
+        return $this->hasManyThrough(Achievement::class, Target::class)->where('targets.id', $this->currentTarget->getKey());
+    }
+
+    /**
+     * Return collection of \App\Models\Achievement model relation value.
+     *
+     * @return \App\Models\Achievement|null
+     */
+    public function getCurrentAchievementRelationValue(): ?Achievement
+    {
+        return $this->getCollectionValue('achievements', Achievement::class)->first();
     }
 }
