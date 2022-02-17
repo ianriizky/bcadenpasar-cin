@@ -211,7 +211,7 @@
                                     <label for="email_verified_at">@lang('Verify Email Address')</label>
 
                                     <p class="form-control-plaintext">
-                                        {{ $user->email_verified_at->translatedFormat('d F Y H:i:s') }}
+                                        {{ $user->email_verified_at->isoFormat('DD MMMM YYYY HH:mm:ss') }}
                                     </p>
                                 </div>
                                 {{-- /.email_verified_at --}}

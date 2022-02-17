@@ -54,7 +54,7 @@ abstract class AbstractRequest extends FormRequest
     public function validated($key = null, $default = null)
     {
         $validated = array_merge(parent::validated(), [
-            'date' => DateFormatLocaleISO::parseDate(Event::DATE_FORMAT_ISO, $this->input('date')),
+            'date' => DateFormatLocaleISO::parseDate(Event::DATE_FORMAT_ISO, $this->input('date'))->startOfDay(),
         ]);
 
         if (!is_null($key)) {

@@ -4,7 +4,7 @@
         <label for="created_at">@lang('Created At')</label>
 
         <p class="form-control-plaintext">
-            {{ $model->created_at->translatedFormat('d F Y H:i:s') }}
+            {{ $model->created_at->isoFormat('DD MMMM YYYY HH:mm:ss') }}
         </p>
     </div>
     {{-- /.created_at --}}
@@ -14,7 +14,7 @@
         <label for="updated_at">@lang('Updated At')</label>
 
         <p class="form-control-plaintext">
-            {{ $model->updated_at->translatedFormat('d F Y H:i:s') }}
+            {{ $model->updated_at->isoFormat('DD MMMM YYYY HH:mm:ss') }}
         </p>
     </div>
     {{-- /.updated_at --}}
