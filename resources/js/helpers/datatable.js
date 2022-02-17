@@ -1,6 +1,6 @@
 var datatable;
 
-$(document).ready(function () {
+$(function () {
   datatable = $('.datatable').DataTable({
     processing: true,
     serverSide: true,
