@@ -83,6 +83,12 @@ Route::middleware('auth:web', 'user_is_verified')->group(function () {
         Route::prefix('/achievement')->name('achievement.')->controller(AchievementController::class)->group(function () {
             Route::post('/datatable', 'datatable')->name('datatable');
             Route::delete('/multiple', 'destroyMultiple')->name('destroy-multiple');
+
+            Route::prefix('/select2')->name('select2.')->group(function () {
+                Route::get('/target/{branch?}', 'select2Target')->name('target');
+                Route::get('/event/{branch?}', 'select2Event')->name('event');
+                Route::get('/user/{branch?}', 'select2User')->name('user');
+            });
         });
         Route::resource('/achievement', AchievementController::class);
     });

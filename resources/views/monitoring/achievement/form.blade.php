@@ -12,23 +12,48 @@
     <script src="{{ mix('node_modules/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ mix('node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
-        $(function() {
+        @if ($oldDate = old('date', $achievement->date_iso_format))
+            const startDate = moment(@json($oldDate), @json(\App\Models\Achievement::DATE_FORMAT_ISO)).startOf('days');
+        @else
+            const startDate = moment().startOf('days');
+        @endif
+
+        const dateFormatIso = @json(\App\Models\Achievement::DATE_FORMAT_ISO);
+        const nullExpression = @json(\App\Http\Middleware\ConvertNullStringsToNull::NULL_EXPRESSION);
+        const select2Routes = {
+            target: @json(route('monitoring.achievement.select2.target')),
+            event: @json(route('monitoring.achievement.select2.event')),
+            user: @json(route('monitoring.achievement.select2.user')),
+        };
+        const selectedBranch = @json(old('branch_id', optional($achievement->target)->branch_id));
+        const selectedTarget = @json(old('target_id', $achievement->target_id));
+        const selectedEvent = @json(old('event_id', $achievement->event_id));
+        const selectedAchievedBy = @json(old('achieved_by', $achievement->achieved_by));
+
+        $(function () {
             $('.select2').select2();
 
             @include('components.select2-change', ['olds' => Arr::except(old() ?: $achievement, '_token')])
+        });
+    </script>
+    <script src="{{ mix('js/page/achievement/form.js') }}"></script>
+    <script>
+        $(async function () {
+            @role (\App\Models\Role::ROLE_ADMIN)
+                $('#branch_id').val(selectedBranch).trigger('change');
+            @else
+                await updateSelect2Option(
+                    select2Routes.event, selectedBranch,
+                    "#event_id", selectedEvent
+                );
+            @endrole
 
-            $('.daterange').daterangepicker({
-                drops: 'down',
-                opens: 'right',
-                startDate: moment().startOf('month'),
-                endDate: moment().endOf('month'),
-                autoApply: true,
-                showWeekNumbers: true,
-                locale: {
-                    separator: @json(\App\Http\Requests\Achievement\StoreRequest::START_DATE_END_DATE_SEPARATOR),
-                    format: @json(\App\Models\Achievement::DATE_FORMAT_ISO),
-                },
-            });
+            @role (\App\Models\Role::ROLE_MANAGER)
+                await updateSelect2Option(
+                    select2Routes.user, selectedBranch,
+                    "#achieved_by", selectedAchievedBy
+                );
+            @endrole
         });
     </script>
 @endsection
@@ -76,8 +101,7 @@
                                         class="form-control select2 @error('branch_id') is-invalid @enderror"
                                         data-placeholder="--@lang('Choose :field', ['field' => __('menu.branch') ])--"
                                         data-allow-clear="true"
-                                        required
-                                        autofocus>
+                                        required>
                                         @foreach (\App\Models\Branch::pluck('name', 'id') as $value => $label)
                                             <option value="{{ $value }}">{{ $label }}</option>
                                         @endforeach
@@ -94,29 +118,47 @@
 
                             <div class="col-12 col-lg-6"></div>
 
-                            {{-- periodicity --}}
+                            {{-- target_id --}}
                             <div class="form-group col-12 col-lg-6">
-                                <label for="periodicity">@lang('Periodicity')<span class="text-danger">*</span></label>
+                                <label for="target_id">@lang('menu.target')<span class="text-danger">*</span></label>
 
-                                <select name="periodicity"
-                                    id="periodicity"
-                                    class="form-control select2 @error('periodicity') is-invalid @enderror"
-                                    data-placeholder="--@lang('Choose :field', ['field' => __('Periodicity') ])--"
+                                @role(\App\Models\Role::ROLE_ADMIN)
+                                    <select name="target_id"
+                                        id="target_id"
+                                        class="form-control select2 @error('target_id') is-invalid @enderror"
+                                        data-placeholder="--@lang('Choose :field', ['field' => __('menu.target') ])--"
+                                        data-allow-clear="true"
+                                        required disabled>
+                                    </select>
+                                @else
+                                    <p class="form-control-plaintext">
+                                        {{ Auth::user()->branch->currentTarget->name }}
+                                    </p>
+                                @endrole
+
+                                <x-invalid-feedback :name="'target_id'"/>
+                            </div>
+                            {{-- /.target_id --}}
+
+                            {{-- event_id --}}
+                            <div class="form-group col-12 col-lg-6">
+                                <label for="event_id">@lang('menu.event')</label>
+
+                                <select name="event_id"
+                                    id="event_id"
+                                    class="form-control select2 @error('event_id') is-invalid @enderror"
+                                    data-placeholder="--@lang('Choose :field', ['field' => __('menu.event') ])--"
                                     data-allow-clear="true"
-                                    required
-                                    autofocus>
-                                    @foreach (\App\Enum\Periodicity::toArray() as $value => $label)
-                                        <option value="{{ $value }}">{{ $label }}</option>
-                                    @endforeach
+                                    disabled>
                                 </select>
 
-                                <x-invalid-feedback :name="'periodicity'"/>
+                                <x-invalid-feedback :name="'event_id'"/>
                             </div>
-                            {{-- /.periodicity --}}
+                            {{-- /.event_id --}}
 
-                            {{-- start_date && end_date --}}
+                            {{-- achieved_date --}}
                             <div class="form-group col-12 col-lg-6">
-                                <label for="name">@lang('Start Date') & @lang('End Date')<span class="text-danger">*</span></label>
+                                <label for="name">@lang('Achieved Date')<span class="text-danger">*</span></label>
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -126,16 +168,37 @@
                                     </div>
 
                                     <input type="text"
-                                        name="start_date_end_date"
-                                        id="start_date_end_date"
-                                        class="form-control daterange @error('start_date_end_date') is-invalid @enderror"
-                                        value="{{ old('start_date_end_date', $achievement->start_date_end_date) }}"
-                                        required>
+                                        name="achieved_date"
+                                        id="achieved_date"
+                                        class="form-control @error('achieved_date') is-invalid @enderror"
+                                        required readonly>
 
-                                    <x-invalid-feedback :name="'start_date_end_date'"/>
+                                    <x-invalid-feedback :name="'achieved_date'"/>
                                 </div>
                             </div>
-                            {{-- /.start_date && end_date --}}
+                            {{-- achieved_date --}}
+
+                            {{-- achieved_by --}}
+                            <div class="form-group col-12 col-lg-6">
+                                <label for="achieved_by">@lang('Achieved By')</label>
+
+                                @unlessrole(\App\Models\Role::ROLE_STAFF)
+                                    <select name="achieved_by"
+                                        id="achieved_by"
+                                        class="form-control select2 @error('achieved_by') is-invalid @enderror"
+                                        data-placeholder="--@lang('Choose :field', ['field' => __('Achieved By') ])--"
+                                        data-allow-clear="true"
+                                        disabled>
+                                    </select>
+                                @else
+                                    <p class="form-control-plaintext">
+                                        {{ Auth::user()->name }}
+                                    </p>
+                                @endunlessrole
+
+                                <x-invalid-feedback :name="'achieved_by'"/>
+                            </div>
+                            {{-- /.achieved_by --}}
 
                             {{-- amount --}}
                             <div class="form-group col-12 col-lg-6">

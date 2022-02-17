@@ -17,7 +17,7 @@
             { data: 'branch_name' },
             { data: 'event_name' },
             { data: 'achieved_date' },
-            { data: 'achieved_by' },
+            { data: 'achieved_by_name' },
             { data: 'amount' },
             { data: 'action', searchable: false, orderable: false, width: '26%' },
         ];
@@ -69,8 +69,8 @@
                                                 <th>@include('components.datatables.checkbox-all')</th>
                                                 <th>@lang('menu.branch')</th>
                                                 <th>@lang('menu.event')</th>
-                                                <th>@lang('Achieve Date')</th>
-                                                <th>@lang('Achieve By')</th>
+                                                <th>@lang('Achieved Date')</th>
+                                                <th>@lang('Achieved By')</th>
                                                 <th>@lang('Amount')</th>
                                                 <th>@lang('Action')</th>
                                             </tr>

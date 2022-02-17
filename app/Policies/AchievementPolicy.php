@@ -53,7 +53,15 @@ class AchievementPolicy
      */
     public function update(User $user, Achievement $model)
     {
-        return $this->create($user) && $this->view($user, $model);
+        if ($user->isManager()) {
+            return $this->view($user, $model);
+        }
+
+        if ($user->isStaff()) {
+            return $this->view($user, $model) && $model->achievedBy->is($user);
+        }
+
+        return false;
     }
 
     /**

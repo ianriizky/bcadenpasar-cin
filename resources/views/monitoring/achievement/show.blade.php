@@ -32,33 +32,49 @@
                     <div class="row">
                         {{-- branch_id --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="branch_id">@lang('menu.branch')<span class="text-danger">*</span></label>
+                            <label for="branch_id">@lang('menu.branch')</label>
 
-                            <p class="form-control-plaintext">{{ $achievement->branch->name }}</p>
+                            <p class="form-control-plaintext">{{ $achievement->target->branch->name }}</p>
                         </div>
                         {{-- /.branch_id --}}
 
                         <div class="col-12 col-lg-6"></div>
 
-                        {{-- periodicity --}}
+                        {{-- target_id --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="periodicity">@lang('Periodicity')<span class="text-danger">*</span></label>
+                            <label for="target_id">@lang('menu.target')</label>
 
-                            <p class="form-control-plaintext">{{ $achievement->periodicity->label }}</p>
+                            <p class="form-control-plaintext">{{ $achievement->target->name }}</p>
                         </div>
-                        {{-- /.periodicity --}}
+                        {{-- /.target_id --}}
 
-                        {{-- start_date && end_date --}}
+                        {{-- event_id --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="name">@lang('Start Date') & @lang('End Date')<span class="text-danger">*</span></label>
+                            <label for="event_id">@lang('menu.event')</label>
 
-                            <p class="form-control-plaintext">{{ $achievement->start_date_iso_format }} & {{ $achievement->end_date_iso_format }}</p>
+                            <p class="form-control-plaintext">{{ optional($achievement->event)->name }}</p>
                         </div>
-                        {{-- /.start_date && end_date --}}
+                        {{-- /.event_id --}}
+
+                        {{-- achieved_date --}}
+                        <div class="form-group col-12 col-lg-6">
+                            <label for="achieved_date">@lang('Achieved Date')</label>
+
+                            <p class="form-control-plaintext">{{ $achievement->achieved_date_iso_format }}</p>
+                        </div>
+                        {{-- /.achieved_date --}}
+
+                        {{-- achieved_by --}}
+                        <div class="form-group col-12 col-lg-6">
+                            <label for="achieved_by">@lang('Achieved Date')</label>
+
+                            <p class="form-control-plaintext">{{ $achievement->achievedBy->name }}</p>
+                        </div>
+                        {{-- /.achieved_by --}}
 
                         {{-- amount --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="amount">@lang('Amount')<span class="text-danger">*</span></label>
+                            <label for="amount">@lang('Amount')</label>
 
                             <p class="form-control-plaintext">{{ $achievement->getRawAttribute('amount') }}</p>
                         </div>

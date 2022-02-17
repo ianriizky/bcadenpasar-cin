@@ -25,6 +25,7 @@
     "/js/helpers/datatable-row-child.js": "/js/helpers/datatable-row-child.js",
     "/js/helpers/datatable.js": "/js/helpers/datatable.js",
     "/js/helpers/geolocation.js": "/js/helpers/geolocation.js",
+    "/js/page/achievement/form.js": "/js/page/achievement/form.js",
     "/js/page/report/laporan-pencapaian-new-cin.js": "/js/page/report/laporan-pencapaian-new-cin.js",
     "/node_modules/select2/dist/css/select2.min.css": "/node_modules/select2/dist/css/select2.min.css",
     "/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css": "/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",

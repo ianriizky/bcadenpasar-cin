@@ -46,6 +46,7 @@ getFiles('resources/js/helpers').forEach(filename => {
 
 [
   // put the specified page js files here
+  'achievement',
   'report',
 ].forEach(directory => {
   getFiles(`resources/js/page/${directory}`).forEach(filename => {

@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Achievement\StoreRequest;
+use App\Http\Requests\Achievement\UpdateRequest;
 use App\Http\Resources\DataTables\AchievementResource;
 use App\Models\Achievement;
+use App\Models\Branch;
+use App\Models\Event;
+use App\Models\Target;
+use Closure;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -19,6 +27,14 @@ class AchievementController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Achievement::class, 'achievement');
+
+        $this->middleware(function (Request $request, Closure $next) {
+            if (!$request->expectsJson()) {
+                throw new AuthorizationException;
+            }
+
+            return $next($request);
+        })->only('select2Target', 'select2Event', 'select2User');
     }
 
     /**
@@ -183,5 +199,72 @@ class AchievementController extends Controller
                 'message' => trans('The :resource was deleted!', ['resource' => trans('menu.achievement')]),
             ],
         ]);
+    }
+
+    /**
+     * Return select2 option of target list in json response format.
+     *
+     * @param  \App\Models\Branch  $branch
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function select2Target(Branch $branch, Request $request)
+    {
+        if (!$request->user()->isAdmin()) {
+            throw new AuthorizationException;
+        }
+
+        $targets = $branch->currentTarget()->select([
+            'id', 'periodicity', 'start_date', 'end_date',
+        ])->get()->map(fn (Target $target) => [
+            'value' => $target->getKey(),
+            'text' => $target->name,
+        ]);
+
+        return response()->json($targets);
+    }
+
+    /**
+     * Return select2 option of event list in json response format.
+     *
+     * @param  \App\Models\Branch  $branch
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function select2Event(Branch $branch)
+    {
+        $events = $branch->events()->whereDate(
+            'date', '>=', Carbon::now()
+        )->select([
+            'id', 'name', 'date',
+        ])->get()->map(fn (Event $event) => [
+            'value' => $event->getKey(),
+            'text' => $event->name_with_date_iso_format,
+        ]);
+
+        return response()->json($events);
+    }
+
+    /**
+     * Return select2 option of user list in json response format.
+     *
+     * @param  \App\Models\Branch  $branch
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function select2User(Branch $branch, Request $request)
+    {
+        if ($request->user()->isStaff()) {
+            throw new AuthorizationException;
+        }
+
+        $users = $branch->users()->select([
+            'id as value', 'name as text',
+        ])->get();
+
+        return response()->json($users);
     }
 }
