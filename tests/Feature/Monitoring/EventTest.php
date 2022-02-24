@@ -97,7 +97,7 @@ it('can update event', function () {
 
     $response = actingAs($this->user)->put(route('monitoring.event.update', $event), $data);
 
-    $updatedEvent = Event::where(Arr::except($data, 'start_date_end_date'))->first();
+    $updatedEvent = Event::where(Arr::except($data, 'date'))->first();
 
     if ($this->user->can('update', $event)) {
         $response->assertRedirect(route('monitoring.event.edit', $updatedEvent));

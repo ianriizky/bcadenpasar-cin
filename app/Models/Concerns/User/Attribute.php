@@ -60,7 +60,7 @@ trait Attribute
      *
      * @return string
      */
-    public function getIsActiveBadgeAttribute(): string
+    public function getIsVerifiedBadgeAttribute(): string
     {
         return sprintf(<<<'html'
             <span class="badge badge-%s">

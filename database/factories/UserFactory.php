@@ -75,7 +75,7 @@ class UserFactory extends Factory
 
         return array_merge($data, [
             'password_confirmation' => $data['password'],
-            'role' => Arr::random([Role::ROLE_ADMIN, Role::ROLE_STAFF]),
+            'role' => Arr::random([Role::ROLE_MANAGER, Role::ROLE_STAFF]),
         ]);
     }
 }

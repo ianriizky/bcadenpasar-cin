@@ -3,9 +3,8 @@
 return [
     'dashboard' => 'Dasbor',
     'master' => 'Master',
-    'user' => 'Pengguna',
-    'role' => 'Peran',
     'branch' => 'Cabang',
+    'user' => 'Pengguna',
     'education' => 'Edukasi',
     'monitoring' => 'Monitoring',
     'target' => 'Target',

@@ -106,7 +106,7 @@
 
                             {{-- role --}}
                             <div class="form-group col-12 col-lg-6">
-                                <label for="role">@lang('Role')<label>
+                                <label for="role">@lang('Role')</label>
 
                                 <p class="form-control-plaintext">{{ $user->role }}</p>
                             </div>

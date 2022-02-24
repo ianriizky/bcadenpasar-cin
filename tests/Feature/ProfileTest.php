@@ -20,8 +20,8 @@ it('can update profile', function () {
     $data = Arr::except(User::factory()->rawForm(), 'role');
 
     actingAs($this->user)
-        ->put(route('profile.edit'), $data)
-        ->assertRedirect(route('profile.edit'));
+        ->put(route('profile.update'), $data)
+        ->assertRedirect(route('profile.update'));
 
     assertDatabaseHas(User::class, Arr::only($data, 'username'));
 });

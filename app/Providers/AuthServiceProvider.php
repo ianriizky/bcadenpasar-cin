@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\Event;
 use App\Models\Target;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -29,8 +30,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function (HasRole $user, $ability) {
+        Gate::before(function (HasRole $user, $ability, array $models) {
             if ($user->isAdmin()) {
+                if (in_array($ability, ['delete', 'forceDelete'])) {
+                    $model = head($models);
+
+                    if ($model instanceof Model && $model->is($user)) {
+                        return false;
+                    }
+                }
+
                 return true;
             }
         });

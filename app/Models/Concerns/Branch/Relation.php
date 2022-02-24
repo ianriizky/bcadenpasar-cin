@@ -200,7 +200,7 @@ trait Relation
      */
     public function currentAchievements(): HasManyThrough
     {
-        return $this->hasManyThrough(Achievement::class, Target::class)->where('targets.id', $this->currentTarget->getKey());
+        return $this->hasManyThrough(Achievement::class, Target::class)->where('targets.id', $this->currentTarget?->getKey());
     }
 
     /**

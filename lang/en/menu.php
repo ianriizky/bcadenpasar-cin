@@ -3,9 +3,8 @@
 return [
     'dashboard' => 'Dashboard',
     'master' => 'Master',
-    'user' => 'User',
-    'role' => 'Role',
     'branch' => 'Branch',
+    'user' => 'User',
     'education' => 'Education',
     'monitoring' => 'Monitoring',
     'target' => 'Target',

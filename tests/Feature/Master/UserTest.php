@@ -50,7 +50,7 @@ it('can store user', function () {
         } else {
             $response->assertRedirect(route('master.user.index'));
 
-            assertDatabaseHas(User::class, $data);
+            assertDatabaseHas(User::class, Arr::except($data, ['password_confirmation', 'role']));
 
             Event::assertDispatched(Registered::class);
         }
@@ -131,7 +131,7 @@ it('can destroy multiple user', function () {
         ->for(Branch::inRandomOrder()->first('id'))
         ->count(rand(1, 5))
         ->create()
-        ->map(fn (User $user) => $user->syncRoles(Arr::random([Role::ROLE_ADMIN, Role::ROLE_STAFF])));
+        ->map(fn (User $user) => $user->syncRoles(Arr::random([Role::ROLE_MANAGER, Role::ROLE_STAFF])));
 
     $response = actingAs($this->user)->delete(route('master.user.destroy-multiple', [
         'checkbox' => $users->pluck('id')->toArray(),
