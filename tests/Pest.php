@@ -40,7 +40,7 @@ expect()->extend('toBeOne', function () {
 */
 
 /**
- * Create user data from factory with "admin" role and specified branch.
+ * Create user data from factory with specified role and specified branch.
  *
  * @param  string  $role
  * @param  \App\Models\Branch  $branch
