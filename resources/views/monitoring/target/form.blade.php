@@ -137,7 +137,7 @@
 
                             {{-- start_date && end_date --}}
                             <div class="form-group col-12 col-lg-6">
-                                <label for="name">@lang('Start Date') & @lang('End Date')<span class="text-danger">*</span></label>
+                                <label for="start_date_end_date">@lang('Start Date') & @lang('End Date')<span class="text-danger">*</span></label>
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">

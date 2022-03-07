@@ -66,7 +66,7 @@
 
                         {{-- achieved_by --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="achieved_by">@lang('Achieved Date')</label>
+                            <label for="achieved_by">@lang('Achieved By')</label>
 
                             <p class="form-control-plaintext">{{ $achievement->achievedBy->name }}</p>
                         </div>

@@ -50,7 +50,7 @@
 
                         {{-- start_date && end_date --}}
                         <div class="form-group col-12 col-lg-6">
-                            <label for="name">@lang('Start Date') & @lang('End Date')</label>
+                            <label for="start_date_end_date">@lang('Start Date') & @lang('End Date')</label>
 
                             <p class="form-control-plaintext">{{ $target->start_date_end_date_iso_format }}</p>
                         </div>

@@ -114,7 +114,7 @@
 
                             {{-- date --}}
                             <div class="form-group col-12 col-lg-6">
-                                <label for="name">@lang('Date')<span class="text-danger">*</span></label>
+                                <label for="date">@lang('Date')<span class="text-danger">*</span></label>
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">

@@ -158,7 +158,7 @@
 
                             {{-- achieved_date --}}
                             <div class="form-group col-12 col-lg-6">
-                                <label for="name">@lang('Achieved Date')<span class="text-danger">*</span></label>
+                                <label for="achieved_date">@lang('Achieved Date')<span class="text-danger">*</span></label>
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
