@@ -50,7 +50,7 @@ it('can store user', function () {
         } else {
             $response->assertRedirect(route('master.user.index'));
 
-            assertDatabaseHas(User::class, Arr::except($data, ['password_confirmation', 'role']));
+            assertDatabaseHas(User::class, Arr::only($data, 'username'));
 
             Event::assertDispatched(Registered::class);
         }
