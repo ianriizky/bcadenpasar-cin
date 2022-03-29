@@ -43,7 +43,7 @@ expect()->extend('toBeOne', function () {
  * Create user data from factory with specified role and specified branch.
  *
  * @param  string  $role
- * @param  \App\Models\Branch  $branch
+ * @param  \App\Models\Branch|null  $branch
  * @return \App\Models\User
  */
 function pest_create_user(string $role, App\Models\Branch $branch = null): App\Models\User
@@ -71,36 +71,28 @@ function pest_create_manager_from_existed_branch(): App\Models\User
 /**
  * Create user data from factory with random role and specified branch.
  *
- * @param  \App\Models\Branch  $branch
+ * @param  \App\Models\Branch|null  $branch
  * @return \App\Models\User
  */
 function pest_create_random_user(App\Models\Branch $branch = null): App\Models\User
 {
-    return App\Models\User::factory()
-        ->verified()
-        ->for($branch ?? App\Models\Branch::factory())
-        ->create()
-        ->syncRoles(Illuminate\Support\Arr::random([
-            App\Models\Role::ROLE_ADMIN,
-            App\Models\Role::ROLE_MANAGER,
-            App\Models\Role::ROLE_STAFF,
-        ]));
+    return pest_create_user(Illuminate\Support\Arr::random([
+        App\Models\Role::ROLE_ADMIN,
+        App\Models\Role::ROLE_MANAGER,
+        App\Models\Role::ROLE_STAFF,
+    ]), $branch);
 }
 
 /**
- * Create user data from factory with manager or staff role and specified branch.
+ * Create user data from factory with "manager" or "staff" role and specified branch.
  *
- * @param  \App\Models\Branch  $branch
+ * @param  \App\Models\Branch|null $branch
  * @return \App\Models\User
  */
 function pest_create_random_manager_or_staff(App\Models\Branch $branch = null): App\Models\User
 {
-    return App\Models\User::factory()
-        ->verified()
-        ->for($branch ?? App\Models\Branch::factory())
-        ->create()
-        ->syncRoles(Illuminate\Support\Arr::random([
-            App\Models\Role::ROLE_MANAGER,
-            App\Models\Role::ROLE_STAFF,
-        ]));
+    return pest_create_user(Illuminate\Support\Arr::random([
+        App\Models\Role::ROLE_MANAGER,
+        App\Models\Role::ROLE_STAFF,
+    ]), $branch);
 }
